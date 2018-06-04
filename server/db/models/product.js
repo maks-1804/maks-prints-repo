@@ -12,6 +12,7 @@ const Product = db.define('product', {
   },
   price: {
     type: Sequelize.DECIMAL, // how to restict it to dollar decimals
+    defaultValue: 0.00,  //this too
     allowNull: false
   },
   inventoryQuanity: {
