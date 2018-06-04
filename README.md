@@ -2,4 +2,8 @@
 
 Selling art prints
 
+
+Arielle Gordon
+
 Kaitlin Schaer
+
