@@ -7,7 +7,8 @@ const Cart = db.define('cart', {
     defaultValue: null
   },
   status: {
-    type: Sequelize.ENUM('open', 'closed')
+    type: Sequelize.ENUM('open', 'closed'),
+    defaultValue: 'open'
   },
   subtotal: {
     type: Sequelize.INTEGER,
