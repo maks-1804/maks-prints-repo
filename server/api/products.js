@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
 })
 
 //GET /api/products/?query --- products in a category
-
+router.get('/')
 
 //GET /api/products/:id --- single product
 router.get('/:id', async (req, res, next) => {
