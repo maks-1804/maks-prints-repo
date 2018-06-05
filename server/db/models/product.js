@@ -37,7 +37,12 @@ const Product = db.define('product', {
 // for each item purchased in the cart, reduce that product's inventory by amount in cart
 // }
 
-Product.findByCategory = function (categoryId) {
+Product.prototype.adjustInventories = function(){
+  this.inventoryQuanity = this.inventoryQuanity--
+  return this
+}
+
+Product.findByCategory = function(categoryId){
   return Product.findAll({
     where: {
       categoryId: categoryId
