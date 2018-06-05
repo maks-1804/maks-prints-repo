@@ -26,6 +26,18 @@ router.get('/:id', async (req, res, next) => {
   } else { res.sendStatus(404) }
 })
 
+router.post('/', async (req, res, next) => {
+  if (req.user.type === "admin") {
+    try {
+      const cart = await Cart.create(req.body);
+      const cartWithAssociations = await Cart.findById(cart.id)
+      res.json(cartWithAssociations)
+    }
+    catch (err) { next(err) }
+  }
+  else { res.sendStatus(404) }
+})
+
 router.put('/:id', async (req, res, next) => {
   if (req.user.type === 'admin') {
     try {
