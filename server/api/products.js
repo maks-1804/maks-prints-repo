@@ -41,9 +41,9 @@ router.post('/', async (req, res, next) => {
 //PUT /api/products/:id --- edit product
 router.put('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id, {include: {all: true}});
+    const product = await Product.findById(req.params.id, {include: {all: true}})
     if (!product) { res.sendStatus(404) }
-    const updated = await product.update(req.body);
+    const updated = await product.update(req.body)
     res.json(updated)
   }
   catch (err) { next(err) }
@@ -52,8 +52,8 @@ router.put('/:id', async (req, res, next) => {
 //DELETE /api/products/:id --- delete product
 router.delete('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id);
-    await product.destroy();
+    const product = await Product.findById(req.params.id)
+    await product.destroy()
     res.status(204).end()
   }
   catch (err) { next(err) }
