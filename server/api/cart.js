@@ -2,6 +2,8 @@ const router = require('express').Router()
 const { Cart } = require('../db/models')
 module.exports = router
 
+
+//------------ADMIN ROUTES---------------\\
 router.get('/', async (req, res, next) => {
   if (req.user.type === 'admin') {
     try {
@@ -22,4 +24,17 @@ router.get('/:id', async (req, res, next) => {
     }
     catch (err) { next(err) }
   } else { res.sendStatus(404) }
+})
+
+router.put('/:id', async (req, res, next) => {
+  if (req.user.type === 'admin') {
+    try {
+      const cart = await Cart.findById(req.params.id, {include: {all: true}})
+      if (!cart) { res.sendStatus(404) }
+      const updated = await cart.update(req.body)
+      res.json(updated)
+    }
+    catch (err) {next(err)}
+  }
+  else { res.sendStatus(404) }
 })
