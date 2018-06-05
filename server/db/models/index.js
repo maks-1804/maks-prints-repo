@@ -1,3 +1,4 @@
+const db = require('../db')
 const User = require('./user')
 const Product = require('./product')
 const Cart = require('./cart')
@@ -30,6 +31,7 @@ Review.belongsTo(Product)
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
+  db,
   User,
   Product,
   Cart,
