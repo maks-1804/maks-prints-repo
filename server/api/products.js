@@ -5,7 +5,7 @@ module.exports = router
 //GET /api/products/ --- all products
 router.get('/', async (req, res, next) => {
   const category = req.query.category
-  if (category === '') {
+  if (!category) {
     try {
     const products = await Product.findAll({include: {all: true}})
     res.json(products)
