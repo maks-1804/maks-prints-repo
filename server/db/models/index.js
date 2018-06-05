@@ -1,6 +1,8 @@
 const User = require('./user')
 const Product = require('./product')
 const Cart = require('./cart')
+const Category = require('./category')
+// const Review = require('./review')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -8,6 +10,19 @@ const Cart = require('./cart')
  *
  *    BlogPost.belongsTo(User)
  */
+
+Cart.belongsToMany(Product, { through: 'cartProducts' })
+Product.belongsToMany(Cart)
+User.hasMany(Cart)
+Cart.belongsTo(User)
+User.hasMany(Cart)
+Product.belongsToMany(Category, { through: 'productCategory' })
+Category.belongsToMany(Product)
+// User.hasMany(Review)
+// Review.belongsTo(User)
+// Product.hasMany(Review)
+// Review.belongsTo(Product)
+
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -18,5 +33,6 @@ const Cart = require('./cart')
 module.exports = {
   User,
   Product,
-  Cart
+  Cart,
+  Category
 }
