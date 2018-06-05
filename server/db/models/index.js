@@ -3,7 +3,6 @@ const Product = require('./product')
 const Cart = require('./cart')
 const Review = require('./review')
 const Category = require('./category')
-const Review = require('./review')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
