@@ -31,6 +31,10 @@ const Product = db.define('product', {
   }
 })
 
-// inventoryQuantity could warrant a class or instance method (called when orded from cart?)
+// inventoryQuantity could warrant a class or instance method (called when order is placed?)
+
+//Product.adjustInventories( takes?? array?) {
+// for each item purchased in the cart, reduce that product's inventory by amount in cart
+// }
 
 module.exports = Product
