@@ -35,9 +35,6 @@ module.exports = {
   User,
   Product,
   Cart,
-<<<<<<< HEAD
-  Review
-=======
+  Review,
   Category
->>>>>>> master
 }
