@@ -31,7 +31,7 @@ router.get('/:id', async (req, res, next) => {
   else {
     try {
       const cart = await Cart.findAll({where: {userId: req.user.id,
-      id: req.params.id}}, {include: {all: true}});
+      id: req.params.id}}, {include: {all: true}})
       res.json(cart)
     } catch (err) { next(err) }
   }
@@ -65,7 +65,7 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   if (req.user.type === 'admin') {
     try {
-      const cart = await Cart.findById(req.params.id);
+      const cart = await Cart.findById(req.params.id)
       await cart.destroy()
       res.status(204).end()
     }
