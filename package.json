@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "maks-prints",
   "version": "1.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "An e-commerce site for prints",
   "engines": {
     "node": ">= 7.0.0"
   },
