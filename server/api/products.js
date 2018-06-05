@@ -4,7 +4,6 @@ module.exports = router
 
 //GET /api/products/ --- all products
 router.get('/', async (req, res, next) => {
-  console.log("this is the session", req.session)
   const category = req.query.category
   if (!category) {
     try {
@@ -26,7 +25,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/category/:categoryId', async (req, res, next) => {
   try {
-    const products = await Product.findAll({where: { categoryId: req.params.categoryId}}, {include: {all: true}})
+    const products = await Product.findAll({where: { categoryId: req.params.categoryId}}, {include: [{all: true}]})
     res.json(products)
   }
   catch (err) { next(err) }
@@ -35,7 +34,7 @@ router.get('/category/:categoryId', async (req, res, next) => {
 //GET /api/products/:id --- single product
 router.get('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id, {include: {all: true}})
+    const product = await Product.findById(req.params.id, {include: [{all: true}]})
     if (!product) { res.sendStatus(404) }
     res.json(product)
   }
@@ -50,7 +49,7 @@ router.post('/', async (req, res, next) => {
   if (req.user.type === 'admin') {
     try {
       const product = await Product.create(req.body)
-      const productWithAssociations = await Product.findById(product.id, {include: {all: true}})
+      const productWithAssociations = await Product.findById(product.id, {include: [{all: true}]})
       res.json(productWithAssociations)
     }
     catch (err) { next(err) }
@@ -62,7 +61,7 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   if (req.user.type === 'admin') {
     try {
-      const product = await Product.findById(req.params.id, {include: {all: true}})
+      const product = await Product.findById(req.params.id, {include: [{all: true}]})
       if (!product) { res.sendStatus(404) }
       const updated = await product.update(req.body)
       res.json(updated)
