@@ -13,7 +13,24 @@ router.get('/', async (req, res, next) => {
 })
 
 //GET /api/products/?query --- products in a category
-router.get('/')
+router.get('/search', async (req, res, next) => {
+  const category = req.query.category;
+  if (category === '') {
+    try {
+    const products = await Product.findAll({include: {all: true}})
+    res.json(products)
+    }
+    catch (err) { next(err) }
+  }
+  else {
+    try {
+      const products = await Product.findByCategory(category)
+      if (!products) { res.sendStatus(404) }
+      res.json(products)
+    }
+    catch (err) { next(err) }
+  }
+})
 
 //GET /api/products/:id --- single product
 router.get('/:id', async (req, res, next) => {
