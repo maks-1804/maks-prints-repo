@@ -12,6 +12,7 @@ router.get('/', async (req, res, next) => {
     }
     catch (err) { next(err) }
   }
+  //in the future we will use this for a search bar functionality
   else {
     try {
       const products = await Product.findByCategory(category)
@@ -22,30 +23,18 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-//GET /api/products/?query --- products in a category
-router.get('/search', async (req, res, next) => {
-  const category = req.query.category
-  if (category === '') {
-    try {
-    const products = await Product.findAll({include: {all: true}})
+router.get('/category/:categoryId', async (req, res, next) => {
+  try {
+    const products = await Product.findAll({where: { categoryId: req.params.categoryId}}, {include: {all: true}})
     res.json(products)
-    }
-    catch (err) { next(err) }
   }
-  else {
-    try {
-      const products = await Product.findByCategory(category)
-      if (!products) { res.sendStatus(404) }
-      res.json(products)
-    }
-    catch (err) { next(err) }
-  }
+  catch (err) { next(err) }
 })
 
 //GET /api/products/:id --- single product
 router.get('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id)
+    const product = await Product.findById(req.params.id, {include: {all: true}})
     if (!product) { res.sendStatus(404) }
     res.json(product)
   }
