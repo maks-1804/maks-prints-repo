@@ -6,7 +6,7 @@ const Product = db.define('product', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isEmpty: false
+      notEmpty: true
     }
   },
   description: {
@@ -37,12 +37,17 @@ const Product = db.define('product', {
 // for each item purchased in the cart, reduce that product's inventory by amount in cart
 // }
 
+Product.prototype.adjustInventories = function(){
+  this.inventoryQuanity = this.inventoryQuanity--
+  return this
+}
+
 Product.findByCategory = function(categoryId){
   return Product.findAll({
     where: {
       categoryId: categoryId
     },
-    include: {all: true}
+    include: { all: true }
   })
 }
 
