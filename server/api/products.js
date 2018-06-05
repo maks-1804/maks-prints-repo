@@ -46,7 +46,7 @@ router.get('/:id', async (req, res, next) => {
 //POST /api/products --- new product
 router.post('/', async (req, res, next) => {
 // awaiting further discussion of admin validation
-  if (req.user.type === "admin") {
+  if (req.user.type === 'admin') {
     try {
       const product = await Product.create(req.body)
       const productWithAssociations = await Product.findById(product.id, {include: {all: true}})
@@ -59,7 +59,7 @@ router.post('/', async (req, res, next) => {
 
 //PUT /api/products/:id --- edit product
 router.put('/:id', async (req, res, next) => {
-  if (req.user.type === "admin") {
+  if (req.user.type === 'admin') {
     try {
       const product = await Product.findById(req.params.id, {include: {all: true}})
       if (!product) { res.sendStatus(404) }
@@ -73,7 +73,7 @@ router.put('/:id', async (req, res, next) => {
 
 //DELETE /api/products/:id --- delete product
 router.delete('/:id', async (req, res, next) => {
-  if (req.user.type === "admin") {
+  if (req.user.type === 'admin') {
     try {
       const product = await Product.findById(req.params.id)
       await product.destroy()
