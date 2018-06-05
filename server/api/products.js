@@ -4,17 +4,27 @@ module.exports = router
 
 //GET /api/products/ --- all products
 router.get('/', async (req, res, next) => {
-  try {
+  const category = req.query.category
+  if (category === '') {
+    try {
     const products = await Product.findAll({include: {all: true}})
-    if (!products) { res.sendStatus(404) }
     res.json(products)
+    }
+    catch (err) { next(err) }
   }
-  catch (err) { next(err) }
+  else {
+    try {
+      const products = await Product.findByCategory(category)
+      if (!products) { res.sendStatus(404) }
+      res.json(products)
+    }
+    catch (err) { next(err) }
+  }
 })
 
 //GET /api/products/?query --- products in a category
 router.get('/search', async (req, res, next) => {
-  const category = req.query.category;
+  const category = req.query.category
   if (category === '') {
     try {
     const products = await Product.findAll({include: {all: true}})
