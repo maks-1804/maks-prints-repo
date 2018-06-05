@@ -4,6 +4,7 @@ module.exports = router
 
 //GET /api/products/ --- all products
 router.get('/', async (req, res, next) => {
+  console.log("this is the session", req.session)
   const category = req.query.category
   if (!category) {
     try {
