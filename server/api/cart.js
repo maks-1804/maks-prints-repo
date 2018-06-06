@@ -31,6 +31,9 @@ router.post('/', async (req, res, next) => {
   catch (err) { next(err) }
 })
 
+//patch --> update quantity
+// put --> add to cart
+
 //-----------------------ADMIN ROUTES--------------------------\\
 
 router.get('/admin', async (req, res, next) => {

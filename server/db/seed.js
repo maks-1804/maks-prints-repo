@@ -84,27 +84,6 @@ const seed = async () => {
         inventoryQuantity: 15,
         imageUrl: 'https://flic.kr/p/XNYogZ'
       }),
-      Product.create({
-        title: 'Grand Canyon',
-        description: 'Grand Canyon with River views',
-        price: 15,
-        inventoryQuantity: 34,
-        imageUrl: 'https://flic.kr/p/W6KyEB '
-      }),
-      Product.create({
-        title: 'Redwoods',
-        description: 'Redwoods Avenue of Giants',
-        price: 25,
-        inventoryQuantity: 20,
-        imageUrl: 'https://flic.kr/p/f2VquP'
-      }),
-      Product.create({
-        title: 'Patagonia',
-        description: 'Patagonia Glaciers',
-        price: 55,
-        inventoryQuantity: 10,
-        imageUrl: 'https://flic.kr/p/7VSNCE'
-      })
     ])
 
     const [review1, review2, review3] = await Promise.all([
