@@ -4,53 +4,22 @@ module.exports = router;
 
 //GET /api/products/ --- all products
 router.get('/', async (req, res, next) => {
-  const category = req.query.category;
-  if (!category) {
     try {
       const products = await Product.findAll({ include: { all: true } })
       res.json(products)
     } catch (err) {
       next(err)
     }
-  }
-  //in the future we will use this for a search bar functionality
-  else {
-    try {
-      const products = await Product.findByCategory(category)
-      if (!products) {
-        res.sendStatus(404)
-      }
-      res.json(products)
-    } catch (err) {
-      next(err)
-    }
-  }
 })
 
 router.get('/category/:categoryId', async (req, res, next) => {
-  console.log(db.models)
   try {
-    // const products = await Product.findAll({
-    //   include: [
-    //     {
-    //       model: db.models.productCategory,
-    //       through: { where: { categoryId: +req.params.categoryId } }
-    //     }
-    //   ]
-    // });
-    // res.json(products);
     const category = await Category.findAll({
       include: [{ model: db.models.product }],
       where: { id: +req.params.categoryId }
     })
-    // const products = await Product.findAll({
-    //   include: [
-    //     { model: db.models.productCategory, where: { categoryId: category.id } }
-    //   ]
-    // });
     res.json(category)
   } catch (err) {
-    // include: Sequelize.Models.productCategory
     next(err)
   }
 })
@@ -75,7 +44,7 @@ router.get('/:id', async (req, res, next) => {
 //POST /api/products --- new product
 router.post('/', async (req, res, next) => {
   // awaiting further discussion of admin validation
-  if (req.user.type === 'admin') {
+  if (req.user.isAdmin) {
     try {
       const product = await Product.create(req.body)
       const productWithAssociations = await Product.findById(product.id, {
@@ -92,7 +61,7 @@ router.post('/', async (req, res, next) => {
 
 //PUT /api/products/:id --- edit product
 router.put('/:id', async (req, res, next) => {
-  if (req.user.type === 'admin') {
+  if (req.user.isAdmin) {
     try {
       const product = await Product.findById(req.params.id, {
         include: [{ all: true }]
@@ -113,7 +82,7 @@ router.put('/:id', async (req, res, next) => {
 
 //DELETE /api/products/:id --- delete product
 router.delete('/:id', async (req, res, next) => {
-  if (req.user.type === 'admin') {
+  if (req.user.isAdmin) {
     try {
       const product = await Product.findById(req.params.id)
       await product.destroy()
