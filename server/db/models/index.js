@@ -12,8 +12,8 @@ const Category = require("./category");
  *    BlogPost.belongsTo(User)
  */
 
-Cart.belongsToMany(Product, { through: "cartProducts" });
-Product.belongsToMany(Cart, { through: "cartProducts" });
+Cart.belongsToMany(Product, { through: "cartProducts" })
+Product.belongsToMany(Cart, { through: "cartProducts" })
 
 User.hasMany(Cart);
 Cart.belongsTo(User);
@@ -28,13 +28,13 @@ Cart.belongsTo(User);
 Product.belongsToMany(Category, {
   through: "productCategory"
 });
-Category.belongsToMany(Product, { through: "productCategory" });
+Category.belongsToMany(Product, { through: "productCategory" })
 
-User.hasMany(Review);
-Review.belongsTo(User);
+User.hasMany(Review)
+Review.belongsTo(User)
 
-Product.hasMany(Review);
-Review.belongsTo(Product);
+Product.hasMany(Review)
+Review.belongsTo(Product)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,

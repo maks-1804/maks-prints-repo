@@ -4,12 +4,12 @@ module.exports = router;
 
 //GET /api/products/ --- all products
 router.get('/', async (req, res, next) => {
-    try {
-      const products = await Product.findAll({ include: { all: true } })
-      res.json(products)
-    } catch (err) {
-      next(err)
-    }
+  try {
+    const products = await Product.findAll({ include: { all: true } })
+    res.json(products)
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.get('/category/:categoryId', async (req, res, next) => {
@@ -23,6 +23,7 @@ router.get('/category/:categoryId', async (req, res, next) => {
     next(err)
   }
 })
+
 
 //GET /api/products/:id --- single product
 router.get('/:id', async (req, res, next) => {
@@ -43,54 +44,49 @@ router.get('/:id', async (req, res, next) => {
 
 //POST /api/products --- new product
 router.post('/', async (req, res, next) => {
-  // awaiting further discussion of admin validation
-  if (req.user.isAdmin) {
-    try {
+  try {
+    if (req.user.isAdmin) {
       const product = await Product.create(req.body)
       const productWithAssociations = await Product.findById(product.id, {
         include: [{ all: true }]
       })
       res.json(productWithAssociations)
-    } catch (err) {
-      next(err)
-    }
-  } else {
-    res.sendStatus(404)
+    } else { res.sendStatus(403) }
+  } catch (err) {
+    next(err)
   }
 })
 
 //PUT /api/products/:id --- edit product
 router.put('/:id', async (req, res, next) => {
-  if (req.user.isAdmin) {
     try {
-      const product = await Product.findById(req.params.id, {
-        include: [{ all: true }]
-      })
-      if (!product) {
-        res.sendStatus(404)
-      }
-      const updated = await product.update(req.body)
-      res.json(updated)
+      if (req.user.isAdmin) {
+        const product = await Product.findById(req.params.id, {
+          include: [{ all: true }]
+        })
+        if (!product) {
+          res.sendStatus(404)
+        }
+        const updated = await product.update(req.body)
+        res.json(updated)
+      } else { res.sendStatus(403) }
     } catch (err) {
       next(err)
     }
-  } else {
-    res.sendStatus(404)
-  }
-  // change to 403
 })
 
 //DELETE /api/products/:id --- delete product
 router.delete('/:id', async (req, res, next) => {
-  if (req.user.isAdmin) {
     try {
-      const product = await Product.findById(req.params.id)
-      await product.destroy()
-      res.status(204).end()
+      if (req.user.isAdmin) {
+        const product = await Product.findById(req.params.id)
+        await product.destroy()
+        res.status(204).end()
+      } else {
+        res.sendStatus(403)
+      }
     } catch (err) {
       next(err)
     }
-  } else {
-    res.sendStatus(404)
-  }
+
 })
