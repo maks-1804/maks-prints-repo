@@ -37,7 +37,7 @@ router.post('/', async (req, res, next) => {
 //-----------------------ADMIN ROUTES--------------------------\\
 
 router.get('/admin', async (req, res, next) => {
-  if (req.user.type === 'admin') {
+  if (req.user.isAdmin) {
     try {
       const carts = await Cart.findAll({include: [{all: true}]})
       if (!carts) { res.sendStatus(404) }
@@ -48,7 +48,7 @@ router.get('/admin', async (req, res, next) => {
 })
 
 router.get('/admin/:id', async (req, res, next) => {
-  if (req.user.type === 'admin') {
+  if (req.user.isAdmin) {
     try {
       const cart = await Cart.findById(req.params.id, {include: [{all: true}]})
       if (!cart) { res.sendStatus(404) }
@@ -60,7 +60,7 @@ router.get('/admin/:id', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-  if (req.user.type === 'admin') {
+  if (req.user.isAdmin) {
     try {
       const cart = await Cart.findById(req.params.id, {include: {all: true}})
       if (!cart) { res.sendStatus(404) }
@@ -73,7 +73,7 @@ router.put('/:id', async (req, res, next) => {
 })
 
 router.delete('/:id', async (req, res, next) => {
-  if (req.user.type === 'admin') {
+  if (req.user.isAdmin) {
     try {
       const cart = await Cart.findById(req.params.id)
       await cart.destroy()
