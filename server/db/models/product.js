@@ -14,18 +14,19 @@ const Product = db.define('product', {
     allowNull: false
   },
   price: {
-    type: Sequelize.DECIMAL(10, 2),
-    //change to integer!!!!!
-    //instance method for displaying as $$$$$
-    defaultValue: 0.00,
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
     allowNull: false,
     validate: {
-      isDecimal: true
+      min: 0
     }
   },
   inventoryQuanity: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
   },
   imageUrl: {
     type: Sequelize.STRING,
@@ -43,14 +44,14 @@ Product.prototype.adjustInventories = function(){
   this.inventoryQuanity = this.inventoryQuanity--
   return this
 }
-
-Product.findByCategory = function(categoryId){
-  return Product.findAll({
-    where: {
-      categoryId: categoryId
-    },
-    include: { all: true }
-  })
-}
+//We might use this if we refactor our products/category/ route
+// Product.findByCategory = function(categoryId){
+//   return Product.findAll({
+//     where: {
+//       categoryId: categoryId
+//     },
+//     include: { all: true }
+//   })
+// }
 
 module.exports = Product
