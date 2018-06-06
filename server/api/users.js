@@ -4,7 +4,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    if (req.user.type === 'admin') {
+    if (req.user.isAdmin) {
       const users = await User.findAll({
         include: [{ model: Cart }, { model: Review }]
       });
@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    if (req.user.type === 'admin' || req.user.id === req.params.userId) {
+    if (req.user.isAdmin || req.user.id === req.params.userId) {
       const user = await User.findById(req.params.userId, {
         include: [{ model: Cart }, { model: Review }]
       })
@@ -39,7 +39,7 @@ router.get('/:userId', async (req, res, next) => {
 // LEAVE IN COMMENT FOR NOW: Admin should only be able to change user TYPE
 router.put('/:userId', async (req, res, next) => {
   try {
-    if (req.user.type === 'admin' || req.user.id === req.params.userId) {
+    if (req.user.isAdmin || req.user.id === req.params.userId) {
       const user = await User.findById(req.params.userId)
       const newUser = await user.update(req.body)
       res.json(newUser)
@@ -53,7 +53,7 @@ router.put('/:userId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    if (req.user.type === 'admin' || req.user.id === req.params.userId) {
+    if (req.user.isAdmin || req.user.id === req.params.userId) {
       const user = await User.create(req.body)
       res.json(user)
     } else {
@@ -66,7 +66,7 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:userId', async (req, res, next) => {
   try {
-    if (req.user.type === 'admin' || req.user.id === req.params.userId) {
+    if (req.user.isAdmin || req.user.id === req.params.userId) {
       const user = await User.findById(req.params.userId)
       await user.destroy()
       res.end()

@@ -37,9 +37,10 @@ const User = db.define('user', {
   address: {
     type: Sequelize.STRING
   },
-  type: {
-    type: Sequelize.ENUM,
-    values: ['admin', 'user', 'visitor']
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   },
   googleId: {
     type: Sequelize.STRING
