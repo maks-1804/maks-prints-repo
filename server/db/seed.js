@@ -116,10 +116,10 @@ const seed = async () => {
           inventoryQuantity: 34,
           imageUrl: 'https://flic.kr/p/W6KyEB ',
           categories: [{ name: nationalParks.name }]
+        },
+        {
+          include: [Category]
         }
-        // {
-        //   include: [Category]
-        // }
       ),
       Product.create(
         {
