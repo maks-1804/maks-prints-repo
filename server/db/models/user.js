@@ -37,11 +37,11 @@ const User = db.define('user', {
   address: {
     type: Sequelize.STRING
   },
-  type: {
-    type: Sequelize.ENUM,
-    values: ['admin', 'user', 'visitor']
-    // bool: isAdmin
-    // drop "visitor" - do not need to create instances for visitors
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+
   },
   googleId: {
     type: Sequelize.STRING
