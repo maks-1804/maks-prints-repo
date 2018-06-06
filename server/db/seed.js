@@ -115,7 +115,7 @@ const seed = async () => {
           price: 15,
           inventoryQuantity: 34,
           imageUrl: 'https://flic.kr/p/W6KyEB ',
-          categories: [{ name: nationalParks.name }]
+          categories: [{ name: nationalParks.name, id: nationalParks.id }]
         },
         {
           include: [Category]
