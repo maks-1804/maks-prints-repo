@@ -11,9 +11,9 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:categoryId', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
-    const category = await Category.findById(+req.params.categoryId,
+    const category = await Category.findById(+req.params.id,
       {
         include: [{ model: Product }]
       })
@@ -25,10 +25,10 @@ router.get('/:categoryId', async (req, res, next) => {
 
 
 // Admin Routes Only
-router.put('/:categoryId', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
-      const category = await Category.findById(req.params.categoryId)
+      const category = await Category.findById(req.params.id)
       const newCategory = await category.update(req.body)
       res.json(newCategory)
     } else {
@@ -52,10 +52,10 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.delete('/:categoryId', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
-      const category = await Category.findById(req.params.categoryId)
+      const category = await Category.findById(req.params.id)
       await category.destroy()
       res.end()
     } else {

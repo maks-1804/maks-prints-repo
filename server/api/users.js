@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
     if (req.user.isAdmin) {
       const users = await User.findAll({
         include: [{ model: Cart }, { model: Review }]
-      });
+      })
       res.json(users)
     } else {
       // When an un-authenticated visitor makes a GET request for all users
@@ -20,10 +20,10 @@ router.get('/', async (req, res, next) => {
 })
 
 // DRY: change userId to id
-router.get('/:userId', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin || req.user.id === req.params.userId) {
-      const user = await User.findById(req.params.userId, {
+    if (req.user.isAdmin || req.user.id === req.params.id) {
+      const user = await User.findById(req.params.id, {
         include: [{ model: Cart }, { model: Review }]
       })
       if (!user) res.sendStatus(404)
@@ -38,10 +38,10 @@ router.get('/:userId', async (req, res, next) => {
 
 // To be added later
 // LEAVE IN COMMENT FOR NOW: Admin should only be able to change user TYPE
-router.put('/:userId', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin || req.user.id === req.params.userId) {
-      const user = await User.findById(req.params.userId)
+    if (req.user.isAdmin || req.user.id === req.params.id) {
+      const user = await User.findById(req.params.id)
       const newUser = await user.update(req.body)
       res.json(newUser)
     } else {
