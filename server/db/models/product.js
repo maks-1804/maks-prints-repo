@@ -15,6 +15,8 @@ const Product = db.define('product', {
   },
   price: {
     type: Sequelize.DECIMAL(10, 2),
+    //change to integer!!!!!
+    //instance method for displaying as $$$$$
     defaultValue: 0.00,
     allowNull: false,
     validate: {

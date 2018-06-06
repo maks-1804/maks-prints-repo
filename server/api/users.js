@@ -19,6 +19,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// DRY: change userId to id
 router.get('/:userId', async (req, res, next) => {
   try {
     if (req.user.isAdmin || req.user.id === req.params.userId) {
