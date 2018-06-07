@@ -10,8 +10,6 @@ router.get('/', async (req, res, next) => {
       })
       res.json(users)
     } else {
-      // When an un-authenticated visitor makes a GET request for all users
-      // 403 is a Forbidden page
       res.sendStatus(403)
     }
   } catch (err) {

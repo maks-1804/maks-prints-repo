@@ -4,19 +4,8 @@ import { connect } from 'react-redux'
 import NavCategory from './nav-category'
 import ProductCard from './product-card'
 import { loadAllProducts } from '../../store/products'
+import axios from 'axios'
 
-// class ProductList extends Component {
-//   constructor() {
-//     super()
-//     this.state = {
-//       something: 'hello'
-//     }
-//   }
-//   render() {
-//     console.log('im alive')
-//     return <div>{this.state.something}</div>
-//   }
-// }
 
 class ProductList extends Component {
   constructor(props) {
@@ -29,6 +18,22 @@ class ProductList extends Component {
   // shouldComponentUpdate(){
 
   // }
+  // componentDidMount = async () => {
+  //   // return async dispatch => {
+  //     try {
+  //       const {data} = await axios.get('/api/products')
+  //       console.log("HIIIIIIIIIIIII", data)
+  //       // dispatch(getProducts(products))
+  //     } catch (err) {
+  //       console.log('Error getting all products: ', err.message)
+  //   }
+  //  }
+
+  componentDidMount(){
+    this.props.fetchProducts()
+    console.log("DA PRODUXX", this.props.products)
+  }
+
   render() {
     const dummyProduct = {
       title: 'Patagonia',
@@ -52,6 +57,9 @@ class ProductList extends Component {
     //const { products } = this.props.products
     return (
       <div className="container-products">
+      {this.props.products.length && <div>It's working</div>}
+      {console.log("HI", this.props.products)}
+
         <NavCategory />
         {/* {products && products.length ? (
         products.map(product => {
@@ -98,15 +106,6 @@ export const DumbProductList = props => {
   }
 
   const arr = [dummyProduct, dummyProduct2]
-  //props from the state
-  // const { products, fetchProducts } = props
-  // //bool for what to display- are we filtering? do we have products from store?
-  // let byCategory
-  // if (props.match.params.categoryName) {
-  //   byCategory = true
-  // } else {
-  //   byCategory = false
-  // }
   console.log('what are props', props)
 
   return (
@@ -142,7 +141,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: dispatch(loadAllProducts())
+    fetchProducts: () => dispatch(loadAllProducts())
   }
 }
 
