@@ -5,30 +5,26 @@ const seed = async () => {
     await db.sync({ force: true })
     const [admin, monica, arielle, kaitlin] = await Promise.all([
       User.create({
-        username: 'admin123',
-        password: 'p@$5w0rd',
         email: 'sharonyun11@gmail.com',
+        password: 'p@$5w0rd',
         address: '144 17th St #4 Brooklyn, NY 11215',
         isAdmin: true
       }),
       User.create({
-        username: 'monicagonzalez',
-        password: 'monica123',
         email: 'monica@gmail.com',
+        password: 'monica123',
         address: '123 Pennsylvania Ave, Jersey City, NJ 07097',
         isAdmin: false
       }),
       User.create({
-        username: 'ariellegordon',
-        password: 'arielle123',
         email: 'arielle@gmail.com',
+        password: 'arielle123',
         address: '456 Park Pl, Brooklyn, NY 11215',
         isAdmin: false
       }),
       User.create({
-        username: 'kaitlinschaer',
-        password: 'kaitlin123',
         email: 'kaitlin@gmail.com',
+        password: 'kaitlin123',
         address: '789 Boardwalk, Brooklyn, NY 11215',
         isAdmin: false
       })
