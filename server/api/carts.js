@@ -24,10 +24,10 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-      const cart = await Cart.create(req.body);
+      const cart = await Cart.create(req.body)
       const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
       res.json(cartWithAssociations)
-    }
+  }
   catch (err) { next(err) }
 })
 
@@ -52,7 +52,7 @@ router.get('/admin/:id', async (req, res, next) => {
       const cart = await Cart.findById(req.params.id, {include: [{all: true}]})
       if (!cart) { res.sendStatus(404) }
       else { res.json(cart) } }
-    else {  res.sendStatus(404) }
+    else {  res.sendStatus(403) }
     }
   catch (err) { next(err) }
 })
@@ -65,7 +65,7 @@ router.put('/:id', async (req, res, next) => {
       const updated = await cart.update(req.body)
       res.json(updated)
     }
-    else { res.sendStatus(404) } }
+    else { res.sendStatus(403) } }
   catch (err) {next(err)}
 })
 
