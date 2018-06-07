@@ -1,8 +1,8 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
+const Sequelize = require('sequelize');
+const db = require('../db')
 
 //had to remove the unique: true condition due to errors when seeding?
-const Category = db.define("category", {
+const Category = db.define('category', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -10,6 +10,6 @@ const Category = db.define("category", {
       notEmpty: true
     }
   }
-});
+})
 
 module.exports = Category;

@@ -41,11 +41,11 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false
-
   },
   googleId: {
     type: Sequelize.STRING
   }
+  // gitHub or something else ?? but what about the parents?
 })
 
 module.exports = User

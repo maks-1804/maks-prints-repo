@@ -1,7 +1,7 @@
 const db = require("../db");
 const User = require("./user");
 const Product = require("./product");
-const Cart = require("./cart");
+const {Cart, cartProducts} = require("./cart");
 const Review = require("./review");
 const Category = require("./category");
 
@@ -48,5 +48,6 @@ module.exports = {
   Product,
   Cart,
   Review,
-  Category
-};
+  Category,
+  cartProducts
+}
