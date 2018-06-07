@@ -24,7 +24,8 @@ const deletedProduct = productId => ({ type: DELETE_PRODUCT, productId })
 export const loadAllProducts = () => {
   return async dispatch => {
     try {
-      const products = await axios.get('/api/products').data
+      const response = await axios.get('/api/products')
+      const products = response.data
       dispatch(getProducts(products))
     } catch (err) {
       console.log('Error getting all products: ', err.message)
