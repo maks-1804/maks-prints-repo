@@ -8,7 +8,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
   <div className="container-nav" id="navbar">
     <nav>
       <div>
-        <Link to="/home">
+        <Link to="/">
           <h1>MAKS PRINTS</h1>
         </Link>
         <div className="container-horizontal" id="navbar-content">
@@ -20,13 +20,13 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
               </a>
             </div>
           ) : (
-            <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/shop">Shop</Link>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </div>
-          )}
+              <div>
+                {/* The navbar will show these links before you log in */}
+                <Link to="/shop">Shop</Link>
+                <Link to="/login">Login</Link>
+                <Link to="/signup">Sign Up</Link>
+              </div>
+            )}
         </div>
       </div>
     </nav>
