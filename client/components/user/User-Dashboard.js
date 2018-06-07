@@ -4,39 +4,34 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const UserDashboard = (props) => {
-  const { id, email } = props
-  console.log("AM I RENDERING ****** ")
-  console.log('props !!!!', props)
+  const { id, email, address } = props
 
   return (
     <div>
-      <h1>Hello!</h1>
+      <div>
+        <h3>Welcome back, {email}!</h3>
+      </div>
+
+      <div>
+        <h3>My Info</h3>
+        <p>{address}</p>
+        <Link to={`/${id}/edit`}>
+          <button type="button">Edit Account</button>
+        </Link>
+      </div>
+
+      <div>
+        <h3>My Cart</h3>
+      </div>
+
+      <div>
+        <h3>Previous Orders</h3>
+      </div>
+
+      <div>
+        <h3>My Reviews</h3>
+      </div>
     </div>
-    // <div>
-    //   <div>
-    //     <h3>Welcome back, {email}!</h3>
-    //   </div>
-
-    //   <div>
-    //     <h3>My Info</h3>
-    //     <p>{address}</p>
-    //     <Link to={`/${id}/edit`}>
-    //       <button type="button">Edit Account</button>
-    //     </Link>
-    //   </div>
-
-    //   <div>
-    //     <h3>My Cart</h3>
-    //   </div>
-
-    //   <div>
-    //     <h3>Previous Orders</h3>
-    //   </div>
-
-    //   <div>
-    //     <h3>My Reviews</h3>
-    //   </div>
-    // </div>
   )
 }
 

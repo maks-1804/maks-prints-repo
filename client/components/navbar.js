@@ -4,41 +4,46 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div className="container-nav" id="navbar">
-    <nav>
-      <div>
-        <Link to="/">
-          <h1>MAKS PRINTS</h1>
-        </Link>
-        <div className="container-horizontal" id="navbar-content">
-          {isLoggedIn ? (
-            <div>
-              {/* The navbar will show these links after you log in */}
-              <a href="#" onClick={handleClick}>
-                Logout
-              </a>
-            </div>
-          ) : (
+const Navbar = (props) => {
+  const { handleClick, isLoggedIn, id } = props
+  return (
+    <div className="container-nav" id="navbar">
+      <nav>
+        <div>
+          <Link to="/">
+            <h1>MAKS PRINTS</h1>
+          </Link>
+          <div className="container-horizontal" id="navbar-content">
+            <Link to="/shop">Shop</Link>
+            {isLoggedIn ? (
               <div>
-                {/* The navbar will show these links before you log in */}
-                <Link to="/shop">Shop</Link>
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Sign Up</Link>
+                {/* The navbar will show these links after you log in */}
+                <Link to={`/${id}/dashboard`}>My Account</Link>
+                <a href="#" onClick={handleClick}>
+                  Logout
+                </a>
               </div>
-            )}
+            ) : (
+                <div>
+                  {/* The navbar will show these links before you log in */}
+                  <Link to="/login">Login</Link>
+                  <Link to="/signup">Sign Up</Link>
+                </div>
+              )}
+          </div>
         </div>
-      </div>
-    </nav>
-  </div>
-);
+      </nav>
+    </div>
+  )
+}
 
 /**
  * CONTAINER
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    id: state.user.id
   };
 };
 

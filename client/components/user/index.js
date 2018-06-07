@@ -1,1 +1,1 @@
-export { UserDashboard } from './User-Dashboard'
+export { default as UserDashboard } from './User-Dashboard'
