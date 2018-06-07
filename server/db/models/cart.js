@@ -17,20 +17,35 @@ const Cart = db.define('cart', {
       min: 0
     },
     defaultValue: 0
-  },
-  quantity: {
-    type: Sequelize.INTEGER,
-
   }
   // should just be a function that sums the products in the cart
   // could add additional fields in the join table (quantity instead of having 5 instances of the same product, for example)
 })
 
-Cart.prototype.addProduct = async function(product){
-  const foundProduct = await Product.findById(product.id)
-  Cart.addProduct(foundProduct)
+const cartProducts = db.define("cartProducts", {
+  productQuantity: {
+    type: Sequelize.INTEGER,
+    defaultValue: 1
+  }
+})
+
+Cart.prototype.addNewProduct = async function(id, number){
+  try {
+    await this.addProduct(id)
+    // const foundProduct = await Product.findAll({
+    //   // include: [{ model: db.models.cart }],
+    //   where: { id: id }
+    // })
+    // console.log('this is the found product', foundProduct)
+    // console.log(this)
+    // await this.addProduct(foundProduct)
+    // await this.setProducts([...this.dataValues.products, foundProduct])
+    // console.log(this.dataValues.products)
+    // await foundProduct.productQuantity++
+    // console.log(foundProduct.productQuantity)
+  } catch (err) { console.error(err.message) }
 }
 
 // add an instance method to add product to cart
 
-module.exports = Cart
+module.exports = {Cart, cartProducts}
