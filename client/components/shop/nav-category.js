@@ -19,7 +19,8 @@ const NavCategory = () => {
   ]
 
   return (
-    <div className="container-nav" id="navcategory">
+    <div className="container-nav col-sm-3" id="navcategory">
+    <div className="px-auto">
       {categories.map(cat => {
         return (
           <div key={cat.id}>
@@ -27,6 +28,7 @@ const NavCategory = () => {
           </div>
         )
       })}
+    </div>
     </div>
   )
 }
