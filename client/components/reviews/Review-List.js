@@ -1,20 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import SingleReview from './Single-Review'
+// class ReviewList extends Component {
+//   constructor(props) {
+//     super(props)
+//   }
+//   render() {
+//     console.log('props on review list', this.props)
+//     let reviewContext
+//     if (product && product.title) {
+//       reviewContext = <div>reviews are alive</div>
+//     } else {
+//       reviewContext = <div>reviews are maybe alive</div>
+//     }
+//     return <div className="container-review-list">{reviewContext}</div>
+//   }
+// }
 
 const ReviewList = props => {
-  console.log('props on review list', props)
   const { product } = props
-  const location = props.location.pathname
-  console.log('location?', location, location.slice(0, 5))
+  //const location = props.location.pathname
+  console.log('location?', location)
   let reviewContext
-  if (
-    location &&
-    location.slice(0, 5) === '/shop' &&
-    product &&
-    product.title
-  ) {
-    reviewContext = <div>reviews are alive</div>
+  if (product && product.title && product.reviews.length) {
+    console.log('WE HAVE REVIEWS')
+    reviewContext = (
+      <div>
+        {product.reviews.map(review => (
+          <SingleReview key={review.id} review={review} />
+        ))}
+      </div>
+    )
   } else {
     reviewContext = <div>reviews are maybe alive</div>
   }
@@ -22,11 +40,12 @@ const ReviewList = props => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const id = ownProps.match.params.id
-  console.log(state.products)
+  console.log('OWNPROPS', ownProps)
+  const id = Number(ownProps.match.params.productId)
   return {
     product: state.products.filter(product => product.id === id)[0]
   }
 }
 
-export default connect(mapStateToProps)(ReviewList)
+export default withRouter(connect(mapStateToProps)(ReviewList))
+//export default ReviewList

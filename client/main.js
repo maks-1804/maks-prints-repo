@@ -37,8 +37,6 @@ class Main extends Component {
           path="/shop/product/:productId"
           component={ProductSingle}
         />
-        <Route exact path="/shop/:productId/reviews" component={ReviewList} />
-
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
