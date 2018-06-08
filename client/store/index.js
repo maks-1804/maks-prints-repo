@@ -8,14 +8,10 @@ import reviews from './reviews'
 import search from './search'
 
 const reducer = combineReducers({ user, products, reviews, search })
-const middleware = composeWithDevTools(applyMiddleware(
-  thunkMiddleware,
-  createLogger({ collapsed: true })
-))
+const middleware = composeWithDevTools(
+  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+)
 const store = createStore(reducer, middleware)
-
-store.dispatch(loadAllProducts())
-console.log(reducer.products)
 
 export default store
 export * from './user'

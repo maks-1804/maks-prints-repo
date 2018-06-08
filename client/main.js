@@ -11,6 +11,7 @@ import {
   ProductSingle
 } from './components'
 //import ProductList from './components/shop/product-list'
+import ReviewList from './components/reviews/Review-List'
 import { me } from './store'
 
 /**

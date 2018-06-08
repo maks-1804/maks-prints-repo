@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadAllProducts } from '../../store/products'
+import ReviewList from '../reviews/Review-List'
 
 class SingleProduct extends Component {
   constructor() {
@@ -77,7 +78,17 @@ class SingleProduct extends Component {
           Add to cart
         </button>
         {/* </div> */}
-        <div>{/* REVIEWS */}</div>
+        <div>
+          {product && product.reviews.length ? (
+            <div>
+              <ReviewList />
+            </div>
+          ) : (
+            <div>
+              <h3>No reviews for this product yet</h3>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
