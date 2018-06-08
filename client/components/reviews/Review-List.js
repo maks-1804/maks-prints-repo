@@ -3,21 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import SingleReview from './Single-Review'
-// class ReviewList extends Component {
-//   constructor(props) {
-//     super(props)
-//   }
-//   render() {
-//     console.log('props on review list', this.props)
-//     let reviewContext
-//     if (product && product.title) {
-//       reviewContext = <div>reviews are alive</div>
-//     } else {
-//       reviewContext = <div>reviews are maybe alive</div>
-//     }
-//     return <div className="container-review-list">{reviewContext}</div>
-//   }
-// }
 
 const ReviewList = props => {
   const { product } = props
