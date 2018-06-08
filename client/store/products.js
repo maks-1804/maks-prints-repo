@@ -1,6 +1,5 @@
 import axios from 'axios'
 import history from '../history' // we'll see if we need this in the thunks
-import { Z_FILTERED } from 'zlib';
 
 /**
  * ACTION TYPES
