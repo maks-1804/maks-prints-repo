@@ -5,24 +5,28 @@ const seed = async () => {
     await db.sync({ force: true })
     const [admin, monica, arielle, kaitlin] = await Promise.all([
       User.create({
+        name: 'Sharon',
         email: 'sharonyun11@gmail.com',
         password: 'p@$5w0rd',
         address: '144 17th St #4 Brooklyn, NY 11215',
         isAdmin: true
       }),
       User.create({
+        name: 'Monica',
         email: 'monica@gmail.com',
         password: 'monica123',
         address: '123 Pennsylvania Ave, Jersey City, NJ 07097',
         isAdmin: false
       }),
       User.create({
+        name: 'Arielle',
         email: 'arielle@gmail.com',
         password: 'arielle123',
         address: '456 Park Pl, Brooklyn, NY 11215',
         isAdmin: false
       }),
       User.create({
+        name: 'Kaitlin',
         email: 'kaitlin@gmail.com',
         password: 'kaitlin123',
         address: '789 Boardwalk, Brooklyn, NY 11215',
@@ -71,35 +75,40 @@ const seed = async () => {
           'Colorful thermal feature, Yellowstone National Park, Montana',
         price: 30,
         inventoryQuantity: 20,
-        imageUrl: 'https://flic.kr/p/bss8YG'
+        imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/1/1b/Old_Faithfull-pdPhoto.jpg'
       }),
       Product.create({
         title: 'Glacier',
         description: 'Margerie Glacier, Tarr Inlet, Glacier Bay National Park',
         price: 25,
         inventoryQuantity: 15,
-        imageUrl: 'https://flic.kr/p/XNYogZ'
+        imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/7/72/Mount_Reynolds_at_Logan_Pass.jpg'
       }),
       Product.create({
         title: 'Grand Canyon',
         description: 'Grand Canyon with River views',
         price: 15,
         inventoryQuantity: 34,
-        imageUrl: 'https://flic.kr/p/W6KyEB '
+        imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/c/cd/Grandcanyon_view2.jpg'
       }),
       Product.create({
         title: 'Redwoods',
         description: 'Redwoods Avenue of Giants',
         price: 25,
         inventoryQuantity: 20,
-        imageUrl: 'https://flic.kr/p/f2VquP'
+        imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Fitz_Roy_framed_trees_%28colour_balans%29.jpg/1920px-Fitz_Roy_framed_trees_%28colour_balans%29.jpg'
       }),
       Product.create({
         title: 'Patagonia',
         description: 'Patagonia Glaciers',
         price: 55,
         inventoryQuantity: 10,
-        imageUrl: 'https://flic.kr/p/7VSNCE'
+        imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Fitz_Roy_framed_trees_%28colour_balans%29.jpg/1920px-Fitz_Roy_framed_trees_%28colour_balans%29.jpg'
       })
     ])
 
@@ -120,8 +129,8 @@ const seed = async () => {
         rating: 'happy'
       })
     ])
-    const products = await db.models.product.findAll()
-    console.log(products)
+    // const products = await db.models.product.findAll()
+    // console.log(products)
     //add associations for productCategories
     await yellowstone.setCategories([nationalParks])
     await patagonia.setCategories([nationalParks, southAmerica])
@@ -147,6 +156,7 @@ const seed = async () => {
     await review3.setProduct(redwoods)
 
     db.close()
+    console.log('seed success')
   } catch (error) {
     console.log(error)
     db.close()

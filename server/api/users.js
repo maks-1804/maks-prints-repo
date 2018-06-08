@@ -38,13 +38,9 @@ router.get('/:id', async (req, res, next) => {
 // LEAVE IN COMMENT FOR NOW: Admin should only be able to change user TYPE
 router.put('/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin || req.user.id === req.params.id) {
-      const user = await User.findById(req.params.id)
-      const newUser = await user.update(req.body)
-      res.json(newUser)
-    } else {
-      res.sendStatus(403)
-    }
+    const user = await User.findById(req.params.id)
+    const newUser = await user.update(req.body)
+    res.json(newUser)
   } catch (err) {
     next(err)
   }

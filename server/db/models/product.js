@@ -21,7 +21,7 @@ const Product = db.define('product', {
       min: 0
     }
   },
-  inventoryQuanity: {
+  inventoryQuantity: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
     validate: {
@@ -30,7 +30,8 @@ const Product = db.define('product', {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: 'http://www.acacia-wood.com/themes/jtherczeg-multi//assets/images/acacia/empty-img.png'
+    defaultValue:
+      'http://www.acacia-wood.com/themes/jtherczeg-multi//assets/images/acacia/empty-img.png'
   }
 })
 
@@ -40,7 +41,7 @@ const Product = db.define('product', {
 // for each item purchased in the cart, reduce that product's inventory by amount in cart
 // }
 
-Product.prototype.adjustInventories = function(){
+Product.prototype.adjustInventories = function() {
   this.inventoryQuanity = this.inventoryQuanity--
   return this
 }
