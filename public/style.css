@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  width: 80%;
+  margin: 0 auto;
 }
 
 a {
@@ -9,13 +11,38 @@ a {
 label {
   display: block;
 }
-
+/*
 nav a {
+  height: 1.5em;
+  margin: 0 1.5em 0 0;
+} */
+
+/* form div {
+  margin: 1em;
   display: inline-block;
+} */
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 2;
   margin: 1em;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
+form input {
+  padding: 0.3em;
+  margin: 0.5em 0;
+  font-size: 0.5em;
+}
+
+form button {
+  color: white;
+  background-color: #59A9E9;
 }

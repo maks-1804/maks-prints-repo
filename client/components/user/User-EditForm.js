@@ -57,42 +57,52 @@ class UserEdit extends React.Component {
 
   render() {
     return (
-      <div className='user-edit-form'>
+      <div className='container'>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor='name'>Name</label>
-          <input
-            value={this.state.name}
-            type='text'
-            name='name'
-            onChange={this.handleChange}
-            placeholder='Name'
-            required />
-          <label htmlFor='email'>Email</label>
-          <input
-            value={this.state.email}
-            type='text'
-            name='email'
-            onChange={this.handleChange}
-            placeholder='Email'
-            required />
-          <label htmlFor='password'>Password</label>
-          <input
-            id='inputPassword'
-            value={this.state.password}
-            type='password'
-            name='password'
-            onChange={this.handleChange}
-            placeholder='Password'
-            required />
-          <label>Show Password</label>
-          <input type='checkbox' onClick={this.togglePassword} />
-          <label htmlFor='password'>Address</label>
-          <input
-            value={this.state.address}
-            type='text'
-            name='address'
-            onChange={this.handleChange}
-            placeholder='Address' />
+          <div className='row'>
+            <label htmlFor='name'>Name</label>
+            <input
+              value={this.state.name}
+              type='text'
+              name='name'
+              onChange={this.handleChange}
+              placeholder='Name'
+              required />
+          </div>
+          <div className='row'>
+            <label htmlFor='email'>Email</label>
+            <input
+              value={this.state.email}
+              type='text'
+              name='email'
+              onChange={this.handleChange}
+              placeholder='Email'
+              required />
+          </div>
+          <div className='row'>
+            <label htmlFor='password'>Password</label>
+            <input
+              id='inputPassword'
+              value={this.state.password}
+              type='password'
+              name='password'
+              onChange={this.handleChange}
+              placeholder='Password'
+              required />
+          </div>
+          <div className='row'>
+            <input type='checkbox' onClick={this.togglePassword} />
+            <label>Show Password</label>
+          </div>
+          <div className='row'>
+            <label htmlFor='password'>Address</label>
+            <input
+              value={this.state.address}
+              type='text'
+              name='address'
+              onChange={this.handleChange}
+              placeholder='Address' />
+          </div>
           <button type='submit'>Submit</button>
         </form>
       </div>
