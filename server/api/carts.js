@@ -31,6 +31,15 @@ router.post('/', async (req, res, next) => {
   catch (err) { next(err) }
 })
 
+router.patch('/:id', async (req, res, next) => {
+  try {
+    const cart = await Cart.findById(req.params.id)
+    const updated = await cart.update({status: req.body.status})
+    res.json(updated)
+  }
+  catch (err) {next(err)}
+})
+
 //patch --> update quantity
 // put --> add to cart
 
@@ -57,6 +66,9 @@ router.get('/admin/:id', async (req, res, next) => {
   catch (err) { next(err) }
 })
 
+
+// router.put('/admin/:id')
+// updating order fulfillment status - (add to table model)
 router.put('/:id', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
