@@ -5,11 +5,11 @@ export const ProductCard = (props) => {
   const { product } = props
 
   return (
-    <div className="container-single-product">
-      <div>
+    <div>
+      <div className="card">
+      <img src={product.imageUrl} className="img img-fluid" />
         <h1>{product.title}</h1>
         <p>Price: ${product.price}</p>
-        <img src={product.imageUrl} />
       </div>
     </div>
   )
