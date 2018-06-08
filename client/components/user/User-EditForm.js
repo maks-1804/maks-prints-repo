@@ -17,6 +17,16 @@ class UserEdit extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user.email !== prevState.email) {
+      return {
+        name: nextProps.user.name,
+        email: nextProps.user.email,
+        address: nextProps.user.address
+      }
+    }
+  }
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -39,7 +49,7 @@ class UserEdit extends React.Component {
     return (
       <div className='user-edit-form'>
         <form onSubmit={this.handleSubmit}>
-          <label>Name</label>
+          <label htmlFor='name'>Name</label>
           <input
             value={this.state.name}
             type='text'
@@ -47,7 +57,7 @@ class UserEdit extends React.Component {
             onChange={this.handleChange}
             placeholder='Name'
             required />
-          <label>Email</label>
+          <label htmlFor='email'>Email</label>
           <input
             value={this.state.email}
             type='text'
@@ -55,7 +65,7 @@ class UserEdit extends React.Component {
             onChange={this.handleChange}
             placeholder='Email'
             required />
-          <label>Password</label>
+          <label htmlFor='password'>Password</label>
           <input
             value={this.state.password}
             type='text'
@@ -63,7 +73,7 @@ class UserEdit extends React.Component {
             onChange={this.handleChange}
             placeholder='Password'
             required />
-          <label>Address</label>
+          <label htmlFor='password'>Address</label>
           <input
             value={this.state.address}
             type='text'
