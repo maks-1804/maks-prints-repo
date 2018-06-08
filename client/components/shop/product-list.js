@@ -21,20 +21,31 @@ class ProductList extends Component {
     })
     const products = this.props.products
     return (
-      <div className="container-products">
-      {this.props.products.length && <div>It's working</div>}
-        <NavCategory />
-        <div>
-          {this.props.match.params.categoryName
-            ?
-            products.filter(product => categoryMap[product.title].includes(this.props.match.params.categoryName))
-                .map(product => {
-                  return <ProductCard key={product.id} product={product} />
-                })
-            : products.map(product => {
-                return <ProductCard key={product.id} product={product} />
-              })}
-        </div>
+      <div className="container">
+      <div className="row">
+        {this.props.products.length && <div />}
+          <NavCategory />
+          <div className="col-9">
+          <div className="card-columns">
+            {this.props.match.params.categoryName
+              ?
+              products.filter(product => categoryMap[product.title].includes(this.props.match.params.categoryName))
+                  .map(product => {
+                    return (
+                    <div key={product.id}>
+                      <ProductCard key={product.id} product={product} />
+                    </div>)
+                  })
+              : products.map(product => {
+                  return (
+                  <div key={product.id}>
+                    <ProductCard key={product.id} product={product} />
+                  </div>
+                  )
+                })}
+          </div>
+          </div>
+      </div>
       </div>
     )
   }
