@@ -8,4 +8,4 @@ export { Login, Signup } from './auth-form'
 export { default as ProductList } from './shop/product-list'
 export { default as NavCategory } from './shop'
 
-export { UserDashboard } from './user'
+export { UserDashboard, UserEdit } from './user'

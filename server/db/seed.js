@@ -5,24 +5,28 @@ const seed = async () => {
     await db.sync({ force: true })
     const [admin, monica, arielle, kaitlin] = await Promise.all([
       User.create({
+        name: 'Sharon',
         email: 'sharonyun11@gmail.com',
         password: 'p@$5w0rd',
         address: '144 17th St #4 Brooklyn, NY 11215',
         isAdmin: true
       }),
       User.create({
+        name: 'Monica',
         email: 'monica@gmail.com',
         password: 'monica123',
         address: '123 Pennsylvania Ave, Jersey City, NJ 07097',
         isAdmin: false
       }),
       User.create({
+        name: 'Arielle',
         email: 'arielle@gmail.com',
         password: 'arielle123',
         address: '456 Park Pl, Brooklyn, NY 11215',
         isAdmin: false
       }),
       User.create({
+        name: 'Kaitlin',
         email: 'kaitlin@gmail.com',
         password: 'kaitlin123',
         address: '789 Boardwalk, Brooklyn, NY 11215',
@@ -120,8 +124,8 @@ const seed = async () => {
         rating: 'happy'
       })
     ])
-    const products = await db.models.product.findAll()
-    console.log(products)
+    // const products = await db.models.product.findAll()
+    // console.log(products)
     //add associations for productCategories
     await yellowstone.setCategories([nationalParks])
     await patagonia.setCategories([nationalParks, southAmerica])
