@@ -15,6 +15,7 @@ class UserEdit extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.togglePassword = this.togglePassword.bind(this)
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -45,6 +46,15 @@ class UserEdit extends React.Component {
     })
   }
 
+  togglePassword() {
+    let inputPass = document.getElementById("inputPassword")
+    if (inputPass.type === "password") {
+      inputPass.type = "text"
+    } else {
+      inputPass.type = "password"
+    }
+  }
+
   render() {
     return (
       <div className='user-edit-form'>
@@ -67,12 +77,15 @@ class UserEdit extends React.Component {
             required />
           <label htmlFor='password'>Password</label>
           <input
+            id='inputPassword'
             value={this.state.password}
-            type='text'
+            type='password'
             name='password'
             onChange={this.handleChange}
             placeholder='Password'
             required />
+          <label>Show Password</label>
+          <input type='checkbox' onClick={this.togglePassword} />
           <label htmlFor='password'>Address</label>
           <input
             value={this.state.address}
