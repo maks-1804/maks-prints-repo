@@ -33,14 +33,8 @@ class SingleProduct extends Component {
 
   render() {
     const { product } = this.props
-    // const title = product.title
-    // const description = product.description
-    // const price = product.price
-    // const inventoryQuantity = product.inventoryQuantity
-    // const imageUrl = product.imageUrl
-    //let title, description, price, inventoryQuantity, imageUrl
+    //need some initial values for the form in case we still need to fetch the product
     let quantity = 0
-    console.log('props: ', this.props)
     let productContent
     let price = 0
     if (product) {
@@ -49,8 +43,6 @@ class SingleProduct extends Component {
       productContent = (
         <div>
           <img src={product.imageUrl} />
-          {/* </div> */}
-          {/* <div className='single-prod-child'> */}
           <h1>{product.title}</h1>
           <p>{product.description}</p>
           <h5>${product.price}</h5>
