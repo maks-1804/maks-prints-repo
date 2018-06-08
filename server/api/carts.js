@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Cart } = require('../db/models')
+const { Cart, cartProducts, Product, db } = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -16,6 +16,8 @@ router.get('/:id', async (req, res, next) => {
     if (!req.user) { res.sendStatus(403) }
     const cart = await Cart.findAll({where: {userId: req.user.id,
     id: req.params.id}}, {include: [{all: true}]})
+    // const cartProduct = await db.models.cartProducts.findAll({where: {cartId: req.params.id}})
+    // console.log("aaaaaahhhh", cartProduct)
     res.json(cart)
   }
   catch (err) { next(err) }
@@ -40,6 +42,17 @@ router.patch('/:id', async (req, res, next) => {
   catch (err) {next(err)}
 })
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    const cart = await Cart.findById(req.params.id, {include: {all: true}})
+    const updated = await cart.addProduct(req.body.products)
+    // const cartProduct = await db.models.cartProducts.findAll({where: {cartId: req.params.id, productId: req.body.products}})
+    // const updatedProduct = await cartProduct.update({productQuantity: cartProduct.productQuantity++})
+    res.json(updated)
+  }
+  catch (err) { next(err) }
+})
+
 //patch --> update quantity
 // put --> add to cart
 
@@ -47,47 +60,37 @@ router.patch('/:id', async (req, res, next) => {
 
 router.get('/admin', async (req, res, next) => {
   try {
-    if (req.user.isAdmin) {
       const carts = await Cart.findAll({include: [{all: true}]})
       if (!carts) { res.sendStatus(404) }
       else { res.json(carts) }
-    } else { res.sendStatus(403) }
   } catch (err) { next(err) }
 })
 
 router.get('/admin/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin) {
       const cart = await Cart.findById(req.params.id, {include: [{all: true}]})
       if (!cart) { res.sendStatus(404) }
       else { res.json(cart) } }
-    else {  res.sendStatus(403) }
-    }
   catch (err) { next(err) }
 })
 
 
 // router.put('/admin/:id')
 // updating order fulfillment status - (add to table model)
-router.put('/:id', async (req, res, next) => {
+router.put('/admin/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin) {
       const cart = await Cart.findById(req.params.id, {include: {all: true}})
       if (!cart) { res.sendStatus(404) }
       const updated = await cart.update(req.body)
       res.json(updated)
     }
-    else { res.sendStatus(403) } }
   catch (err) {next(err)}
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/admin/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin) {
       const cart = await Cart.findById(req.params.id)
       await cart.destroy()
       res.status(204).end()
-    }
-    else { res.sendStatus(404) }
   } catch (err) {next(err)}
 })
