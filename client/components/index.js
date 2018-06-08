@@ -9,3 +9,5 @@ export { default as ProductList } from './shop/product-list'
 export { default as NavCategory } from './shop'
 
 export { UserDashboard, UserEdit } from './user'
+
+export { ReviewList } from './reviews'
