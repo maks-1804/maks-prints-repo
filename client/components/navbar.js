@@ -2,37 +2,52 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+
+import SearchBar from './Navbar-Search';
 import { logout } from "../store";
 
 const Navbar = (props) => {
   const { handleClick, isLoggedIn, id } = props
+
   return (
     <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-      <div className="navbar-nav">
-
-        <NavLink className="navbar-brand" to="/">MAKS PRINTS</NavLink>
-        <NavLink className="nav-item nav-link" to="/shop">Shop</NavLink>
-        <div>
-          <form className="form-inline my-2 my-lg-0">
-            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-sm btn-outline-secondary" type="submit">Search</button>
-          </form>
+      <div className="container">
+        <div className="navbar-header">
+          <NavLink className="navbar-brand" to="/">MAKS PRINTS</NavLink>
         </div>
+
+        <div>
+          <NavLink className="nav-item nav-link" to="/shop">Shop</NavLink>
+        </div>
+
+        <SearchBar />
+
+        {/* The navbar will show these links after you log in */}
         {isLoggedIn ? (
-          <div className="nav-item nav-link">
-            {/* The navbar will show these links after you log in */}
-            <NavLink className="nav-link" to={`/${id}/dashboard`}>My Account</NavLink>
-            <a className="nav-link" href="#" onClick={handleClick}>Logout</a>
+          <div>
+            <ul className="nav navbar-nav navbar-right">
+              <li>
+                <NavLink className="nav-link" to={`/${id}/dashboard`}>My Account</NavLink>
+              </li>
+              <li>
+                <a className="nav-link" href="#" onClick={handleClick}>Logout</a>
+              </li>
+            </ul>
           </div>
         ) : (
-            <div className="nav-item nav-link">
-              {/* The navbar will show these links before you log in */}
-              <NavLink to="/login">Login</NavLink>
-              <NavLink to="/signup">Sign Up</NavLink>
+            <div>
+              <ul className="nav navbar-nav">
+                <li>
+                  <NavLink className="nav-link" to="/login">Login</NavLink>
+                </li>
+                <li>
+                  <NavLink className="nav-link" to="/signup">Sign Up</NavLink>
+                </li>
+              </ul>
             </div>
           )}
       </div>
-    </nav>
+    </nav >
   )
 }
 

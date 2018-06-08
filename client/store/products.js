@@ -47,10 +47,8 @@ export const addProduct = product => {
 export const updateProduct = product => {
   return async dispatch => {
     try {
-      const updatedProduct = await axios.put(
-        `/api/products/${product.id}`,
-        product
-      ).data
+      const res = await axios.put(`/api/products/${product.id}`, product)
+      const updatedProduct = res.data
       dispatch(editProduct(updatedProduct))
     } catch (err) {
       console.log('Error editing product: ', err.message)
@@ -61,7 +59,7 @@ export const updateProduct = product => {
 export const deleteProduct = productId => {
   return async dispatch => {
     try {
-      const deleteThisProduct = await axios.delete(`/api/products/${productId}`)
+      await axios.delete(`/api/products/${productId}`)
       dispatch(deletedProduct(productId))
     } catch (err) {
       console.log('Error deleting product: ', err.message)
@@ -92,11 +90,7 @@ export default (state = defaultProducts, action) => {
         return product //otherwise, return it as is
       })
     case DELETE_PRODUCT:
-      return state.map(product => {
-        if (product.id !== action.productId) {
-          return product
-        }
-      })
+      return state.filter(product => product.id !== action.productId)
     default:
       return state
   }
