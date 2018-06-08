@@ -8,7 +8,7 @@ export const ProductCard = props => {
   return (
     <div>
       <div className="card">
-        <Link to={`shop/product/${product.id}`}>
+        <Link to={`/shop/product/${product.id}`}>
           <img src={product.imageUrl} className="img img-fluid" />
           <h1>{product.title}</h1>
         </Link>
