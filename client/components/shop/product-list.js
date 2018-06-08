@@ -8,52 +8,65 @@ import axios from 'axios'
 
 
 class ProductList extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchProducts()
   }
   render() {
     let categoryMap = {}
 
-    this.props.products.length && this.props.products.forEach( product =>
-      {
+    this.props.products.length && this.props.products.forEach(product => {
       const categoryNames = product.categories.map(category => category.name)
       categoryMap[product.title] = categoryNames
     })
+
+    // DO NOT REMOVE THIS COMMENT !!!
+    // let products
+    // if (this.props.search.length > 1) {
+    //   products = this.props.products.filter(product => product.title === this.props.search)
+    // } else {
+    //   products = this.props.products
+    // }
+
+    // The above may be inside a lifecycle hook OR let's make sure that after the submit is completed, this.props.search is an empty string again
+
     const products = this.props.products
+
     return (
       <div className="container">
-      <div className="row">
-        {this.props.products.length && <div />}
+        <div className="row">
+          {this.props.products.length && <div />}
           <NavCategory />
           <div className="col-9">
-          <div className="card-columns">
-            {this.props.match.params.categoryName
-              ?
-              products.filter(product => categoryMap[product.title].includes(this.props.match.params.categoryName))
-                  .map(product => {
+            <div className="card-columns">
+              {
+                this.props.match.params.categoryName
+                  ? products.filter(product => categoryMap[product.title].includes(this.props.match.params.categoryName))
+                    .map(product => {
+                      return (
+                        <div key={product.id}>
+                          <ProductCard key={product.id} product={product} />
+                        </div>)
+                    })
+                  : products.map(product => {
                     return (
-                    <div key={product.id}>
-                      <ProductCard key={product.id} product={product} />
-                    </div>)
-                  })
-              : products.map(product => {
-                  return (
-                  <div key={product.id}>
-                    <ProductCard key={product.id} product={product} />
-                  </div>
-                  )
-                })}
+                      <div key={product.id}>
+                        <ProductCard key={product.id} product={product} />
+                      </div>
+                    )
+                  })}
+            </div>
           </div>
-          </div>
-      </div>
+        </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    products: state.products
+    products: state.products,
+    query: ownProps.location.query,
+    search: state.search
   }
 }
 const mapDispatchToProps = dispatch => {
