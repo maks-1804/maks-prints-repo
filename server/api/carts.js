@@ -23,10 +23,22 @@ router.get('/:id', async (req, res, next) => {
   catch (err) { next(err) }
 })
 
+router.get('/open/:id', async (req, res, next) => {
+  try {
+    if (!req.user) { res.sendStatus(403) }
+    const cart = await Cart.findAll({where: {userId: req.user.id, status: 'open'}, include: [Product]})
+    res.json(cart)
+  } catch (err) {next(err)}
+})
 
 router.post('/', async (req, res, next) => {
   try {
-      const cart = await Cart.create(req.body)
+      const cart = await Cart.create(req.body.userId)
+      if (req.body.products) {
+        for (let i = 0; i < req.body.products; i++) {
+          await cart.addProduct(req.body.products[i].id)
+        }
+      }
       const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
       res.json(cartWithAssociations)
   }
@@ -36,7 +48,7 @@ router.post('/', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
   try {
     const cart = await Cart.findById(req.params.id)
-    const updated = await cart.update({status: req.body.status})
+    const updated = await cart.update({status: req.body.status, date: req.body.date})
     res.json(updated)
   }
   catch (err) {next(err)}
@@ -45,10 +57,14 @@ router.patch('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const cart = await Cart.findById(req.params.id, {include: {all: true}})
-    const updated = await cart.addProduct(req.body.products)
+     for (let i = 0; i < req.body.products; i++) {
+       await cart.addProduct(req.body.products[i].id)
+    }
+    const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
+    res.json(cartWithAssociations)
     // const cartProduct = await db.models.cartProducts.findAll({where: {cartId: req.params.id, productId: req.body.products}})
     // const updatedProduct = await cartProduct.update({productQuantity: cartProduct.productQuantity++})
-    res.json(updated)
+
   }
   catch (err) { next(err) }
 })
