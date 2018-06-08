@@ -7,14 +7,15 @@ import history from '../history'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const ADD_USER = 'ADD_USER'
-
+const EDIT_USER = 'EDIT_USER'
 
 /**
  * ACTION CREATORS
  */
 const getUser = user => ({ type: GET_USER, user })
 const removeUser = () => ({ type: REMOVE_USER })
-const addNewUser = user => ({ type: ADD_USER, user})
+const addNewUser = user => ({ type: ADD_USER, user })
+const editUser = user => ({ type: EDIT_USER, user })
 
 /**
  * THUNK CREATORS
@@ -32,7 +33,6 @@ export const auth = (email, password, method) =>
       .then(res => {
         dispatch(getUser(res.data))
         history.push('/shop')
-        // history.push(`/${res.data.id}/dashboard`)
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
         dispatch(getUser({ error: authError }))
       })
@@ -59,6 +59,15 @@ export const addUser = (user) => {
   }
 }
 
+export const updateUser = (id, user) => dispatch => {
+  axios
+    .put(`/api/users/${id}`, user)
+    .then(res => dispatch(editUser(res.data)))
+    .catch(err =>
+      console.error('Error editing user: ', err.message)
+    )
+}
+
 /**
  * INITIAL STATE
  */
@@ -74,6 +83,8 @@ export default function (state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case ADD_USER:
+      return action.user
+    case EDIT_USER:
       return action.user
     default:
       return state
