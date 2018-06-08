@@ -7,7 +7,8 @@ import {
   Signup,
   UserDashboard,
   UserEdit,
-  ProductList
+  ProductList,
+  ProductSingle
 } from './components'
 //import ProductList from './components/shop/product-list'
 import ReviewList from './components/reviews/Review-List'
@@ -31,7 +32,13 @@ class Main extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/shop" component={ProductList} />
         <Route exact path="/shop/:categoryName" component={ProductList} />
+        <Route
+          exact
+          path="/shop/product/:productId"
+          component={ProductSingle}
+        />
         <Route exact path="/shop/:productId/reviews" component={ReviewList} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
