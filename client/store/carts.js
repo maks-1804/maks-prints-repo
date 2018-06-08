@@ -79,6 +79,9 @@ export default (state = initialCart, action) => {
     case CLOSE_CART: {
       return initialCart
     }
+    case DELETE_PRODUCT_NO_USER: {
+      // we will remove the product from the state!!!!!!
+    }
     default: return state
   }
 }
