@@ -33,7 +33,12 @@ router.get('/open/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-      const cart = await Cart.create(req.body)
+      const cart = await Cart.create(req.body.userId)
+      if (req.body.products) {
+        for (let i = 0; i < req.body.products; i++) {
+          await cart.addProduct(req.body.products[i].id)
+        }
+      }
       const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
       res.json(cartWithAssociations)
   }
@@ -48,14 +53,18 @@ router.patch('/:id', async (req, res, next) => {
   }
   catch (err) {next(err)}
 })
-//!!!!!!!!!
+
 router.put('/:id', async (req, res, next) => {
   try {
     const cart = await Cart.findById(req.params.id, {include: {all: true}})
-    const updated = await cart.addProduct(req.body.products)
+     for (let i = 0; i < req.body.products; i++) {
+       await cart.addProduct(req.body.products[i].id)
+    }
+    const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
+    res.json(cartWithAssociations)
     // const cartProduct = await db.models.cartProducts.findAll({where: {cartId: req.params.id, productId: req.body.products}})
     // const updatedProduct = await cartProduct.update({productQuantity: cartProduct.productQuantity++})
-    res.json(updated)
+
   }
   catch (err) { next(err) }
 })
