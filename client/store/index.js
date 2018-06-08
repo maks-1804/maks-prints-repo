@@ -1,20 +1,17 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
-import {composeWithDevTools} from 'redux-devtools-extension'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import user from './user'
-import products, {loadAllProducts} from './products'
+import products, { loadAllProducts } from './products'
 import reviews from './reviews'
+import search from './search'
 
-const reducer = combineReducers({user, products, reviews})
-const middleware = composeWithDevTools(applyMiddleware(
-  thunkMiddleware,
-  createLogger({collapsed: true})
-))
+const reducer = combineReducers({ user, products, reviews, search })
+const middleware = composeWithDevTools(
+  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+)
 const store = createStore(reducer, middleware)
-
-store.dispatch(loadAllProducts())
-console.log(reducer.products)
 
 export default store
 export * from './user'

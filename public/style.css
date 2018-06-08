@@ -1,7 +1,5 @@
 body {
   font-family: sans-serif;
-  width: 80%;
-  margin: 0 auto;
 }
 
 a {
@@ -11,16 +9,6 @@ a {
 label {
   display: block;
 }
-/*
-nav a {
-  height: 1.5em;
-  margin: 0 1.5em 0 0;
-} */
-
-/* form div {
-  margin: 1em;
-  display: inline-block;
-} */
 
 .row {
   display: flex;
