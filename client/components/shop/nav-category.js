@@ -19,7 +19,7 @@ const NavCategory = () => {
   ]
 
   return (
-    <div className="container-nav" id="navcategory">
+    <div className="container-nav col-sm-4" id="navcategory">
       {categories.map(cat => {
         return (
           <div key={cat.id}>
