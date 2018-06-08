@@ -14,6 +14,7 @@ const UserDashboard = (props) => {
 
       <div>
         <h3>My Info</h3>
+        <p>{email}</p>
         <p>{address}</p>
         <Link to={`/${id}/edit`}>
           <button type="button">Edit Account</button>
@@ -50,6 +51,7 @@ export default connect(mapState)(UserDashboard)
  * PROP TYPES
  */
 UserDashboard.propTypes = {
-  id: PropTypes.number,
-  email: PropTypes.string
+  id: PropTypes.number.isRequired,
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired
 }
