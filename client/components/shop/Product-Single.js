@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadAllProducts } from '../../store/products'
 import ReviewList from '../reviews/Review-List'
+import RevewForm, { ReviewForm } from '../reviews'
 
 class SingleProduct extends Component {
   constructor() {
@@ -16,7 +17,6 @@ class SingleProduct extends Component {
 
   componentDidMount() {
     if (!this.props.product) {
-      console.log('dispatching!')
       this.props.fetchProducts()
     }
   }
@@ -88,6 +88,9 @@ class SingleProduct extends Component {
               <h3>No reviews for this product yet</h3>
             </div>
           )}
+        </div>
+        <div>
+          <ReviewForm />
         </div>
       </div>
     )
