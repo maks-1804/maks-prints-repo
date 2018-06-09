@@ -23,12 +23,10 @@ class ReviewForm extends Component {
       content: '',
       rating: 'happy'
     })
-    console.log('submitting a review')
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value })
-    console.log(this.state)
   }
   render() {
     return (
