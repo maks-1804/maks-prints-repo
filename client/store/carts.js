@@ -85,11 +85,12 @@ export const closeTheCart = cart => {
   }
 }
 
-export const editTheCart = cart => {
+export const editTheCart = (cart, user) => {
   return async dispatch => {
     try {
-      const response = await axios.put(`/api/carts/${cart.id}`, {
-        products: cart.products
+      const response = await axios.put(`/api/carts/open`, {
+        products: cart.products,
+        user: user
       })
       const editedCart = response.data
       dispatch(editCart(editedCart))

@@ -54,17 +54,38 @@ router.patch('/:id', async (req, res, next) => {
   catch (err) {next(err)}
 })
 
-router.put('/:id', async (req, res, next) => {
-  try {
-    const cart = await Cart.findById(req.params.id, {include: {all: true}})
-     for (let i = 0; i < req.body.products; i++) {
-       await cart.addProduct(req.body.products[i].id)
-    }
-    const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
-    res.json(cartWithAssociations)
-    // const cartProduct = await db.models.cartProducts.findAll({where: {cartId: req.params.id, productId: req.body.products}})
-    // const updatedProduct = await cartProduct.update({productQuantity: cartProduct.productQuantity++})
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//     const cart = await Cart.findById(req.params.id, {include: {all: true}})
+//      for (let i = 0; i < req.body.products; i++) {
+//        await cart.addProduct(req.body.products[i].id)
+//     }
+//     const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
+//     res.json(cartWithAssociations)
+//     // const cartProduct = await db.models.cartProducts.findAll({where: {cartId: req.params.id, productId: req.body.products}})
+//     // const updatedProduct = await cartProduct.update({productQuantity: cartProduct.productQuantity++})
 
+//   }
+//   catch (err) { next(err) }
+// })
+
+router.put('/open', async (req, res, next) => {
+  try {
+    const cart = await Cart.findAll({where: {userId: req.body.user.id, status: 'open'}, include: [{all: true}]})
+    console.log('wzzzzzuppppp')
+    await cart.addProduct(2)
+    req.body.products.forEach(async (product) => {
+      const existingProduct = await cartProducts.findOne({where: {cartId: cart[0].id, productId: product.id}})
+      // console.log("This is the product", existingProduct)
+      if (!existingProduct) {
+        console.log(cart)
+        const newProduct = await Product.findById(product.id)
+        await cart.addProduct(newProduct)
+      }
+      await existingProduct.update({productQuantity: product.productQuantity})
+    })
+    const cartWithAssociations = await Cart.findById(cart[0].id, {include: [{all: true}]})
+    res.json(cartWithAssociations)
   }
   catch (err) { next(err) }
 })
