@@ -23,14 +23,12 @@ class SearchBar extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.dispatchSearch(this.state.search)
-    // if we wrap this component with a withRouter - we should have access to ownProps
     this.setState({
       search: ''
     })
   }
 
   render() {
-    console.log('what are my props here!!!', this.props)
     return (
       <div>
         <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSubmit} >
