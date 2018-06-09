@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+
 import NavCategory from './nav-category'
 import ProductCard from './product-card'
 import { loadAllProducts } from '../../store/products'
@@ -11,25 +13,24 @@ class ProductList extends Component {
   componentDidMount() {
     this.props.fetchProducts()
   }
+
   render() {
     let categoryMap = {}
-
     this.props.products.length && this.props.products.forEach(product => {
       const categoryNames = product.categories.map(category => category.name)
       categoryMap[product.title] = categoryNames
     })
 
-    // DO NOT REMOVE THIS COMMENT !!!
-    // let products
-    // if (this.props.search.length > 1) {
-    //   products = this.props.products.filter(product => product.title === this.props.search)
-    // } else {
-    //   products = this.props.products
-    // }
+    // The below may be inside a lifecycle hook
+    // OR let's make sure that after the submit is completed, this.props.search is an empty string again
+    let products
+    if (this.props.search.length > 1) {
+      products = this.props.products.filter(product => product.title.toLowerCase() == this.props.search.toLowerCase())
+    } else {
+      products = this.props.products
+    }
 
-    // The above may be inside a lifecycle hook OR let's make sure that after the submit is completed, this.props.search is an empty string again
-
-    const products = this.props.products
+    // const products = this.props.products
 
     return (
       <div className="container">
@@ -62,10 +63,9 @@ class ProductList extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     products: state.products,
-    query: ownProps.location.query,
     search: state.search
   }
 }
@@ -75,7 +75,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductList)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductList))
 
 /* Prop Types */
 ProductList.propTypes = {
