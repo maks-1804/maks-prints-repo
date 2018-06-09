@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
+import { loadAllProducts } from '../../store/products'
+import ReviewList from '../reviews/Review-List'
+import RevewForm, { ReviewForm } from '../reviews'
 
 class SingleProduct extends Component {
   constructor() {
@@ -11,6 +13,12 @@ class SingleProduct extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    if (!this.props.product) {
+      this.props.fetchProducts()
+    }
   }
 
   handleSubmit(event) {
@@ -25,48 +33,83 @@ class SingleProduct extends Component {
   }
 
   render() {
-    const { id, title, description, price, inventoryQuantity, imageUrl } = this.props.location.props
-    console.log('props: ', this.props.location.props)
+    const { product } = this.props
+    //need some initial values for the form in case we still need to fetch the product
+    let quantity = 0
+    let productContent
+    let price = 0
+    if (product) {
+      quantity = product.inventoryQuantity
+      price = product.price
+      productContent = (
+        <div>
+          <img src={product.imageUrl} />
+          <h1>{product.title}</h1>
+          <p>{product.description}</p>
+          <h5>${product.price}</h5>
+        </div>
+      )
+    }
+    const loadingContent = (
+      <div>
+        <p>loading this product...</p>
+      </div>
+    )
     return (
       // classNames can be changed...flexbox in mind (2columns, pic vs everything else)
       //if it works better with something (bootstrap?), feel free to change classNames/div structure!
-      <div className='container-single-prod-parent'>
+      <div className="container-single-prod-parent">
         {/* <div className='single-prod-child'> */}
-          <img src={imageUrl} />
-        {/* </div> */}
-        {/* <div className='single-prod-child'> */}
-          <h1>{title}</h1>
-          <p>{description}</p>
-          <h5>${price}</h5>
-          <form>
-            <label>Select Quantity</label>
-            <select
-              name='product-quantity'
-              value={this.state.selectedQuantity}
-              onChange={this.handleChange}>
-              {Array.apply(null, new Array(inventoryQuantity)).map((el, ind) => {
-                  return (<option key={ind}>{ind}</option>)
-                })}
-            </select>
-          </form>
-          <h5>Subtotal: ${this.state.selectedQuantity * price}</h5>
-          <button type='submit' onClick={this.handleSubmit}>Add to cart</button>
+        {product ? productContent : loadingContent}
+        <form>
+          <label>Select Quantity</label>
+          <select
+            name="product-quantity"
+            value={this.state.selectedQuantity}
+            onChange={this.handleChange}
+          >
+            {Array.apply(null, new Array(quantity)).map((el, ind) => {
+              return <option key={ind}>{ind}</option>
+            })}
+          </select>
+        </form>
+        <h5>Subtotal: ${this.state.selectedQuantity * price}</h5>
+        <button type="submit" onClick={this.handleSubmit}>
+          Add to cart
+        </button>
         {/* </div> */}
         <div>
-          {/* REVIEWS */}
+          {product && product.reviews.length ? (
+            <div>
+              <ReviewList />
+            </div>
+          ) : (
+            <div>
+              <h3>No reviews for this product yet</h3>
+            </div>
+          )}
+        </div>
+        <div>
+          <ReviewForm />
         </div>
       </div>
     )
   }
 }
-
-const mapDispatch = dispatch => {
+const mapStateToProps = (state, ownProps) => {
+  const id = Number(ownProps.match.params.productId)
   return {
-    test: () => dispatch('thing')
+    product: state.products.filter(product => product.id === id)[0],
+    products: state.products
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchProducts: () => dispatch(loadAllProducts())
   }
 }
 
-export default connect(null, mapDispatch)(SingleProduct)
+export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
 
 // SingleProduct.propTypes = {
 //   id: PropTypes.string.isRequired,
