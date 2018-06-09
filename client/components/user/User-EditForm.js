@@ -47,64 +47,88 @@ class UserEdit extends React.Component {
   }
 
   togglePassword() {
-    let inputPass = document.getElementById("inputPassword")
-    if (inputPass.type === "password") {
-      inputPass.type = "text"
+    let inputPass = document.getElementById('inputPassword')
+    if (inputPass.type === 'password') {
+      inputPass.type = 'text'
     } else {
-      inputPass.type = "password"
+      inputPass.type = 'password'
     }
   }
 
   render() {
     return (
-      <div className='container'>
-        <form onSubmit={this.handleSubmit}>
-          <div className='row'>
-            <label htmlFor='name'>Name</label>
-            <input
-              value={this.state.name}
-              type='text'
-              name='name'
-              onChange={this.handleChange}
-              placeholder='Name'
-              required />
-          </div>
-          <div className='row'>
-            <label htmlFor='email'>Email</label>
-            <input
-              value={this.state.email}
-              type='text'
-              name='email'
-              onChange={this.handleChange}
-              placeholder='Email'
-              required />
-          </div>
-          <div className='row'>
-            <label htmlFor='password'>Password</label>
-            <input
-              id='inputPassword'
-              value={this.state.password}
-              type='password'
-              name='password'
-              onChange={this.handleChange}
-              placeholder='Password'
-              required />
-          </div>
-          <div className='row'>
-            <input type='checkbox' onClick={this.togglePassword} />
-            <label>Show Password</label>
-          </div>
-          <div className='row'>
-            <label htmlFor='password'>Address</label>
-            <input
-              value={this.state.address}
-              type='text'
-              name='address'
-              onChange={this.handleChange}
-              placeholder='Address' />
-          </div>
-          <button type='submit'>Submit</button>
-        </form>
+      <div className="container">
+
+        <div>
+          <h3>
+            Edit Your Account
+          </h3>
+          <p>...Looking to delete your account? Delete</p>
+        </div>
+
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group row">
+              <label htmlFor="name" className="col-sm-4">Name</label>
+              <div className="col-sm-8">
+                <input
+                  className="form-control"
+                  value={this.state.name}
+                  type="text"
+                  name="name"
+                  onChange={this.handleChange}
+                  placeholder="Name"
+                  required />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="email" className="col-sm-4">Email</label>
+              <div className="col-sm-8">
+                <input
+                  className="form-control"
+                  value={this.state.email}
+                  type="text"
+                  name="email"
+                  onChange={this.handleChange}
+                  placeholder="Email"
+                  required />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="password" className="col-sm-4" >Password</label>
+              <div className="col-sm-8">
+                <input
+                  className="form-control"
+                  id="inputPassword"
+                  value={this.state.password}
+                  type="password"
+                  name="password"
+                  onChange={this.handleChange}
+                  placeholder="Password"
+                  required />
+              </div>
+            </div>
+
+            <div className="form-group row">
+              <input className="form-check-input" type="checkbox" onClick={this.togglePassword} />
+              <label className="form-check-label">Show Password</label>
+            </div>
+
+            <div className="form-group row">
+              <label htmlFor="password" className="col-sm-4" >Address</label>
+              <div className="col-sm-8">
+                <input
+                  className="form-control"
+                  value={this.state.address}
+                  type="text"
+                  name="address"
+                  onChange={this.handleChange}
+                  placeholder="Address" />
+              </div>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     )
   }

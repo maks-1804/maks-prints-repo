@@ -6,11 +6,8 @@ import SingleReview from './Single-Review'
 
 const ReviewList = props => {
   const { product } = props
-  //const location = props.location.pathname
-  console.log('location?', location)
   let reviewContext
   if (product && product.title && product.reviews.length) {
-    console.log('WE HAVE REVIEWS')
     reviewContext = (
       <div>
         {product.reviews.map(review => (
@@ -25,7 +22,6 @@ const ReviewList = props => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('OWNPROPS', ownProps)
   const id = Number(ownProps.match.params.productId)
   return {
     product: state.products.filter(product => product.id === id)[0]

@@ -30,7 +30,9 @@ form input {
   font-size: 0.5em;
 }
 
-form button {
+.edit-form-btn {
   color: white;
   background-color: #59A9E9;
+  width: 60%;
+  margin: 0 auto;
 }
