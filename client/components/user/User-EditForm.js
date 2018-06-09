@@ -48,15 +48,16 @@ class UserEdit extends React.Component {
   }
 
   togglePassword() {
-    let inputPass = document.getElementById("inputPassword")
-    if (inputPass.type === "password") {
-      inputPass.type = "text"
+    let inputPass = document.getElementById('inputPassword')
+    if (inputPass.type === 'password') {
+      inputPass.type = 'text'
     } else {
-      inputPass.type = "password"
+      inputPass.type = 'password'
     }
   }
 
   render() {
+<<<<<<< HEAD
     if (this.props.user.id === Number(this.props.match.params.userId)) {
       return (
         <div className='container'>
@@ -114,7 +115,6 @@ class UserEdit extends React.Component {
         <Forbidden />
       )
     }
-
   }
 }
 

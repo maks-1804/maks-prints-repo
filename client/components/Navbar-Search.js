@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { loadAllProducts } from '../store/products'
+import { withRouter } from 'react-router-dom'
 
+import { loadAllProducts } from '../store/products'
 import { dispatchSearch } from '../store/search'
 
 class SearchBar extends React.Component {
@@ -40,14 +41,14 @@ class SearchBar extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchProducts: () => dispatch(loadAllProducts()),
     dispatchSearch: (query) => {
       dispatch(dispatchSearch(query))
-      // ownProps.history.push(`?${query}`)
+      ownProps.history.push(`?${query}`)
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(SearchBar)
+export default withRouter(connect(null, mapDispatchToProps)(SearchBar))
