@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { fetchUsers } from '../../store/admin'
-import { UserCard } from './UserCard'
+import UserCard from './UserCard'
 
 class AllUsers extends Component {
   componentDidMount() {
@@ -11,7 +11,7 @@ class AllUsers extends Component {
   render(){
     const {users} = this.props
     return (
-      <div>
+      <div className="card-columns">
         {users.map(user => {return <UserCard key={user.id} user={user} />})}
       </div>
     )
