@@ -7,7 +7,7 @@ class ProductEdit extends Component {
     super(props)
     this.state = {
       title: '',
-      image: '',
+      imageUrl: '',
       description: '',
       price: ''
     }
@@ -38,17 +38,12 @@ class ProductEdit extends Component {
   }
 
   handleSubmit(evt){
+    const id = this.props.product.id
     evt.preventDefault()
-    this.props.editProduct({
-      title: this.state.title,
-      image: this.state.image,
-      description: this.state.description,
-      price: this.state.price
-    })
+    this.props.submitEdit(id, this.state)
   }
 
   render(){
-    console.log("here's props", this.props.product)
     const { product } = this.props
     return (
       <div>{product && (<div className="container">
@@ -131,9 +126,13 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    submitEdit: product => dispatch(updateProduct(product)),
+    submitEdit: (id, product) =>
+      {
+        id = Number(ownProps.match.params.productId)
+        dispatch(updateProduct(id, product))
+      },
     loadProducts: () => dispatch(loadAllProducts())
   }
 }
