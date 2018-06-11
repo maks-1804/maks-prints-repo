@@ -16,7 +16,8 @@ class ProductEdit extends Component {
   }
 
   componentDidMount(){
-    this.props.loadProducts()
+    if (!this.props.product) { this.props.loadProducts() }
+    //!!!!
   }
 
   handleChange(evt) {
@@ -39,7 +40,7 @@ class ProductEdit extends Component {
     console.log("here's props", this.props.product)
     const { product } = this.props
     return (
-      <div className="container">
+      <div>{product && (<div className="container">
         <div>
           <h3>Edit {product.title}</h3>
         </div>
@@ -103,14 +104,17 @@ class ProductEdit extends Component {
           </div>
           <button type="submit" className="btn btn-primary btn-lg">Submit</button>
         </form>
+      </div>)}
       </div>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const id = Number(ownProps.match.params.id)
-  const product = state.products
+  const id = Number(ownProps.match.params.productId)
+  console.log(id)
+  const product = state.products.find(elem => elem.id === id)
+  console.log(state.products)
   return {
     product: product
   }
