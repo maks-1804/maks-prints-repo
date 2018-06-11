@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadAllProducts } from '../../store/products'
 import ReviewList from '../reviews/Review-List'
 import { ReviewForm } from '../reviews'
 
-//adding product
-import { editTheCart } from '../../store/carts'
+import { retreiveOpenCart, editTheCart } from '../../store/carts'
+//import { me } from '../../store/user'
 
 class SingleProduct extends Component {
   constructor() {
@@ -26,7 +27,20 @@ class SingleProduct extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    //add to cart function
+    //get old cart products and update opencart with products we area adding
+    const oldProducts = this.props.openCart.products
+    const newProduct = this.props.product
+    //put a quantity property on the new product object based on the dropdown
+    newProduct.productQuantity = this.state.selectedQuantity
+    const filteredProducts = oldProducts.filter(
+      product => product.id !== newProduct.id
+    )
+    console.log('oldProducts', oldProducts, 'filtered', filteredProducts)
+
+    //replace prev product value (if was there) with the updated quantity
+    this.props.openCart.products = [...filteredProducts, newProduct]
+    //now dispatch!
+    this.props.addToCart(this.props.openCart, this.props.user)
   }
 
   handleChange(evt) {
@@ -37,13 +51,14 @@ class SingleProduct extends Component {
 
   render() {
     const { product } = this.props
+
     //need some initial values for the form in case we still need to fetch the product
     let quantity = 0
     let productContent
     let price = 0
     if (product) {
       quantity = product.inventoryQuantity
-      price = product.price
+      price = Math.floor(product.price / 100)
       productContent = (
         <div className="container-fluid bg-light">
           <div className="row">
@@ -57,17 +72,21 @@ class SingleProduct extends Component {
               <div className="mx-3 my-5">
                 <h1>{product.title}</h1>
                 <p>{product.description}</p>
-                <h5>${product.price}</h5>
+                <h5>{`$${price}`}</h5>
                 <div>
                   <form>
-                    <label>Select Quantity</label>
+                    <label>
+                      {`Select Quantity - ${
+                        product.inventoryQuantity
+                      } available`}
+                    </label>
                     <select
                       name="product-quantity"
                       value={this.state.selectedQuantity}
                       onChange={this.handleChange}
                     >
                       {Array.apply(null, new Array(quantity)).map((el, ind) => {
-                        return <option key={ind}>{ind}</option>
+                        return <option key={ind}>{ind + 1}</option>
                       })}
                     </select>
                   </form>
@@ -113,20 +132,28 @@ class SingleProduct extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
+  // console.log('what are ownProps', ownProps)
+  // console.log('state open cart? ', state.cart)
   const id = Number(ownProps.match.params.productId)
   return {
     product: state.products.filter(product => product.id === id)[0],
-    products: state.products
+    products: state.products,
+    user: state.user,
+    openCart: state.cart
   }
 }
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+  //console.log('doI have? ', ownProps)
   return {
     fetchProducts: () => dispatch(loadAllProducts()),
-    addToCart: () => dispatch(editTheCart())
+    getOpenCart: user => dispatch(retreiveOpenCart(user)),
+    addToCart: (user, products) => dispatch(editTheCart(user, products))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
+)
 
 // SingleProduct.propTypes = {
 //   id: PropTypes.string.isRequired,
