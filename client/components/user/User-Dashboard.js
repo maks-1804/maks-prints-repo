@@ -43,7 +43,6 @@ class UserDashboard extends React.Component {
               userReviews.map((review) =>
                 (
                   <SingleReview key={review.id} review={review} />
-
                 )
               )
               :

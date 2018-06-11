@@ -11,6 +11,7 @@ import {
   ProductSingle,
   OpenCart,
   EditProduct,
+  AddProduct,
   AllUsers,
   AdminDashboard
 } from './components'
@@ -48,6 +49,7 @@ class Main extends Component {
           <Switch>
             <Route exact path="/admin/product/edit/:productId" component={EditProduct} />
             <Route exact path="/admin/user/edit/:userId" />
+            <Route exact path="/admin/product/add" component={AddProduct} />
             <Route exact path="/admin/product/add" />
             <Route exact path="/admin/users/" component={AllUsers} />
             <Route exact path="/admin/dashboard" component={AdminDashboard} />
