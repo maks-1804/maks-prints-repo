@@ -40,9 +40,11 @@ export const retrieveOpenCart = (user) => {
     try {
       const response = await axios.get(`/api/carts/open/${user.id}`)
       //response.data returns an array so accessing it's first element
-      const openCart = response.data[0]
+      let openCart = response.data[0]
+      console.log('in store, openCart.products: ', openCart)
+      openCart = openCart.products ? openCart : {...openCart, products: []}
       dispatch(getOpenCart(openCart))
-      dispatch(updateNumItemsAndSubtotal(openCart.products))
+      openCart.products && dispatch(updateNumItemsAndSubtotal(openCart.products))
       // return openCart
     }
     catch (err) {console.log('Error getting cart', err.message)}

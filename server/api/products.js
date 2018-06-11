@@ -62,12 +62,9 @@ router.post('/', isAdmin, async (req, res, next) => {
 
     if (req.body.categories) {
       
-      // const categories = await Category.findAll({
-      //   attributes: req.body.categories
-      // })
-      console.log('categories object should be all:', categories)
-      const productWithCategories = productWithAssociations.setCategories(categories)
-      res.json(productWithCategories)
+      // console.log('categories object should be all:', categories)
+      // const productWithCategories = productWithAssociations.setCategories(categories)
+      // res.json(productWithCategories)
     } else {
       res.json(productWithAssociations)
     }

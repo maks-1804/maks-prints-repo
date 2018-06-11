@@ -37,7 +37,6 @@ export const addProduct = (product, ownProps) => {
   return async dispatch => {
     try {
       const res = await axios.post('/api/products', product)
-      
       dispatch(addNewProduct(res.data))
       ownProps.history.push('/admin/dashboard')
     } catch (err) {
@@ -46,12 +45,11 @@ export const addProduct = (product, ownProps) => {
   }
 }
 
-export const updateProduct = product => {
+export const updateProduct = (id, product) => {
   return async dispatch => {
     try {
-      const res = await axios.put(`/api/products/${product.id}`, product)
-      const updatedProduct = res.data
-      dispatch(editProduct(updatedProduct))
+      const { data } = await axios.put(`/api/products/${id}`, product)
+      dispatch(editProduct(data))
     } catch (err) {
       console.log('Error editing product: ', err.message)
     }
