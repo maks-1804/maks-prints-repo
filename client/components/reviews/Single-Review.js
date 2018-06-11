@@ -7,7 +7,6 @@ const SingleReview = props => {
   //the moment library lets us get relative time easily:
   const timeSince = moment(review.createdAt).fromNow()
 
-  console.log('the review:', review, timeSince)
   return (
     <div className="container-review-single">
       <h4>{review.title}</h4>
