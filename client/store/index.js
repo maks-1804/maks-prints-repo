@@ -7,8 +7,9 @@ import products, { loadAllProducts } from './products'
 import reviews from './reviews'
 import search from './search'
 import cart, { frontEndCartReducer } from './carts'
+import categories from './categories'
 
-const reducer = combineReducers({ user, products, reviews, search, cart, frontEndCartReducer })
+const reducer = combineReducers({ user, products, reviews, search, cart, frontEndCartReducer, categories })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 )

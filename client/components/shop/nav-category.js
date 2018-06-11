@@ -2,21 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-const NavCategory = () => {
-  const categories = [
-    {
-      id: 1,
-      name: 'National Parks'
-    },
-    {
-      id: 2,
-      name: 'California'
-    },
-    {
-      id: 3,
-      name: 'South America'
-    }
-  ]
+const NavCategory = (props) => {
+  const { categories } = props
 
   return (
     <div className="container-nav col-sm-3" id="navcategory">
