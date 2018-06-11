@@ -39,8 +39,8 @@ class Main extends Component {
           path="/shop/product/:productId"
           component={ProductSingle}
         />
-        <Route exact path='/cart' component={OpenCart} />
 
+        <Route exact path='/cart' component={OpenCart} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -49,8 +49,9 @@ class Main extends Component {
           </Switch>
         )}
         {isAdmin && (
+          //!!!!
           <Switch>
-            <Route exact path="/admin/product/edit/:product1" component={EditProduct} />
+            <Route exact path="/admin/product/edit/:productId" component={EditProduct} />
             <Route exact path="/admin/user/edit/:userId" />
             <Route exact path="/admin/product/add" />
             <Route exact path="/admin/dashboard" />
@@ -58,6 +59,14 @@ class Main extends Component {
             <Route exact path="/admin/carts" />
           </Switch>
         )}
+        {isLoggedIn && (
+          <Switch>
+            {/* Routes placed here are only available after logging in */}
+            <Route exact path="/:userId/dashboard" component={UserDashboard} />
+            <Route exact path="/:userId/edit" component={UserEdit} />
+          </Switch>
+        )}
+
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>

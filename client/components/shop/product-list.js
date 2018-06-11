@@ -6,12 +6,15 @@ import { withRouter } from 'react-router-dom'
 import NavCategory from './nav-category'
 import ProductCard from './product-card'
 import { loadAllProducts } from '../../store/products'
+import { loadAllCategories } from '../../store/categories'
+
 import axios from 'axios'
 
 
 class ProductList extends Component {
   componentDidMount() {
     this.props.fetchProducts()
+    this.props.fetchCategories()
   }
 
   render() {
@@ -36,7 +39,7 @@ class ProductList extends Component {
       <div className="container">
         <div className="row">
           {this.props.products.length && <div />}
-          <NavCategory />
+          <NavCategory categories={this.props.categories} />
           <div className="col-9">
             <div className="card-columns">
               {
@@ -66,12 +69,14 @@ class ProductList extends Component {
 const mapStateToProps = (state) => {
   return {
     products: state.products,
-    search: state.search
+    search: state.search,
+    categories: state.categories
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: () => dispatch(loadAllProducts())
+    fetchProducts: () => dispatch(loadAllProducts()),
+    fetchCategories: () => dispatch(loadAllCategories())
   }
 }
 
