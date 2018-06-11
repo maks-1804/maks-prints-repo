@@ -1,34 +1,26 @@
 const router = require('express').Router()
 const { User, Cart, Review } = require('../db/models')
+const { isAdmin, isAdminOrUser } = require('./access')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
-    if (req.user.isAdmin) {
-      const users = await User.findAll({
-        include: [{ model: Cart }, { model: Review }]
-      })
-      res.json(users)
-    } else {
-      res.sendStatus(403)
-    }
+    const users = await User.findAll({
+      include: [{ model: Cart }, { model: Review }]
+    })
+    res.json(users)
   } catch (err) {
     next(err)
   }
 })
 
-// DRY: change userId to id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', isAdminOrUser, async (req, res, next) => {
   try {
-    if (req.user.isAdmin || req.user.id === req.params.id) {
-      const user = await User.findById(req.params.id, {
-        include: [{ model: Cart }, { model: Review }]
-      })
-      if (!user) res.sendStatus(404)
-      res.json(user)
-    } else {
-      res.sendStatus(403)
-    }
+    const user = await User.findById(req.params.id, {
+      include: [{ model: Cart }, { model: Review }]
+    })
+    if (!user) res.sendStatus(404)
+    res.json(user)
   } catch (err) {
     next(err)
   }
@@ -36,15 +28,12 @@ router.get('/:id', async (req, res, next) => {
 
 // To be added later
 // LEAVE IN COMMENT FOR NOW: Admin should only be able to change user TYPE
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', isAdminOrUser, async (req, res, next) => {
   try {
-    if (req.user.isAdmin || req.user.id === Number(req.params.id)) {
-      const user = await User.findById(req.params.id)
-      const newUser = await user.update(req.body)
-      res.json(newUser)
-    } else {
-      res.sendStatus(403)
-    }
+    const user = await User.findById(req.params.id)
+    if (!user) res.sendStatus(404)
+    const newUser = await user.update(req.body)
+    res.json(newUser)
   } catch (err) {
     next(err)
   }
@@ -59,15 +48,11 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isAdminOrUser, async (req, res, next) => {
   try {
-    if (req.user.isAdmin || req.user.id === req.params.id) {
-      const user = await User.findById(req.params.id)
-      await user.destroy()
-      res.end()
-    } else {
-      res.sendStatus(403)
-    }
+    const user = await User.findById(req.params.id)
+    await user.destroy()
+    res.end()
   } catch (err) {
     next(err)
   }
