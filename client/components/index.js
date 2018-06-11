@@ -12,3 +12,5 @@ export { default as ProductSingle } from './shop/Product-Single'
 export { UserDashboard, UserEdit } from './user'
 
 export { ReviewList } from './reviews'
+
+export { OpenCart, CartProductCard } from './cart'
