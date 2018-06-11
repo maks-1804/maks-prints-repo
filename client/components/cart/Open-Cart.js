@@ -48,6 +48,7 @@ class OpenCart extends Component {
 
   render() {
     const { cart, products, numberOfItems, subtotal} = this.props
+    console.log('in open cart: ', cart)
     return (
       <div className='container'>
         <div className='row'>
