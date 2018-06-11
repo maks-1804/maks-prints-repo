@@ -15,6 +15,17 @@ class ProductEdit extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.product.title !== prevState.title) {
+  //     return {
+  //       title: nextProps.product.title,
+  //       image: nextProps.product.imageUrl,
+  //       description: nextProps.user.imageUrl,
+  //       price: nextProps.user.price
+  //     }
+  //   }
+  // }
+
   componentDidMount(){
     if (!this.props.product) { this.props.loadProducts() }
     //!!!!

@@ -41,13 +41,7 @@ class Main extends Component {
         />
 
         <Route exact path='/cart' component={OpenCart} />
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route exact path="/:userId/dashboard" component={UserDashboard} />
-            <Route exact path="/:userId/edit" component={UserEdit} />
-          </Switch>
-        )}
+
         {isAdmin && (
           //!!!!
           <Switch>
