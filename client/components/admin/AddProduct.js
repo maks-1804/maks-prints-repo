@@ -110,12 +110,15 @@ class AddProduct extends Component {
                 this.props.categories.map((category) => {
                   return (
                     <div key={category.id} className="form-group-row">
-                      <label>{category.name}</label>
-                      <input
-                        type="checkbox"
-                        value={category.name}
-                        onChange={this.handleChange}
-                      />
+                      <div className="col-8">
+                        <label className="col-4">{category.name}</label>
+                        <input
+                          className="form-control"
+                          type="checkbox"
+                          value={category.name}
+                          onChange={this.handleChange}
+                        />
+                      </div>
                     </div>
                   )
                 })
