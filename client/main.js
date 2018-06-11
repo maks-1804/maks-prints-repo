@@ -9,6 +9,7 @@ import {
   UserEdit,
   ProductList,
   ProductSingle,
+  OpenCart,
   EditProduct
 } from './components'
 //import ProductList from './components/shop/product-list'
@@ -38,6 +39,15 @@ class Main extends Component {
           path="/shop/product/:productId"
           component={ProductSingle}
         />
+
+        <Route exact path='/cart' component={OpenCart} />
+        {isLoggedIn && (
+          <Switch>
+            {/* Routes placed here are only available after logging in */}
+            <Route exact path="/:userId/dashboard" component={UserDashboard} />
+            <Route exact path="/:userId/edit" component={UserEdit} />
+          </Switch>
+        )}
         {isAdmin && (
           //!!!!
           <Switch>

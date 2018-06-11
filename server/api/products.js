@@ -1,6 +1,8 @@
-const router = require('express').Router();
-const { db, Product, productCategory, Category, Cart, cartProducts } = require('../db/models');
-module.exports = router;
+const router = require('express').Router()
+const { db, Product, productCategory, Category, Cart, cartProducts } = require('../db/models')
+const { isAdmin } = require('./access')
+
+module.exports = router
 
 //GET /api/products/ --- all products
 router.get('/', async (req, res, next) => {
@@ -51,7 +53,7 @@ router.get('/:id', async (req, res, next) => {
 //   ---ADMIN ONLY---
 
 //POST /api/products --- new product
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const product = await Product.create(req.body)
     const productWithAssociations = await Product.findById(product.id, {
@@ -64,7 +66,7 @@ router.post('/', async (req, res, next) => {
 })
 
 //PUT /api/products/:id --- edit product
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', isAdmin, async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id, {
       include: [{ all: true }]
@@ -80,7 +82,7 @@ router.put('/:id', async (req, res, next) => {
 })
 
 //DELETE /api/products/:id --- delete product
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isAdmin, async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id)
     await product.destroy()

@@ -13,6 +13,7 @@ const EDIT_CART = 'EDIT_CART'
 const ADD_PRODUCT_NO_USER = 'ADD_PRODUCT_NO_USER'
 const CLOSE_CART = 'CLOSE_CART'
 const DELETE_PRODUCT_NO_USER = 'DELETE_PRODUCT_NO_USER'
+const UPDATE_NUM_AND_SUBTOTAL = 'UPDATE_NUM_AND_SUBTOTAL'
 
 /**
  * ACTION CREATORS
@@ -24,6 +25,7 @@ const addCart = cart => ({
   cart
 })
 const editCart = cart => ({type: EDIT_CART, cart})
+export const updateNumItemsAndSubtotal = products => ({type: UPDATE_NUM_AND_SUBTOTAL, products})
 
 // export const addCart = (cart) => {
 //   return async dispatch => {
@@ -52,11 +54,13 @@ export const retrieveOpenCart = (user) => {
   return async dispatch => {
     try {
       const response = await axios.get(`/api/carts/open/${user.id}`)
-      const openCart = response.data
+      //response.data returns an array so accessing it's first element
+      const openCart = response.data[0]
       dispatch(getOpenCart(openCart))
-      return openCart
+      dispatch(updateNumItemsAndSubtotal(openCart.products))
+      // return openCart
     }
-    catch (err) {console.err('Error getting cart', err.message)}
+    catch (err) {console.log('Error getting cart', err.message)}
   }
 }
 
@@ -109,7 +113,7 @@ export default (state = initialCart, action) => {
       return {...state, products: [...state.products, action.product]}
     }
     case GET_OPEN_CART: {
-      return action.openCart
+      return action.cart
     }
     case CLOSE_CART: {
       return initialCart
@@ -125,4 +129,28 @@ export default (state = initialCart, action) => {
     }
     default: return state
   }
+}
+
+//------Front End Cart Info ---------//
+
+const initialFrontCart = {
+  numItemsInCart: 0,
+  subtotal: 0
+}
+
+export const frontEndCartReducer = (state = initialFrontCart, action) => {
+  switch (action.type) {
+    case UPDATE_NUM_AND_SUBTOTAL:
+      return {...state,
+          numItemsInCart: action.products.reduce( (acc, product) => {
+            return acc + product.cartProducts.productQuantity
+            }, 0),
+          subtotal: (action.products.reduce( (acc, product) => {
+            return acc + (product.price * product.cartProducts.productQuantity)
+            }, 0) / 100).toFixed(2)
+          }
+    default:
+      return state
+  }
+
 }
