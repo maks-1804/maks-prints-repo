@@ -39,7 +39,7 @@ class ReviewForm extends Component {
             onChange={this.handleChange}
             name="title"
           />
-          <input
+          <textarea
             type="text"
             value={this.state.content}
             onChange={this.handleChange}

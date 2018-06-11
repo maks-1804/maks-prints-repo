@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadAllProducts } from '../../store/products'
 import ReviewList from '../reviews/Review-List'
-import RevewForm, { ReviewForm } from '../reviews'
+import { ReviewForm } from '../reviews'
 
 class SingleProduct extends Component {
   constructor() {
@@ -42,11 +42,40 @@ class SingleProduct extends Component {
       quantity = product.inventoryQuantity
       price = product.price
       productContent = (
-        <div>
-          <img src={product.imageUrl} />
-          <h1>{product.title}</h1>
-          <p>{product.description}</p>
-          <h5>${product.price}</h5>
+        <div className="container-fluid bg-light">
+          <div className="row">
+            <div className="col-md-8">
+              <img
+                className="img-responsive mx-3 my-5"
+                src={product.imageUrl}
+              />
+            </div>
+            <div className="col-md-4">
+              <div className="mx-3 my-5">
+                <h1>{product.title}</h1>
+                <p>{product.description}</p>
+                <h5>${product.price}</h5>
+                <div>
+                  <form>
+                    <label>Select Quantity</label>
+                    <select
+                      name="product-quantity"
+                      value={this.state.selectedQuantity}
+                      onChange={this.handleChange}
+                    >
+                      {Array.apply(null, new Array(quantity)).map((el, ind) => {
+                        return <option key={ind}>{ind}</option>
+                      })}
+                    </select>
+                  </form>
+                  <h5>Subtotal: ${this.state.selectedQuantity * price}</h5>
+                  <button type="submit" onClick={this.handleSubmit}>
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )
     }
@@ -58,25 +87,9 @@ class SingleProduct extends Component {
     return (
       // classNames can be changed...flexbox in mind (2columns, pic vs everything else)
       //if it works better with something (bootstrap?), feel free to change classNames/div structure!
-      <div className="container-single-prod-parent">
-        {/* <div className='single-prod-child'> */}
+      <div className="container-fluid">
         {product ? productContent : loadingContent}
-        <form>
-          <label>Select Quantity</label>
-          <select
-            name="product-quantity"
-            value={this.state.selectedQuantity}
-            onChange={this.handleChange}
-          >
-            {Array.apply(null, new Array(quantity)).map((el, ind) => {
-              return <option key={ind}>{ind}</option>
-            })}
-          </select>
-        </form>
-        <h5>Subtotal: ${this.state.selectedQuantity * price}</h5>
-        <button type="submit" onClick={this.handleSubmit}>
-          Add to cart
-        </button>
+
         {/* </div> */}
         <div>
           {product && product.reviews.length ? (
