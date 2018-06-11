@@ -7,14 +7,18 @@ import NavCategory from './nav-category'
 import ProductCard from './product-card'
 import { loadAllProducts } from '../../store/products'
 import { loadAllCategories } from '../../store/categories'
+import { retrieveOpenCart } from '../../store/carts'
 
 import axios from 'axios'
 
 
 class ProductList extends Component {
   componentDidMount() {
+    const { user } = this.props
     this.props.fetchProducts()
     this.props.fetchCategories()
+    this.props.findOrCreateOpenCart(user)
+
   }
 
   render() {
@@ -70,13 +74,15 @@ const mapStateToProps = (state) => {
   return {
     products: state.products,
     search: state.search,
-    categories: state.categories
+    categories: state.categories,
+    user: state.user
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     fetchProducts: () => dispatch(loadAllProducts()),
-    fetchCategories: () => dispatch(loadAllCategories())
+    fetchCategories: () => dispatch(loadAllCategories()),
+    findOrCreateOpenCart: (user) => dispatch(retrieveOpenCart(user))
   }
 }
 

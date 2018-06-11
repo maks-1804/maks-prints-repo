@@ -30,7 +30,7 @@ router.get('/:id', async (req, res, next) => {
 router.get('/open/:id', async (req, res, next) => {
   try {
     if (!req.user) { res.sendStatus(403) }
-    const cart = await Cart.findAll({ where: { userId: req.user.id, status: 'open' }, include: [Product] })
+    const cart = await Cart.findOrCreate({ where: { userId: req.user.id, status: 'open' }, include: [Product] })
     res.json(cart)
   } catch (err) { next(err) }
 })
