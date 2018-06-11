@@ -70,39 +70,31 @@ router.patch('/:id', async (req, res, next) => {
 router.put('/open', async (req, res, next) => {
   try {
     const cart = await Cart.findOne({where: {userId: req.body.user.id, status: 'open'}, include: [{all: true}]})
-    // req.body.products.forEach(async (product) => {
-    //   let existingProduct = await cartProducts.findOne({where: {cartId: cart.id, productId: product.id}})
-    //   if (!existingProduct) {
-    //     const newProduct = await Product.findById(product.id)
-    //     await cart.addNewProduct(newProduct.id)
-    //     existingProduct = await cartProducts.findOne({where: {cartId: cart.id, productId: product.id}})
-    //   }
-    //   await existingProduct.update({productQuantity: product.productQuantity})
-    // })
+    const waitFor = async (product) => {
+        let existingProduct = await cartProducts.findOne({where: {cartId: cart.id, productId: product.id}})
+        if (!existingProduct) {
+          const newProduct = await Product.findById(product.id)
+          await cart.addNewProduct(newProduct.id)
+          existingProduct = await cartProducts.findOne({where: {cartId: cart.id, productId: product.id}})
+        }
+        await existingProduct.update({productQuantity: product.productQuantity})
+      }
+     const asyncForEach = async (array, callback) => {
+        for (let index = 0; index < array.length; index++) {
+          await callback(array[index])
+        }
+      }
+    const start = async () => {
+      await asyncForEach(req.body.products, async (product) => {
+        await waitFor(product)
+      })
+      const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
+      console.log('here: ', cartWithAssociations.products[2].cartProducts)
+      res.json(cartWithAssociations)
+      // return cartWithAssociations
+    }
 
-
-
-    //******Promise - didn't work */
-    // let productPromises = []
-    //   req.body.products.forEach(async (product) => {
-    //   let existingProduct = await cartProducts.findOne({where: {cartId: cart.id, productId: product.id}})
-    //   if (!existingProduct) {
-    //     const newProduct = await Product.findById(product.id)
-    //     await cart.addNewProduct(newProduct.id)
-    //     existingProduct = await cartProducts.findOne({where: {cartId: cart.id, productId: product.id}})
-    //   }
-    //   productPromises.push(await existingProduct.update({productQuantity: product.productQuantity}))
-    // })
-    // await Promise.all(productPromises)
-
-
-
-
-    // console.log(cart)
-    const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
-    // console.log('inroute: ', cartWithAssociations.products)
-    // res.json(cart)
-    res.json(cartWithAssociations)
+    start()
   }
   catch (err) { next(err) }
 })
