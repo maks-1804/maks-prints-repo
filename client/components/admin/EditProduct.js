@@ -17,6 +17,7 @@ class ProductEdit extends Component {
 
   componentDidMount(){
     if (!this.props.product) { this.props.loadProducts() }
+    //!!!!
   }
 
   handleChange(evt) {

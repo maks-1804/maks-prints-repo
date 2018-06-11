@@ -39,6 +39,7 @@ class Main extends Component {
           component={ProductSingle}
         />
         {isAdmin && (
+          //!!!!
           <Switch>
             <Route exact path="/admin/product/edit/:productId" component={EditProduct} />
             <Route exact path="/admin/user/edit/:userId" />

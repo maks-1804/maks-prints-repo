@@ -10,6 +10,6 @@ export const fetchUsers = () => {
       const {data} = await axios.get('/users')
       dispatch(getAllUsers(data))
     }
-    catch (err) { console.error("There was an error adding all users", err.message) }
+    catch (err) { console.error('There was an error adding all users', err.message) }
   }
 }
