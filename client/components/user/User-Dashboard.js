@@ -39,7 +39,7 @@ class UserDashboard extends React.Component {
         <div>
           <h3>My Reviews</h3>
           {
-            userReviews ?
+            userReviews.length ?
               userReviews.map((review) =>
                 (
                   <SingleReview key={review.id} review={review} />
