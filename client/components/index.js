@@ -12,6 +12,7 @@ export { UserDashboard, UserEdit } from './user'
 export { AdminDashboard } from './admin'
 
 export { default as EditProduct } from './admin/EditProduct'
+export { default as AllUsers } from './admin/AllUsers'
 
 export { ReviewList } from './reviews'
 

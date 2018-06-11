@@ -36,20 +36,19 @@ export const loadAllProducts = () => {
 export const addProduct = product => {
   return async dispatch => {
     try {
-      const newProduct = await axios.post('/api/products', product).data
-      dispatch(addNewProduct(newProduct))
+      const {data} = await axios.post('/api/products', product)
+      dispatch(addNewProduct(data))
     } catch (err) {
       console.log('Error adding new product: ', err.message)
     }
   }
 }
 
-export const updateProduct = product => {
+export const updateProduct = (id, product) => {
   return async dispatch => {
     try {
-      const res = await axios.put(`/api/products/${product.id}`, product)
-      const updatedProduct = res.data
-      dispatch(editProduct(updatedProduct))
+      const {data} = await axios.put(`/api/products/${id}`, product)
+      dispatch(editProduct(data))
     } catch (err) {
       console.log('Error editing product: ', err.message)
     }
