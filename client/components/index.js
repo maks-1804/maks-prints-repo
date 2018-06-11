@@ -14,3 +14,5 @@ export { UserDashboard, UserEdit } from './user'
 export { default as EditProduct } from './admin/EditProduct'
 
 export { ReviewList } from './reviews'
+
+export { OpenCart, CartProductCard } from './cart'
