@@ -52,6 +52,8 @@ class Main extends Component {
             <Route exact path="/admin/user/edit/:userId" />
             <Route exact path="/admin/product/add" />
             <Route exact path="/admin/dashboard" />
+            <Route exact path="/admin/user/" />
+            <Route exact path="/admin/carts" />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
