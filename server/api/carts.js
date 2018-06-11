@@ -102,6 +102,19 @@ router.put('/open', async (req, res, next) => {
   catch (err) { next(err) }
 })
 
+router.put('/open/:productId', async (req, res, next) => {
+  try {
+    const productId = +req.params.productId
+    const cartId = +req.body.cartId
+    const productToDelete = await cartProducts.findOne({where: {cartId: cartId, productId: productId}})
+    productToDelete && await productToDelete.destroy()
+    const cart = await Cart.findOne({where: {id: cartId, status: 'open'}, include: [{all: true}]})
+    res.json(cart)
+  } catch (err) {
+    next(err)
+  }
+})
+
 //patch --> update quantity
 // put --> add to cart
 

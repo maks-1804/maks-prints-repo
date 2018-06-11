@@ -14,6 +14,7 @@ const ADD_PRODUCT_NO_USER = 'ADD_PRODUCT_NO_USER'
 const CLOSE_CART = 'CLOSE_CART'
 const DELETE_PRODUCT_NO_USER = 'DELETE_PRODUCT_NO_USER'
 const UPDATE_NUM_AND_SUBTOTAL = 'UPDATE_NUM_AND_SUBTOTAL'
+const DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER '
 
 /**
  * ACTION CREATORS
@@ -27,27 +28,11 @@ const addCart = cart => ({
 const editCart = cart => ({type: EDIT_CART, cart})
 export const updateNumItemsAndSubtotal = products => ({type: UPDATE_NUM_AND_SUBTOTAL, products})
 
-// export const addCart = (cart) => {
-//   return async dispatch => {
-//     try {
-//       const response = await axios.post('/', cart)
-//     }
-//   }
-// }
 
-export const addProductNoUser = (product) => {
-  return {
-    type: ADD_PRODUCT_NO_USER,
-    product
-  }
-}
+export const addProductNoUser = (product) => ({type: ADD_PRODUCT_NO_USER, product})
 
-export const deleteProductNoUser = (product) => {
-  return {
-    type: DELETE_PRODUCT_NO_USER,
-    product
-  }
-}
+export const deleteProductNoUser = (product) => ({type: DELETE_PRODUCT_NO_USER, product})
+const deleteProductWithUser = cart => ({type: DELETE_PRODUCT_WITH_USER, cart})
 
 /**THUNKS **/
 export const retrieveOpenCart = (user) => {
@@ -74,7 +59,7 @@ export const createNewCart = (user, products) => {
       const cart = response.data
       dispatch(addCart(cart))
     }
-    catch (err) { console.err('Error creating cart', err.message) }
+    catch (err) { console.log('Error creating cart', err.message) }
   }
 }
 
@@ -85,7 +70,7 @@ export const closeTheCart = cart => {
       const closedCart = response.data
       dispatch(closeCart(closedCart))
     }
-    catch (err) { console.err('Error closing cart', err.message) }
+    catch (err) { console.log('Error closing cart', err.message) }
   }
 }
 
@@ -101,7 +86,21 @@ export const editTheCart = (cart, user) => {
       dispatch(editCart(editedCart))
       dispatch(updateNumItemsAndSubtotal(editedCart.products))
     }
-    catch (err) { console.err('Error editing cart', err.message)}
+    catch (err) { console.log('Error editing cart', err.message)}
+  }
+}
+
+export const deleteTheProductWithUser = (cartId, productId) => {
+  return async dispatch => {
+    try {
+      console.log('in store, ids: ', cartId, productId)
+      const response = await axios.put(`/api/carts/open/${productId}`, { cartId })
+      const updatedCart = response.data
+      dispatch(deleteProductWithUser(updatedCart))
+      dispatch(updateNumItemsAndSubtotal(updatedCart.products))
+    } catch (err) {
+      console.log('Error deleting product from cart: ', err.message)
+    }
   }
 }
 
@@ -120,6 +119,8 @@ export default (state = initialCart, action) => {
     case CLOSE_CART: {
       return initialCart
     }
+    case DELETE_PRODUCT_WITH_USER:
+      return action.cart
     case DELETE_PRODUCT_NO_USER: {
       return {...state, products: state.products.filter(product => product.id !== action.product.id)}
     }
