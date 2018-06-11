@@ -33,11 +33,13 @@ export const loadAllProducts = () => {
   }
 }
 
-export const addProduct = product => {
+export const addProduct = (product, ownProps) => {
   return async dispatch => {
     try {
-      const newProduct = await axios.post('/api/products', product).data
-      dispatch(addNewProduct(newProduct))
+      const res = await axios.post('/api/products', product)
+      
+      dispatch(addNewProduct(res.data))
+      ownProps.history.push('/admin/dashboard')
     } catch (err) {
       console.log('Error adding new product: ', err.message)
     }
