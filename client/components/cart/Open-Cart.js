@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import CartProductCard from './Cart-ProductCard'
-import { retrieveOpenCart, editTheCart, updateNumItemsAndSubtotal } from '../../store/carts'
+import {
+  retrieveOpenCart,
+  editTheCart,
+  deleteProductNoUser,
+  deleteTheProductWithUser } from '../../store/carts'
 // import {}
 
 //<Route exact path='cart' component={OpenCart} />
@@ -11,7 +15,7 @@ class OpenCart extends Component {
   constructor() {
     super()
     this.state = {}
-    // this.deleteProductFromCart = this.deleteProductFromCart.bind(this)
+    this.deleteProductFromCart = this.deleteProductFromCart.bind(this)
     this.changeQuantity = this.changeQuantity.bind(this)
   }
   componentDidMount() {
@@ -20,10 +24,14 @@ class OpenCart extends Component {
     // updateFrontCart(products)
   }
 
-  //deleteProductFromCart(evt) {
-  //   evt.preventDefault()
-  //   other logic to delete product from cart
-  // }
+  deleteProductFromCart(evt, product) {
+    evt.preventDefault()
+    const { deleteProdNoUser, deleteProdWithUser, isLoggedIn, cart } = this.props
+    isLoggedIn
+    ? deleteProdWithUser(cart.id, product.id)
+    : deleteProdNoUser(product)
+  }
+
   changeQuantity(evt, product) {
     const { cart, user, editCart } = this.props
     const { products } = cart
@@ -58,6 +66,7 @@ class OpenCart extends Component {
                     key={product.id}
                     product={product}
                     changeQuantity={this.changeQuantity}
+                    deleteItem={this.deleteProductFromCart}
                     cartStatus={cart.status} />) //pass down cart, maybe just status?
                   })}
                </div>)}
@@ -91,9 +100,11 @@ const mapDispatch = dispatch => {
   return {
     getOpenCart: (user) => dispatch(retrieveOpenCart(user)),
     // ^ retrieveOpenCart will later be on login.signup button
-      // .then(() => dispatch(editTheCart(cart, user)))
+      // editTheCart(cart, user) will be on componentDidMount
     editCart: (cart, user) => dispatch(editTheCart(cart, user)),
-    // updateFrontCart: (products) => dispatch(updateNumItemsAndSubtotal(products)),
+    deleteProdNoUser: (product) => dispatch(deleteProductNoUser(product)),
+    deleteProdWithUser: (cartId, productId) => dispatch(deleteTheProductWithUser(cartId, productId))
+
   }
 }
 

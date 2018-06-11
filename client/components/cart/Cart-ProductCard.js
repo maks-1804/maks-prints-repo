@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 const CartProductCard = props => {
-  const { product, cartStatus, changeQuantity } = props
+  const { product, cartStatus, changeQuantity, deleteItem } = props
   // console.log(product)
   return (
     <div className='container'>
@@ -14,7 +14,7 @@ const CartProductCard = props => {
           {cartStatus === 'open' &&
           <button
             type='button'
-            onClick={(evt) => evt.preventDefault()}>
+            onClick={(evt) => deleteItem(evt, product)}>
             Delete Item
           </button>}
         </div>
