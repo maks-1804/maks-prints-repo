@@ -5,6 +5,9 @@ import { loadAllProducts } from '../../store/products'
 import ReviewList from '../reviews/Review-List'
 import { ReviewForm } from '../reviews'
 
+//adding product
+import { editTheCart } from '../../store/carts'
+
 class SingleProduct extends Component {
   constructor() {
     super()
@@ -118,7 +121,8 @@ const mapStateToProps = (state, ownProps) => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: () => dispatch(loadAllProducts())
+    fetchProducts: () => dispatch(loadAllProducts()),
+    addToCart: () => dispatch(editTheCart())
   }
 }
 
