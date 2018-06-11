@@ -10,11 +10,11 @@ label {
   display: block;
 }
 
-.row {
+/* .row {
   display: flex;
   flex-direction: row;
   justify-content: left;
-}
+} */
 
 form {
   display: flex;
@@ -32,7 +32,16 @@ form input {
 
 .edit-form-btn {
   color: white;
-  background-color: #59A9E9;
+  background-color: #59a9e9;
   width: 60%;
   margin: 0 auto;
 }
+
+img {
+  width: 100%;
+}
+
+/* #single-product {
+  padding: 0.5em;
+  margin: 1em 0.5em;
+} */
