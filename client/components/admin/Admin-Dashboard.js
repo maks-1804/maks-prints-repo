@@ -15,11 +15,16 @@ class AdminDashboard extends React.Component {
         <div>
           <h3>Product Management</h3>
           <div>
-            {
-              this.props.products.map(product => (
-                <ProductCard key={product.id} product={product} isAdmin={this.props.isAdmin} deleteProduct={this.props.deleteProduct} />
-              ))
-            }
+            <div>
+              <p>Add a new product</p>
+            </div>
+            <div>
+              {
+                this.props.products.map(product => (
+                  <ProductCard key={product.id} product={product} isAdmin={this.props.isAdmin} deleteProduct={this.props.deleteProduct} />
+                ))
+              }
+            </div>
           </div>
         </div>
 
