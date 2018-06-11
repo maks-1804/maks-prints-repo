@@ -31,8 +31,9 @@ class SingleProduct extends Component {
     const oldProducts = this.props.openCart.products || []
     const newProduct = this.props.product
     //put a quantity property on the new product object based on the dropdown
+    newProduct.productQuantity = this.state.selectedQuantity
+
     if (oldProducts.length) {
-      newProduct.productQuantity = this.state.selectedQuantity
       const filteredProducts = oldProducts.filter(
         product => product.id !== newProduct.id
       )
