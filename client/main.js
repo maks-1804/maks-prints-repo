@@ -9,6 +9,7 @@ import {
   UserEdit,
   ProductList,
   ProductSingle,
+  OpenCart,
   EditProduct
 } from './components'
 //import ProductList from './components/shop/product-list'
@@ -38,6 +39,7 @@ class Main extends Component {
           path="/shop/product/:productId"
           component={ProductSingle}
         />
+        <Route exact path='/cart' component={OpenCart} />
 
         {isLoggedIn && (
           <Switch>
