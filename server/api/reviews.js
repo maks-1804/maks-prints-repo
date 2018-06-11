@@ -5,16 +5,12 @@ const { isAdmin, isUser, isAdminOrUser } = require('./access')
 module.exports = router
 
 // GET - ADMIN ONLY --- all reviews
-router.get('/', isAdmin, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    if (req.user.type === 'admin') {
-      const reviews = await Review.findAll({
-        include: [{ model: Product }, { model: User }]
-      })
-      res.json(reviews)
-    } else {
-      res.sendStatus(403)
-    }
+    const reviews = await Review.findAll({
+      include: [{ model: Product }, { model: User }]
+    })
+    res.json(reviews)
   } catch (err) {
     next(err)
   }

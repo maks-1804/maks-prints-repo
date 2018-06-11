@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 export const ProductCard = props => {
-  const { product } = props
+  const { product, isAdmin, deleteProduct } = props
 
   return (
     <div>
@@ -13,8 +13,21 @@ export const ProductCard = props => {
           <h1>{product.title}</h1>
         </Link>
         <p>Price: ${product.price}</p>
+        {
+          isAdmin &&
+          <div>
+            <Link to={`/admin/product/edit/${product.id}`}>
+              <button type="button">Edit</button>
+            </Link>
+
+            <button type="button" onClick={() => deleteProduct(product.id)}>
+              Delete
+            </button>
+          </div>
+        }
       </div>
     </div>
+
   )
 }
 

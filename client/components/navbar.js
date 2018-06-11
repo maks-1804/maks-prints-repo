@@ -7,7 +7,7 @@ import SearchBar from './Navbar-Search';
 import { logout } from "../store";
 
 const Navbar = (props) => {
-  const { handleClick, isLoggedIn, id, numberOfItems, subtotal } = props
+  const { handleClick, isLoggedIn, isAdmin, id, numberOfItems, subtotal } = props
 
   return (
     <nav className="navbar navbar-default navbar-transparent navbar-fixed-top navbar-color-on-scroll">
@@ -26,11 +26,18 @@ const Navbar = (props) => {
 
         {/* The navbar will show these links after you log in */}
         {isLoggedIn ? (
+
           <div>
             <ul className="nav navbar-nav navbar-right">
-              <li>
-                <NavLink className="nav-link" to={`/${id}/dashboard`}>My Account</NavLink>
-              </li>
+
+              {
+                isAdmin ?
+                  <NavLink className="nav-link" to="/admin/dashboard">Dashboard</NavLink>
+                  :
+                  <li>
+                    <NavLink className="nav-link" to={`/${id}/dashboard`}>My Account</NavLink>
+                  </li>
+              }
               <li>
                 <a className="nav-link" href="#" onClick={handleClick}>Logout</a>
               </li>
@@ -48,9 +55,10 @@ const Navbar = (props) => {
               </ul>
             </div>
           )}
+
         <div className='row align-items-center'>
           <NavLink to='/cart'>
-            <img src='https://d30y9cdsu7xlg0.cloudfront.net/png/7352-200.png' style={{maxHeight: '50px', maxWidth: '50px'}} />
+            <img src='https://d30y9cdsu7xlg0.cloudfront.net/png/7352-200.png' style={{ maxHeight: '50px', maxWidth: '50px' }} />
           </NavLink>
           <h5 className='col-2'>({numberOfItems})</h5>
           <h5 className='col-2'>${subtotal}</h5>
@@ -66,6 +74,7 @@ const Navbar = (props) => {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin,
     id: state.user.id,
     numberOfItems: state.frontEndCartReducer.numItemsInCart,
     subtotal: state.frontEndCartReducer.subtotal
