@@ -39,15 +39,7 @@ class OpenCart extends Component {
   }
 
   render() {
-    const { cart, products, numberOfItems } = this.props
-    // console.log('in open cart, products: ', products)
-    console.log('numberOfItems: ', this.props.numberOfItems)
-    // const numberOfItems = products.reduce( (acc, product) => {
-    //   return acc + product.cartProducts.productQuantity
-    //   }, 0)
-    const subtotal = (products.reduce( (acc, product) => {
-      return acc + (product.price * product.cartProducts.productQuantity)
-      }, 0) / 100).toFixed(2)
+    const { cart, products, numberOfItems, subtotal} = this.props
     return (
       <div className='container'>
         <div className='row'>
@@ -90,7 +82,8 @@ const mapState = state => {
     cart: state.cart || {},
     products: state.cart.products || [],
     isLoggedIn: !!state.user.id,
-    numberOfItems: state.frontEndCartReducer.numItemsInCart
+    numberOfItems: state.frontEndCartReducer.numItemsInCart,
+    subtotal: state.frontEndCartReducer.subtotal
   }
 }
 

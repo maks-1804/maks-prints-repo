@@ -97,7 +97,9 @@ export const editTheCart = (cart, user) => {
         user: user
       })
       const editedCart = response.data
+      console.log('in store, editedCart: ', editedCart)
       dispatch(editCart(editedCart))
+      dispatch(updateNumItemsAndSubtotal(editedCart.products))
     }
     catch (err) { console.err('Error editing cart', err.message)}
   }
