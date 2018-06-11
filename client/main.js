@@ -9,11 +9,8 @@ import {
   UserEdit,
   ProductList,
   ProductSingle,
-<<<<<<< HEAD
-  OpenCart
-=======
+  OpenCart,
   EditProduct
->>>>>>> master
 } from './components'
 //import ProductList from './components/shop/product-list'
 import ReviewList from './components/reviews/Review-List'
@@ -42,11 +39,8 @@ class Main extends Component {
           path="/shop/product/:productId"
           component={ProductSingle}
         />
-<<<<<<< HEAD
         <Route exact path='/cart' component={OpenCart} />
-=======
 
->>>>>>> master
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
