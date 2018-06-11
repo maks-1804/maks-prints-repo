@@ -28,15 +28,21 @@ class SingleProduct extends Component {
   handleSubmit(event) {
     event.preventDefault()
     //get old cart products and update opencart with products we area adding
-    const oldProducts = this.props.openCart.products
+    const oldProducts = this.props.openCart.products || []
     const newProduct = this.props.product
     //put a quantity property on the new product object based on the dropdown
-    newProduct.productQuantity = this.state.selectedQuantity
-    const filteredProducts = oldProducts.filter(
-      product => product.id !== newProduct.id
-    )
-    //replace prev product value (if was there) with the updated quantity
-    this.props.openCart.products = [...filteredProducts, newProduct]
+    if (oldProducts.length) {
+      newProduct.productQuantity = this.state.selectedQuantity
+      const filteredProducts = oldProducts.filter(
+        product => product.id !== newProduct.id
+      )
+      //replace prev product value (if was there) with the updated quantity
+      this.props.openCart.products = [...filteredProducts, newProduct]
+    } else {
+      //this is the first item in the cart
+      this.props.openCart.products = [newProduct]
+    }
+
     //now dispatch!
     this.props.addToCart(this.props.openCart, this.props.user)
   }
