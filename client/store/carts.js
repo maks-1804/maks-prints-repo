@@ -93,7 +93,8 @@ export const editTheCart = (cart, user) => {
 export const deleteTheProductWithUser = (cartId, productId) => {
   return async dispatch => {
     try {
-      const response = await axios.put(`/api/carts/open/${productId}`, cartId)
+      console.log('in store, ids: ', cartId, productId)
+      const response = await axios.put(`/api/carts/open/${productId}`, { cartId })
       const updatedCart = response.data
       dispatch(deleteProductWithUser(updatedCart))
       dispatch(updateNumItemsAndSubtotal(updatedCart.products))

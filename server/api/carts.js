@@ -104,12 +104,11 @@ router.put('/open', async (req, res, next) => {
 
 router.put('/open/:productId', async (req, res, next) => {
   try {
-    const productId = req.params.productId
-    const cartId = req.body.cartId
+    const productId = +req.params.productId
+    const cartId = +req.body.cartId
     const productToDelete = await cartProducts.findOne({where: {cartId: cartId, productId: productId}})
-    productToDelete.destroy()
+    productToDelete && await productToDelete.destroy()
     const cart = await Cart.findOne({where: {id: cartId, status: 'open'}, include: [{all: true}]})
-    console.log('look here: ', cart)
     res.json(cart)
   } catch (err) {
     next(err)

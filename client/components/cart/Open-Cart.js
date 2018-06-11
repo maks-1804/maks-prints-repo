@@ -25,10 +25,10 @@ class OpenCart extends Component {
   }
 
   deleteProductFromCart(evt, product) {
-    const { deleteProdNoUser, deleteProdWithUser, isLoggedIn } = this.props
     evt.preventDefault()
+    const { deleteProdNoUser, deleteProdWithUser, isLoggedIn, cart } = this.props
     isLoggedIn
-    ? deleteProdWithUser(product)
+    ? deleteProdWithUser(cart.id, product.id)
     : deleteProdNoUser(product)
   }
 
@@ -103,7 +103,7 @@ const mapDispatch = dispatch => {
       // editTheCart(cart, user) will be on componentDidMount
     editCart: (cart, user) => dispatch(editTheCart(cart, user)),
     deleteProdNoUser: (product) => dispatch(deleteProductNoUser(product)),
-    deleteProdWithUser: (product) => dispatch(deleteTheProductWithUser(product))
+    deleteProdWithUser: (cartId, productId) => dispatch(deleteTheProductWithUser(cartId, productId))
 
   }
 }
