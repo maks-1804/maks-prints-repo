@@ -35,8 +35,6 @@ class SingleProduct extends Component {
     const filteredProducts = oldProducts.filter(
       product => product.id !== newProduct.id
     )
-    console.log('oldProducts', oldProducts, 'filtered', filteredProducts)
-
     //replace prev product value (if was there) with the updated quantity
     this.props.openCart.products = [...filteredProducts, newProduct]
     //now dispatch!
