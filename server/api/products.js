@@ -59,7 +59,15 @@ router.post('/', isAdmin, async (req, res, next) => {
     const productWithAssociations = await Product.findById(product.id, {
       include: [{ all: true }]
     })
-    res.json(productWithAssociations)
+
+    if (req.body.categories) {
+      
+      // console.log('categories object should be all:', categories)
+      // const productWithCategories = productWithAssociations.setCategories(categories)
+      // res.json(productWithCategories)
+    } else {
+      res.json(productWithAssociations)
+    }
   } catch (err) {
     next(err)
   }
