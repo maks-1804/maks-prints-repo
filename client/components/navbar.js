@@ -69,8 +69,8 @@ const mapState = state => {
     id: state.user.id,
     numberOfItems: state.frontEndCartReducer.numItemsInCart,
     subtotal: state.frontEndCartReducer.subtotal
-  };
-};
+  }
+}
 
 const mapDispatch = dispatch => {
   return {
