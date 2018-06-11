@@ -40,7 +40,6 @@ class Main extends Component {
           component={ProductSingle}
         />
         <Route exact path='/cart' component={OpenCart} />
-
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
