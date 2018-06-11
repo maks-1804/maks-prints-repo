@@ -75,18 +75,29 @@ router.patch('/:id', async (req, res, next) => {
 
 router.put('/open', async (req, res, next) => {
   try {
-    const cart = await Cart.findOne({ where: { userId: req.body.user.id, status: 'open' } })
-    req.body.products.forEach(async (product) => {
-      let existingProduct = await cartProducts.findOne({ where: { cartId: cart.id, productId: product.id } })
-      if (!existingProduct) {
-        const newProduct = await Product.findById(product.id)
-        await cart.addNewProduct(newProduct.id)
-        existingProduct = await cartProducts.findOne({ where: { cartId: cart.id, productId: product.id } })
+    const cart = await Cart.findOne({where: {userId: req.body.user.id, status: 'open'}, include: [{all: true}]})
+    const waitFor = async (product) => {
+        let existingProduct = await cartProducts.findOne({where: {cartId: cart.id, productId: product.id}})
+        if (!existingProduct) {
+          const newProduct = await Product.findById(product.id)
+          await cart.addNewProduct(newProduct.id)
+          existingProduct = await cartProducts.findOne({where: {cartId: cart.id, productId: product.id}})
+        }
+        await existingProduct.update({productQuantity: product.productQuantity})
       }
-      await existingProduct.update({ productQuantity: product.productQuantity })
-    })
-    const cartWithAssociations = await Cart.findById(cart.id, { include: [{ all: true }] })
-    res.json(cartWithAssociations)
+     const asyncForEach = async (array, callback) => {
+        for (let index = 0; index < array.length; index++) {
+          await callback(array[index])
+        }
+      }
+    const start = async () => {
+      await asyncForEach(req.body.products, async (product) => {
+        await waitFor(product)
+      })
+      const cartWithAssociations = await Cart.findById(cart.id, {include: [{all: true}]})
+      res.json(cartWithAssociations)
+    }
+    start()
   }
   catch (err) { next(err) }
 })
