@@ -42,32 +42,37 @@ class SingleProduct extends Component {
       quantity = product.inventoryQuantity
       price = product.price
       productContent = (
-        <div className="container-fluid">
+        <div className="container-fluid bg-light">
           <div className="row">
             <div className="col-md-8">
-              <img className="img-responsive" src={product.imageUrl} />
+              <img
+                className="img-responsive mx-3 my-5"
+                src={product.imageUrl}
+              />
             </div>
             <div className="col-md-4">
-              <h1>{product.title}</h1>
-              <p>{product.description}</p>
-              <h5>${product.price}</h5>
-              <div>
-                <form>
-                  <label>Select Quantity</label>
-                  <select
-                    name="product-quantity"
-                    value={this.state.selectedQuantity}
-                    onChange={this.handleChange}
-                  >
-                    {Array.apply(null, new Array(quantity)).map((el, ind) => {
-                      return <option key={ind}>{ind}</option>
-                    })}
-                  </select>
-                </form>
-                <h5>Subtotal: ${this.state.selectedQuantity * price}</h5>
-                <button type="submit" onClick={this.handleSubmit}>
-                  Add to cart
-                </button>
+              <div className="mx-3 my-5">
+                <h1>{product.title}</h1>
+                <p>{product.description}</p>
+                <h5>${product.price}</h5>
+                <div>
+                  <form>
+                    <label>Select Quantity</label>
+                    <select
+                      name="product-quantity"
+                      value={this.state.selectedQuantity}
+                      onChange={this.handleChange}
+                    >
+                      {Array.apply(null, new Array(quantity)).map((el, ind) => {
+                        return <option key={ind}>{ind}</option>
+                      })}
+                    </select>
+                  </form>
+                  <h5>Subtotal: ${this.state.selectedQuantity * price}</h5>
+                  <button type="submit" onClick={this.handleSubmit}>
+                    Add to cart
+                  </button>
+                </div>
               </div>
             </div>
           </div>
