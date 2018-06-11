@@ -10,11 +10,9 @@ class AllUsers extends Component {
 
   render(){
     const {users} = this.props
-    console.log("Helloooooo nurse", this.props.users)
     return (
       <div>
-        {users.map(user => (<UserCard key={user.id} user={user} />
-        Hello
+        {users.map(user => {return <UserCard key={user.id} user={user} />})}
       </div>
     )
   }
