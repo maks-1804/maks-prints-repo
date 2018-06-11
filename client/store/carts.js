@@ -3,8 +3,8 @@ import axios from 'axios'
 /**
  * ACTION TYPES
  */
-// const GET_CARTS = 'GET_CARTS'
 // view my carts (closed) OR view all carts (admin)
+// const GET_CARTS = 'GET_CARTS'
 const GET_OPEN_CART = 'GET_OPEN_CART'
 // only for open carts (users, by id) (un-logged-in users, by session?)
 const ADD_CART = 'ADD_CART'
@@ -28,11 +28,11 @@ const addCart = cart => ({
 const editCart = cart => ({type: EDIT_CART, cart})
 export const updateNumItemsAndSubtotal = products => ({type: UPDATE_NUM_AND_SUBTOTAL, products})
 
-
 export const addProductNoUser = (product) => ({type: ADD_PRODUCT_NO_USER, product})
 
 export const deleteProductNoUser = (product) => ({type: DELETE_PRODUCT_NO_USER, product})
 const deleteProductWithUser = cart => ({type: DELETE_PRODUCT_WITH_USER, cart})
+
 
 /**THUNKS **/
 export const retrieveOpenCart = (user) => {

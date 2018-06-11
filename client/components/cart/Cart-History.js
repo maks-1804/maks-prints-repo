@@ -9,7 +9,7 @@ class CartHistory extends Component {
     this.state = {}
   }
   render() {
-    //do is logge din info on open cart page
+    //do is logged in info on open cart page
     return (
       <div>
         <h2>Order History</h2>
@@ -19,7 +19,7 @@ class CartHistory extends Component {
 
 const mapState = state => {
   return {
-    // isLoggedIn: !!state.user.id
+    orderHistory:
   }
 }
 
