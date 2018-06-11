@@ -10,7 +10,8 @@ import {
   ProductList,
   ProductSingle,
   OpenCart,
-  EditProduct
+  EditProduct,
+  AllUsers
 } from './components'
 //import ProductList from './components/shop/product-list'
 import ReviewList from './components/reviews/Review-List'
@@ -49,7 +50,7 @@ class Main extends Component {
             <Route exact path="/admin/user/edit/:userId" />
             <Route exact path="/admin/product/add" />
             <Route exact path="/admin/dashboard" />
-            <Route exact path="/admin/user/" />
+            <Route exact path="/admin/users/" component={AllUsers} />
             <Route exact path="/admin/carts" />
           </Switch>
         )}
