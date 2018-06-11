@@ -10,7 +10,9 @@ const Navbar = (props) => {
   const { handleClick, isLoggedIn, id } = props
 
   return (
-    <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-default navbar-transparent navbar-fixed-top navbar-color-on-scroll">
+
+
       <div className="container">
         <div className="navbar-header">
           <NavLink className="navbar-brand" to="/">MAKS PRINTS</NavLink>
