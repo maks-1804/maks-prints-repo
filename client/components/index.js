@@ -11,4 +11,6 @@ export { default as ProductSingle } from './shop/Product-Single'
 export { default as Forbidden } from './Forbidden'
 export { UserDashboard, UserEdit } from './user'
 
+export { default as EditProduct } from './admin/EditProduct'
+
 export { ReviewList } from './reviews'

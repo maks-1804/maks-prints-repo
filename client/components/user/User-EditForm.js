@@ -57,7 +57,6 @@ class UserEdit extends React.Component {
   }
 
   render() {
-<<<<<<< HEAD
     if (this.props.user.id === Number(this.props.match.params.userId)) {
       return (
         <div className='container'>
