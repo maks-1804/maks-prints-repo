@@ -7,7 +7,7 @@ import SearchBar from './Navbar-Search';
 import { logout } from "../store";
 
 const Navbar = (props) => {
-  const { handleClick, isLoggedIn, id } = props
+  const { handleClick, isLoggedIn, id, numberOfItems, subtotal } = props
 
   return (
     <nav className="navbar navbar-default navbar-transparent navbar-fixed-top navbar-color-on-scroll">
@@ -48,6 +48,13 @@ const Navbar = (props) => {
               </ul>
             </div>
           )}
+        <div className='row align-items-center'>
+          <NavLink to='/cart'>
+            <img src='https://d30y9cdsu7xlg0.cloudfront.net/png/7352-200.png' style={{maxHeight: '50px', maxWidth: '50px'}} />
+          </NavLink>
+          <h5 className='col-2'>({numberOfItems})</h5>
+          <h5 className='col-2'>${subtotal}</h5>
+        </div>
       </div>
     </nav >
   )
@@ -59,17 +66,19 @@ const Navbar = (props) => {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    id: state.user.id
-  };
-};
+    id: state.user.id,
+    numberOfItems: state.frontEndCartReducer.numItemsInCart,
+    subtotal: state.frontEndCartReducer.subtotal
+  }
+}
 
 const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout());
     }
-  };
-};
+  }
+}
 
 export default connect(mapState, mapDispatch)(Navbar);
 
