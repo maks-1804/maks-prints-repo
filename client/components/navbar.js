@@ -49,7 +49,9 @@ const Navbar = (props) => {
             </div>
           )}
         <div className='row align-items-center'>
-          <img src='https://d30y9cdsu7xlg0.cloudfront.net/png/7352-200.png' style={{maxHeight: '50px', maxWidth: '50px'}}/>
+          <NavLink to='/cart'>
+            <img src='https://d30y9cdsu7xlg0.cloudfront.net/png/7352-200.png' style={{maxHeight: '50px', maxWidth: '50px'}}/>
+          </NavLink>
           <h5 className='col-2'>({numberOfItems})</h5>
           <h5 className='col-2'>${subtotal}</h5>
         </div>
