@@ -1,9 +1,11 @@
 const router = require('express').Router()
 const { Review, Product, User } = require('../db/models')
+const { isAdmin, isUser, isAdminOrUser } = require('./access')
+
 module.exports = router
 
 // GET - ADMIN ONLY --- all reviews
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     if (req.user.type === 'admin') {
       const reviews = await Review.findAll({
@@ -33,7 +35,7 @@ router.get('/:productId', async (req, res, next) => {
 })
 
 // GET: USER SPECIFIC & ADMIN --- all associated reviews with user
-router.get('/user/:userId', async (req, res, next) => {
+router.get('/user/:userId', isAdminOrUser, async (req, res, next) => {
   const userId = +req.params.userId
   try {
     if (req.user.type === 'admin' || req.user.id === userId) {
@@ -52,9 +54,14 @@ router.get('/user/:userId', async (req, res, next) => {
 })
 
 // User adds a review to a specific product
-router.post('/', async (req, res, next) => {
+router.post('/:id/', isUser, async (req, res, next) => {
   try {
-    const review = await Review.create(req.body)
+    const product = Product.findById(req.params.id)
+    if (!product) res.sendStatus(404)
+    const newReview = req.body
+    newReview.productId = Number(req.params.id)
+    newReview.userId = req.user.id
+    const review = await Review.create(newReview)
     res.status(201).json(review)
   } catch (err) {
     next(err)
@@ -62,7 +69,7 @@ router.post('/', async (req, res, next) => {
 })
 
 // User edits a review to a specific product
-router.put('/:reviewId', async (req, res, next) => {
+router.put('/:reviewId', isUser, async (req, res, next) => {
   try {
     const review = await Review.findById(req.params.reviewId)
     if (!review) res.sendStatus(404)
@@ -78,20 +85,12 @@ router.put('/:reviewId', async (req, res, next) => {
 })
 
 // User deletes a review to a specific product
-router.delete('/product/:productId', async (req, res, next) => {
-  const userId = +req.params.userId
+router.delete('/:productId/:reviewId', isUser, async (req, res, next) => {
   try {
-    if (req.user.type === 'admin' || req.user.id === userId) {
-      const review = await Review.findOne({
-        where: {
-          productId: userId
-        }
-      })
-      await review.destroy()
-      res.end()
-    } else {
-      res.sendStatus(403)
-    }
+    const review = await Review.findById(req.params.reviewId)
+    if (!review) res.sendStatus(404)
+    await review.destroy()
+    res.end()
   } catch (err) {
     next(err)
   }

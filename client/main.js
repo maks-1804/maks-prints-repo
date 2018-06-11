@@ -9,6 +9,7 @@ import {
   UserEdit,
   ProductList,
   ProductSingle,
+  Forbidden,
   EditProduct
 } from './components'
 //import ProductList from './components/shop/product-list'
@@ -38,7 +39,7 @@ class Main extends Component {
           path="/shop/product/:productId"
           component={ProductSingle}
         />
-
+        <Route exact path="/forbidden" component={Forbidden} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
