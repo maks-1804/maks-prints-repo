@@ -7,7 +7,7 @@ export { default as Navbar } from './Navbar'
 export { Login, Signup } from './AuthForm'
 export { default as ProductList } from './shop/ProductList'
 export { default as NavCategory } from './shop'
-export { default as ProductSingle } from './shop/ProductSingle'
+export { default as ProductSingle } from './shop/SingleProduct'
 export { UserDashboard, UserEdit } from './user'
 export { AdminDashboard, AddProduct } from './admin'
 //!!!!!!!
