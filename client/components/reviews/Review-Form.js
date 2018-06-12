@@ -14,7 +14,6 @@ class ReviewForm extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  //component did mount, try to get prev state in case of editing?
 
   handleSubmit(event) {
     event.preventDefault()
@@ -25,7 +24,6 @@ class ReviewForm extends Component {
       content: this.state.content,
       rating: this.state.rating
     }
-    console.log('handling review submit,', newReview, this.props.product.id)
     this.props.postReview(newReview, this.props.product.id)
     //reset form to blank vals
     this.setState({

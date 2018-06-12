@@ -28,7 +28,6 @@ export const loadAllReviews = () => {
     try {
       const response = await axios.get('/api/reviews')
       const reviews = response.data
-      console.log('dispatching load all reviews', reviews)
       dispatch(getReviews(reviews))
     } catch (err) {
       console.log('Error getting all reviews: ', err.message)
@@ -52,7 +51,6 @@ export const addReview = (review, id) => {
     try {
       const response = await axios.post(`/api/reviews/${id}`, review)
       const newReview = response.data
-      console.log('dispatching new review thunk,', newReview)
       dispatch(addNewReview(newReview))
     } catch (err) {
       console.log('Error adding new review: ', err.message)

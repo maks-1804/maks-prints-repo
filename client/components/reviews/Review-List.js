@@ -8,7 +8,7 @@ import { loadAllReviews } from '../../store/reviews'
 
 class ReviewList extends React.Component {
   // Initialize state in constructor,
-  // Or with a property initializer.
+  // Or with a property initializer. linter is unhappy but get derived state needs this to work!
   state = {
     reviews: []
   }
@@ -27,7 +27,6 @@ class ReviewList extends React.Component {
   }
   render() {
     const { product, reviews } = this.props
-    console.log(this.props.reviews, this.state.reviews)
     let reviewContext
     if (product && product.title && reviews.length) {
       reviewContext = (
