@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { loadAllProducts, deleteProduct } from '../../store/products'
 import { ProductCard } from '../shop'
@@ -16,7 +17,10 @@ class AdminDashboard extends React.Component {
           <h3>Product Management</h3>
           <div>
             <div>
-              <p>Add a new product</p>
+              <h4>Add a new product</h4>
+              <Link to="/admin/product/add">
+                <button type="button">Add Product</button>
+              </Link>
             </div>
             <div>
               {

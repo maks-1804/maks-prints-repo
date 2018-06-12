@@ -3,8 +3,8 @@ import axios from 'axios'
 /**
  * ACTION TYPES
  */
-// const GET_CARTS = 'GET_CARTS'
 // view my carts (closed) OR view all carts (admin)
+// const GET_CARTS = 'GET_CARTS'
 const GET_OPEN_CART = 'GET_OPEN_CART'
 // only for open carts (users, by id) (un-logged-in users, by session?)
 const ADD_CART = 'ADD_CART'
@@ -21,18 +21,13 @@ const DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER '
  */
 const getOpenCart = cart => ({type: GET_OPEN_CART, cart})
 const closeCart = () => ({type: CLOSE_CART})
-const addCart = cart => ({
-  type: ADD_CART,
-  cart
-})
+const addCart = cart => ({type: ADD_CART, cart})
 const editCart = cart => ({type: EDIT_CART, cart})
 export const updateNumItemsAndSubtotal = products => ({type: UPDATE_NUM_AND_SUBTOTAL, products})
-
-
 export const addProductNoUser = (product) => ({type: ADD_PRODUCT_NO_USER, product})
-
 export const deleteProductNoUser = (product) => ({type: DELETE_PRODUCT_NO_USER, product})
 const deleteProductWithUser = cart => ({type: DELETE_PRODUCT_WITH_USER, cart})
+
 
 /**THUNKS **/
 export const retrieveOpenCart = (user) => {
@@ -40,13 +35,14 @@ export const retrieveOpenCart = (user) => {
     try {
       const response = await axios.get(`/api/carts/open/${user.id}`)
       //response.data returns an array so accessing it's first element
-      const openCart = response.data[0]
+      let openCart = response.data[0]
       console.log('in store, openCart.products: ', openCart)
+      openCart = openCart.products ? openCart : {...openCart, products: []}
       dispatch(getOpenCart(openCart))
       openCart.products && dispatch(updateNumItemsAndSubtotal(openCart.products))
       // return openCart
     }
-    catch (err) {console.log('Error getting cart', err.message)}
+    catch (err) {console.log('Error getting cart: ', err.message)}
   }
 }
 
@@ -60,7 +56,7 @@ export const createNewCart = (user, products) => {
       const cart = response.data
       dispatch(addCart(cart))
     }
-    catch (err) { console.log('Error creating cart', err.message) }
+    catch (err) { console.log('Error creating cart: ', err.message) }
   }
 }
 
@@ -71,7 +67,7 @@ export const closeTheCart = cart => {
       const closedCart = response.data
       dispatch(closeCart(closedCart))
     }
-    catch (err) { console.log('Error closing cart', err.message) }
+    catch (err) { console.log('Error closing cart: ', err.message) }
   }
 }
 
@@ -83,11 +79,10 @@ export const editTheCart = (cart, user) => {
         user: user
       })
       const editedCart = response.data
-      console.log('in store, editedCart: ', editedCart)
       dispatch(editCart(editedCart))
       dispatch(updateNumItemsAndSubtotal(editedCart.products))
     }
-    catch (err) { console.log('Error editing cart', err.message)}
+    catch (err) { console.log('Error editing cart: ', err.message)}
   }
 }
 
@@ -105,10 +100,13 @@ export const deleteTheProductWithUser = (cartId, productId) => {
   }
 }
 
+
+/**DEFAULT STATE **/
 const initialCart = {
   products: []
 }
 
+/**REDUCER **/
 export default (state = initialCart, action) => {
   switch (action.type) {
     case ADD_PRODUCT_NO_USER: {
@@ -137,11 +135,13 @@ export default (state = initialCart, action) => {
 
 //------Front End Cart Info ---------//
 
+/**DEFAULT STATE **/
 const initialFrontCart = {
   numItemsInCart: 0,
   subtotal: 0
 }
 
+/**REDUCER **/
 export const frontEndCartReducer = (state = initialFrontCart, action) => {
   switch (action.type) {
     case UPDATE_NUM_AND_SUBTOTAL:
