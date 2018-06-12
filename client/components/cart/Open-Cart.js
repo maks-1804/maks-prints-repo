@@ -51,14 +51,15 @@ class OpenCart extends Component {
     const { cart, products, numberOfItems, subtotal, isLoggedIn } = this.props
     // console.log('in open cart: ', cart)
     return (
-      <div className='container'>
+      <div>
+      <div className='container-fluid cart'>
         <div className='row'>
           <div className='col-10'>
-            <h1>Current Cart:</h1>
+            <h1 id='current-cart'>Current Cart:</h1>
             {products.length < 1
             ? (<h5>There are currently no items in your cart.</h5>)
             : (<div>
-                  <div className='row'>
+                  <div className='row btm-brdr'>
                     <p className='col-8'>Item</p>
                     <p className='col-2'>Price</p>
                     <p className='col-2'>Quantity</p>
@@ -73,7 +74,7 @@ class OpenCart extends Component {
                   })}
                </div>)}
           </div>
-          <div className='column col-2'>
+          <div className='column col-2 summary row-3'>
                 <h5>Cart Summary:</h5>
                 <div className='row'>
                   <p className='col-7'>Items({numberOfItems}):</p>
@@ -82,9 +83,12 @@ class OpenCart extends Component {
                 <button type='submit'>Place Your Order</button>
           </div>
         </div>
+      </div>
+      <div className='container-fluid cart'>
         {/* if a user is logged in, they can see their order history: */}
         {isLoggedIn &&
           <CartHistory />}
+      </div>
       </div>
     )
   }

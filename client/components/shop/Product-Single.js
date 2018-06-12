@@ -76,10 +76,7 @@ class SingleProduct extends Component {
         <div className="container-fluid bg-light">
           <div className="row">
             <div className="col-md-8">
-              <img
-                className="img-responsive mx-3 my-5"
-                src={product.imageUrl}
-              />
+              <img className="col s8" src={product.imageUrl} />
             </div>
             <div className="col-md-4">
               <div className="mx-3 my-5">
@@ -165,8 +162,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
-)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SingleProduct)
+);
 
 // SingleProduct.propTypes = {
 //   id: PropTypes.string.isRequired,

@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Merriweather', sans-serif;
 }
 
 a {
@@ -45,3 +45,45 @@ img {
   padding: 0.5em;
   margin: 1em 0.5em;
 } */
+
+
+/* Cart Styles */
+.cart {
+  padding: 30px;
+  margin: 10, 10 auto;
+}
+
+.btm-brdr {
+  border-bottom: 1px solid black;
+}
+
+div.row.btm-brdr {
+  margin-left: 180px;
+  margin-right: 180px;
+}
+
+#current-cart {
+  margin-left: 180px;
+}
+
+#order-history {
+  margin-left: 180px;
+}
+
+.summary {
+  padding: 20px;
+  background: #c2d2df81;
+  text-align: center;
+}
+
+.cart-card {
+  margin: 10px;
+  padding: 20px;
+  background: #c2d2df2d;
+}
+
+#history-card {
+  margin-left: 180px;
+}
+
+
