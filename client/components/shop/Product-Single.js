@@ -39,17 +39,11 @@ class SingleProduct extends Component {
       return product.id === newProduct.id
     }
     if (oldProducts.find(findById) !== undefined) {
-      //finding index correctly
       idx = oldProducts.indexOf(oldProducts.find(findById))
-      console.log('index', idx)
-      console.log(
-        'oldproductsFOUND',
-        oldProducts[idx].cartProducts.productQuantity
-      )
+
       oldQuantity = await oldProducts[idx].cartProducts.productQuantity
       newProduct.productQuantity =
         Number(this.state.selectedQuantity) + Number(oldQuantity)
-      console.log('old', oldQuantity, 'new', newProduct.productQuantity)
       filteredProducts = oldProducts.filter(
         product => product.id !== newProduct.id
       )
@@ -57,19 +51,7 @@ class SingleProduct extends Component {
       filteredProducts = oldProducts
       newProduct.productQuantity = this.state.selectedQuantity
     }
-    // if (oldProducts.includes(newProduct)) {
-    //   idx = oldProducts.indexOf(newProduct)
-    //   oldQuantity = oldProducts[idx].productQuantity
-    //   newProduct.productQuantity = this.state.selectedQuantity + oldQuantity
-    // } else {
-    //   newProduct.productQuantity = this.state.selectedQuantity
-    // }
-    // filteredProducts = oldProducts.filter(
-    //   product => product.id !== newProduct.id
-    // )
-    //replace prev product value (if was there) with the updated quantity
     this.props.openCart.products = [...filteredProducts, newProduct]
-    console.log(this.props.openCart.products)
     //now dispatch!
     this.props.addToCart(this.props.openCart, this.props.user)
   }
