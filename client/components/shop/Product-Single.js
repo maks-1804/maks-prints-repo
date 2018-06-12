@@ -12,17 +12,23 @@ class SingleProduct extends Component {
   constructor() {
     super()
     this.state = {
-      selectedQuantity: 1
+      selectedQuantity: 1,
+      removeAvailable: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleDropdown = this.handleDropdown.bind(this)
+    this.cartQuantity = this.cartQuantity.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (!this.props.product) {
       this.props.fetchProducts()
     }
+    const toRemove = await this.cartQuantity()
+    this.setState({
+      removeAvailable: toRemove
+    })
   }
 
   async handleSubmit(event) {
@@ -55,6 +61,35 @@ class SingleProduct extends Component {
     this.props.openCart.products = [...filteredProducts, newProduct]
     //now dispatch!
     this.props.addToCart(this.props.openCart, this.props.user)
+    //set local state
+    let prevRemoved = Number(this.state.removeAvailable)
+    let toRemove = Number(this.state.selectedQuantity)
+    this.setState({
+      removeAvailable: prevRemoved + toRemove
+    })
+    console.log('remove avail,', this.state.removeAvailable)
+  }
+  async cartQuantity() {
+    const oldProducts = this.props.openCart.products
+    const newProduct = this.props.product
+    let idx
+    let oldQuantity
+    const findById = function(product) {
+      return product.id === newProduct.id
+    }
+    if (oldProducts.find(findById) !== undefined) {
+      idx = oldProducts.indexOf(oldProducts.find(findById))
+
+      oldQuantity = await oldProducts[idx].cartProducts.productQuantity
+    } else {
+      oldQuantity = 0
+    }
+    let prevRemoved = Number(this.state.removeAvailable)
+    let toRemove = Number(this.state.selectedQuantity)
+    // this.setState({
+    //   removeAvailable: prevRemoved + toRemove
+    // })
+    return oldQuantity
   }
 
   handleChange(evt) {
@@ -64,14 +99,14 @@ class SingleProduct extends Component {
   }
 
   handleDropdown() {
-    $(document).ready(function(){
+    $(document).ready(function() {
       $('select').formSelect()
     })
   }
 
   render() {
     const { product } = this.props
-
+    const { removeAvailable } = this.state
     //need some initial values for the form in case we still need to fetch the product
     let quantity = 0
     let productContent
@@ -104,8 +139,13 @@ class SingleProduct extends Component {
                         value={this.state.selectedQuantity}
                         onChange={this.handleChange}
                       >
-                      <option value="" disabled selected>Choose Quantity</option>
-                        {Array.apply(null, new Array(quantity)).map((el, ind) => {
+                        <option value="" disabled selected>
+                          Choose Quantity
+                        </option>
+                        {Array.apply(
+                          null,
+                          new Array(quantity - removeAvailable)
+                        ).map((el, ind) => {
                           return <option key={ind}>{ind + 1}</option>
                         })}
                       </select>
@@ -173,17 +213,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(SingleProduct)
-);
-
-// SingleProduct.propTypes = {
-//   id: PropTypes.string.isRequired,
-//   title: PropTypes.string.isRequired,
-//   description: PropTypes.string.isRequired,
-//   price: PropTypes.number.isRequired,   //number is corrent for number?
-//   inventoryQuantity: PropTypes.number.isRequired,   //number is corrent for number?
-//   imageUrl: PropTypes.string.isRequired
-// }
+  connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
+)
