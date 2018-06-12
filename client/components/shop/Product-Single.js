@@ -5,8 +5,7 @@ import { loadAllProducts } from '../../store/products'
 import ReviewList from '../reviews/Review-List'
 import { ReviewForm } from '../reviews'
 
-import { retreiveOpenCart, editTheCart } from '../../store/cart'
-//import { me } from '../../store/user'
+import { retrieveOpenCart, editTheCart } from '../../store/cart'
 
 class SingleProduct extends Component {
   constructor() {

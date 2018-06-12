@@ -5,14 +5,6 @@ import { withRouter } from 'react-router'
 import SingleReview from './Single-Review'
 
 import { loadAllReviews } from '../../store/reviews'
-// class ReviewList extends Component {
-//   constructor(){
-//     super()
-//   }
-//   static getDerivedStateFromProps(props, nextProps){
-
-//   }
-// }
 
 class ReviewList extends React.Component {
   // Initialize state in constructor,
@@ -51,29 +43,11 @@ class ReviewList extends React.Component {
     return <div className="container-review-list">{reviewContext}</div>
   }
 }
-const DumbReviewList = props => {
-  const { product, reviews } = props
-  let reviewContext
-  if (product && product.title && reviews.length) {
-    reviewContext = (
-      <div>
-        {reviews.map(review => (
-          <SingleReview key={review.id} review={review} />
-        ))}
-      </div>
-    )
-  } else {
-    reviewContext = <div>reviews are maybe alive</div>
-  }
-  return <div className="container-review-list">{reviewContext}</div>
-}
 
 const mapStateToProps = (state, ownProps) => {
   const id = Number(ownProps.match.params.productId)
   return {
     product: state.products.filter(product => product.id === id)[0],
-    reviewsOnProduct: state.products.filter(product => product.id === id)[0]
-      .reviews,
     reviews: state.reviews.filter(review => review.productId === id)
   }
 }
