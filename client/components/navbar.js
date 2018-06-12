@@ -27,7 +27,7 @@ const Navbar = props => {
           </div>
 
           <div className="center">
-            <SearchBar />
+            {/* <SearchBar /> */}
           </div>
 
           {/* The navbar will show these links after you log in */}

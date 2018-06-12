@@ -19,7 +19,7 @@ class AdminDashboard extends React.Component {
           <div className="row">
             <div>
               <Link to="/admin/product/add">
-                <button type="button">Add Product</button>
+                <button className="btn-large waves-effect waves-light" type="button">Add Product</button>
               </Link>
             </div>
             <div className="card-columns">
