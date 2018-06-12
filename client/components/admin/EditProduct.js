@@ -13,23 +13,25 @@ class ProductEdit extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.returnState = this.returnState.bind(this)
   }
-
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.product.title !== prevState.title) {
-  //     return {
-  //       title: nextProps.product.title,
-  //       image: nextProps.product.imageUrl,
-  //       description: nextProps.user.imageUrl,
-  //       price: nextProps.user.price
-  //     }
-  //   }
-  // }
 
   componentDidMount(){
     if (!this.props.product) { this.props.loadProducts() }
-    //!!!!
+    this.returnState()
   }
+
+  returnState(){
+    return {
+        getDerivedStateFromProps(props, state) {
+          const { product } = props
+          const { title } = state
+          console.log('here is the product', product)
+          console.log('here is the title', title)
+        }
+    }
+  }
+
 
   handleChange(evt) {
     this.setState({
@@ -118,9 +120,7 @@ class ProductEdit extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const id = Number(ownProps.match.params.productId)
-  console.log(id)
   const product = state.products.find(elem => elem.id === id)
-  console.log(state.products)
   return {
     product: product
   }
