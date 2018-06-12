@@ -33,7 +33,7 @@ const seed = async () => {
         isAdmin: false
       })
     ])
-    const [nationalParks, southAmerica, california] = await Promise.all([
+    const [nationalParks, southAmerica, california, cities, selfies, animals] = await Promise.all([
       Category.create({
         name: 'National Parks'
       }),
@@ -42,9 +42,18 @@ const seed = async () => {
       }),
       Category.create({
         name: 'California'
+      }),
+      Category.create({
+        name: 'Cities'
+      }),
+      Category.create({
+        name: 'Selfies'
+      }),
+      Category.create({
+        name: 'Animals'
       })
     ])
-    const [cart1, cart2, cart3] = await Promise.all([
+    const [cart1, cart2, cart3, cart4, cart5, cart6] = await Promise.all([
       Cart.create({
         date: Date.now(),
         status: 'open',
@@ -59,6 +68,21 @@ const seed = async () => {
         date: new Date('June 4, 2018 12:00:00'),
         status: 'open',
         subtotal: 50
+      }),
+      Cart.create({
+        date: new Date('March 10, 2018 03:24:00'),
+        status: 'closed',
+        subtotal: 85
+      }),
+      Cart.create({
+        date: new Date('June 3, 2018 03:24:00'),
+        status: 'processing',
+        subtotal: 10
+      }),
+      Cart.create({
+        date: new Date('June 1, 2018 03:24:00'),
+        status: 'canceled',
+        subtotal: 3
       })
     ])
 
@@ -67,13 +91,15 @@ const seed = async () => {
       glacier,
       grandCanyon,
       redwoods,
-      patagonia
+      patagonia,
+      skyViewCity,
+      superHighway
     ] = await Promise.all([
       Product.create({
         title: 'Yellowstone',
         description:
           'Colorful thermal feature, Yellowstone National Park, Montana',
-        price: 30,
+        price: 300,
         inventoryQuantity: 20,
         imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/1/1b/Old_Faithfull-pdPhoto.jpg'
@@ -81,7 +107,7 @@ const seed = async () => {
       Product.create({
         title: 'Glacier',
         description: 'Margerie Glacier, Tarr Inlet, Glacier Bay National Park',
-        price: 25,
+        price: 250,
         inventoryQuantity: 15,
         imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/7/72/Mount_Reynolds_at_Logan_Pass.jpg'
@@ -89,7 +115,7 @@ const seed = async () => {
       Product.create({
         title: 'Grand Canyon',
         description: 'Grand Canyon with River views',
-        price: 15,
+        price: 150,
         inventoryQuantity: 34,
         imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/c/cd/Grandcanyon_view2.jpg'
@@ -97,7 +123,7 @@ const seed = async () => {
       Product.create({
         title: 'Redwoods',
         description: 'Redwoods Avenue of Giants',
-        price: 25,
+        price: 250,
         inventoryQuantity: 20,
         imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Fitz_Roy_framed_trees_%28colour_balans%29.jpg/1920px-Fitz_Roy_framed_trees_%28colour_balans%29.jpg'
@@ -105,10 +131,24 @@ const seed = async () => {
       Product.create({
         title: 'Patagonia',
         description: 'Patagonia Glaciers',
-        price: 55,
+        price: 550,
         inventoryQuantity: 10,
         imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Fitz_Roy_framed_trees_%28colour_balans%29.jpg/1920px-Fitz_Roy_framed_trees_%28colour_balans%29.jpg'
+      }),
+      Product.create({
+        title: 'Sky View City',
+        description: 'View from above',
+        price: 550,
+        inventoryQuantity: 10,
+        imageUrl: 'https://cdn.triplepundit.com/wp-content/uploads/2017/03/chicago-1791002_1280.jpg'
+      }),
+      Product.create({
+        title: 'Super Highway',
+        description: 'A big highway in a city',
+        price: 350,
+        inventoryQuantity: 15,
+        imageUrl: 'https://www.100resilientcities.org/wp-content/uploads/2017/06/cities-bangkok_optimized-450x300.jpg'
       })
     ])
 
@@ -137,15 +177,20 @@ const seed = async () => {
     await glacier.setCategories([nationalParks])
     await redwoods.setCategories([nationalParks, california])
     await grandCanyon.setCategories([nationalParks])
+    await skyViewCity.setCategories([cities])
+    await superHighway.setCategories([cities])
 
     //add products to the carts
     await cart1.setProducts([yellowstone, patagonia])
     await cart2.setProducts([yellowstone, glacier, redwoods])
     await cart3.setProducts([grandCanyon, glacier, patagonia])
+    await cart4.setProducts([patagonia, skyViewCity])
+    await cart5.setProducts([superHighway, redwoods, glacier])
+    await cart6.setProducts([grandCanyon])
 
     //assign user a cart or multiple carts
     await arielle.setCarts([cart1, cart2])
-    await monica.setCarts([cart3])
+    await monica.setCarts([cart3, cart4, cart5, cart6])
 
     //assign reviews to the users that wrote them
     await kaitlin.setReviews([review1, review2])

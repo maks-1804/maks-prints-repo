@@ -8,7 +8,7 @@ const Cart = db.define('cart', {
     defaultValue: null
   },
   status: {
-    type: Sequelize.ENUM('open', 'closed'),
+    type: Sequelize.ENUM('open', 'closed', 'processing', 'canceled'),
     defaultValue: 'open'
   },
   subtotal: {
@@ -46,6 +46,5 @@ Cart.prototype.addNewProduct = async function(id, number){
   } catch (err) { console.error(err.message) }
 }
 
-// add an instance method to add product to cart
 
 module.exports = {Cart, cartProducts}
