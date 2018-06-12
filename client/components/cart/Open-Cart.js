@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import CartProductCard from './Cart-ProductCard'
+import CartHistory from './Cart-History'
 import {
   retrieveOpenCart,
   editTheCart,
   deleteProductNoUser,
-  deleteTheProductWithUser } from '../../store/carts'
-// import {}
+  deleteTheProductWithUser } from '../../store/cart'
+
 
 //<Route exact path='cart' component={OpenCart} />
 
@@ -47,8 +48,8 @@ class OpenCart extends Component {
   }
 
   render() {
-    const { cart, products, numberOfItems, subtotal} = this.props
-    console.log('in open cart: ', cart)
+    const { cart, products, numberOfItems, subtotal, isLoggedIn } = this.props
+    // console.log('in open cart: ', cart)
     return (
       <div className='container'>
         <div className='row'>
@@ -81,6 +82,9 @@ class OpenCart extends Component {
                 <button type='submit'>Place Your Order</button>
           </div>
         </div>
+        {/* if a user is logged in, they can see their order history: */}
+        {isLoggedIn &&
+          <CartHistory />}
       </div>
     )
   }

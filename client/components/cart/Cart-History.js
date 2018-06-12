@@ -19,13 +19,13 @@ class CartHistory extends Component {
 
 const mapState = state => {
   return {
-    orderHistory:
+    orderHistory: state.carts
   }
 }
 
 // const mapDispatch ??
 
-export default connect(mapState, mapDispatch)(CartHistory)
+export default connect(mapState)(CartHistory)
 
 CartHistory.propTypes = {
 

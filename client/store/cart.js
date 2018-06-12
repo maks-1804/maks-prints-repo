@@ -21,15 +21,10 @@ const DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER '
  */
 const getOpenCart = cart => ({type: GET_OPEN_CART, cart})
 const closeCart = () => ({type: CLOSE_CART})
-const addCart = cart => ({
-  type: ADD_CART,
-  cart
-})
+const addCart = cart => ({type: ADD_CART, cart})
 const editCart = cart => ({type: EDIT_CART, cart})
 export const updateNumItemsAndSubtotal = products => ({type: UPDATE_NUM_AND_SUBTOTAL, products})
-
 export const addProductNoUser = (product) => ({type: ADD_PRODUCT_NO_USER, product})
-
 export const deleteProductNoUser = (product) => ({type: DELETE_PRODUCT_NO_USER, product})
 const deleteProductWithUser = cart => ({type: DELETE_PRODUCT_WITH_USER, cart})
 
@@ -47,7 +42,7 @@ export const retrieveOpenCart = (user) => {
       openCart.products && dispatch(updateNumItemsAndSubtotal(openCart.products))
       // return openCart
     }
-    catch (err) {console.log('Error getting cart', err.message)}
+    catch (err) {console.log('Error getting cart: ', err.message)}
   }
 }
 
@@ -61,7 +56,7 @@ export const createNewCart = (user, products) => {
       const cart = response.data
       dispatch(addCart(cart))
     }
-    catch (err) { console.log('Error creating cart', err.message) }
+    catch (err) { console.log('Error creating cart: ', err.message) }
   }
 }
 
@@ -72,7 +67,7 @@ export const closeTheCart = cart => {
       const closedCart = response.data
       dispatch(closeCart(closedCart))
     }
-    catch (err) { console.log('Error closing cart', err.message) }
+    catch (err) { console.log('Error closing cart: ', err.message) }
   }
 }
 
@@ -84,11 +79,10 @@ export const editTheCart = (cart, user) => {
         user: user
       })
       const editedCart = response.data
-      console.log('in store, editedCart: ', editedCart)
       dispatch(editCart(editedCart))
       dispatch(updateNumItemsAndSubtotal(editedCart.products))
     }
-    catch (err) { console.log('Error editing cart', err.message)}
+    catch (err) { console.log('Error editing cart: ', err.message)}
   }
 }
 
@@ -106,10 +100,13 @@ export const deleteTheProductWithUser = (cartId, productId) => {
   }
 }
 
+
+/**DEFAULT STATE **/
 const initialCart = {
   products: []
 }
 
+/**REDUCER **/
 export default (state = initialCart, action) => {
   switch (action.type) {
     case ADD_PRODUCT_NO_USER: {
@@ -138,11 +135,13 @@ export default (state = initialCart, action) => {
 
 //------Front End Cart Info ---------//
 
+/**DEFAULT STATE **/
 const initialFrontCart = {
   numItemsInCart: 0,
   subtotal: 0
 }
 
+/**REDUCER **/
 export const frontEndCartReducer = (state = initialFrontCart, action) => {
   switch (action.type) {
     case UPDATE_NUM_AND_SUBTOTAL:

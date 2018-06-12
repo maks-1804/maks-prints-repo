@@ -6,7 +6,7 @@ import { loadAllProducts } from '../../store/products'
 import ReviewList from '../reviews/Review-List'
 import { ReviewForm } from '../reviews'
 
-import { retreiveOpenCart, editTheCart } from '../../store/carts'
+import { retreiveOpenCart, editTheCart } from '../../store/cart'
 //import { me } from '../../store/user'
 
 class SingleProduct extends Component {
