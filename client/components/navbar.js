@@ -26,17 +26,22 @@ const Navbar = props => {
             </NavLink>
           </div>
 
-          <div className="center">
+          <div className="nav-wrapper">
             {/* <SearchBar /> */}
+          </div>
+
+          <div className="nav-wrapper">
+            <ul className="hide-on-med-and-down">
+              <li>
+                <NavLink to="/shop">Shop</NavLink>
+              </li>
+            </ul>
           </div>
 
           {/* The navbar will show these links after you log in */}
           {isLoggedIn ? (
             <div className="nav-wrapper">
               <ul className="right hide-on-med-and-down">
-                <li>
-                  <NavLink to="/shop">Shop</NavLink>
-                </li>
                 {isAdmin ? (
                   <li>
                     <NavLink to="/admin/dashboard">Dashboard</NavLink>
