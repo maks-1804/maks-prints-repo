@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import CartProductCard from './Cart-ProductCard'
-import CartHistory from './Cart-History'
+import CartHistory from './CartHistory'
 import Checkout from './Checkout'
 import {
   retrieveOpenCart,

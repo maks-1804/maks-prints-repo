@@ -16,7 +16,7 @@ import {
   AdminDashboard
 } from './components'
 //import ProductList from './components/shop/product-list'
-import ReviewList from './components/reviews/Review-List'
+import ReviewList from './components/reviews/ReviewList'
 import { me } from './store'
 
 /**
