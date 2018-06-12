@@ -28,12 +28,23 @@ export const loadAllReviews = () => {
     try {
       const response = await axios.get('/api/reviews')
       const reviews = response.data
+      console.log('dispatching load all reviews', reviews)
       dispatch(getReviews(reviews))
     } catch (err) {
       console.log('Error getting all reviews: ', err.message)
     }
   }
 }
+
+// export const loadProductReviews = id => {
+//   return async dispatch => {
+//     try {
+
+//     } catch (err) {
+//       console.log('error getting reviews on product:', err.message)
+//     }
+//   }
+// }
 //need to interpolate to add to correct product
 //api/reviews/:productId
 export const addReview = (review, id) => {

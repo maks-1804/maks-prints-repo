@@ -4,13 +4,21 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import SingleReview from './Single-Review'
 
+// class ReviewList extends Component {
+//   constructor(){
+//     super()
+//   }
+//   static getDerivedStateFromProps(props, nextProps){
+
+//   }
+// }
 const ReviewList = props => {
-  const { product } = props
+  const { product, reviews } = props
   let reviewContext
-  if (product && product.title && product.reviews.length) {
+  if (product && product.title && reviews.length) {
     reviewContext = (
       <div>
-        {product.reviews.map(review => (
+        {reviews.map(review => (
           <SingleReview key={review.id} review={review} />
         ))}
       </div>
@@ -24,7 +32,8 @@ const ReviewList = props => {
 const mapStateToProps = (state, ownProps) => {
   const id = Number(ownProps.match.params.productId)
   return {
-    product: state.products.filter(product => product.id === id)[0]
+    product: state.products.filter(product => product.id === id)[0],
+    reviews: state.products.filter(product => product.id === id)[0].reviews
   }
 }
 
