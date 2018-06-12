@@ -22,6 +22,7 @@ const CartProductCard = props => {
         {cartStatus === 'open'
           ?  (<form className='col-1'>
                 <select
+                  className="browser-default"
                   name="product-quantity"
                   defaultValue={product.cartProducts.productQuantity}
                   onChange={(evt) => changeQuantity(evt, product)}
@@ -38,9 +39,7 @@ const CartProductCard = props => {
   )
 }
 
-
 export default CartProductCard
-
 
 // CartProductCard.propTypes = {
 //   id: PropTypes.number.isRequired,
