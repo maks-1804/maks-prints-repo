@@ -3823,9 +3823,11 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.frontEndCartReducer = exports.default = exports.deleteTheProductWithUser = exports.editTheCart = exports.closeTheCart = exports.createNewCart = exports.retrieveOpenCart = exports.deleteProductNoUser = exports.addProductNoUser = exports.updateNumItemsAndSubtotal = void 0;
+exports.frontEndCartReducer = exports.default = exports.deleteTheProductWithUser = exports.editTheCart = exports.closeTheCart = exports.createNewCart = exports.getCookieCart = exports.retrieveOpenCart = exports.deleteProductNoUser = exports.addProductNoUser = exports.updateNumItemsAndSubtotal = void 0;
 
 var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+
+var _reduxCookie = __webpack_require__(/*! redux-cookie */ "./node_modules/redux-cookie/lib/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3975,6 +3977,15 @@ var retrieveOpenCart = function retrieveOpenCart(user) {
 };
 
 exports.retrieveOpenCart = retrieveOpenCart;
+
+var getCookieCart = function getCookieCart() {
+  return function (dispatch) {
+    var cart = dispatch((0, _reduxCookie.getCookie)('cart'));
+    dispatch(getOpenCart(cart && JSON.parse(cart)) || []);
+  };
+};
+
+exports.getCookieCart = getCookieCart;
 
 var createNewCart = function createNewCart(user, products) {
   return (
@@ -4514,6 +4525,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import { createCookieMiddleware } from 'redux-cookie'
 var reducer = (0, _redux.combineReducers)({
   user: _user.default,
   products: _products.default,
@@ -67613,6 +67625,106 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
+
+/***/ }),
+
+/***/ "./node_modules/redux-cookie/lib/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/redux-cookie/lib/index.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var REDUX_COOKIES_GET = 'REDUX_COOKIES_GET';
+var REDUX_COOKIES_SET = 'REDUX_COOKIES_SET';
+var REDUX_COOKIES_EXPIRE = 'REDUX_COOKIES_EXPIRE';
+var REDUX_COOKIES_REMOVE = 'REDUX_COOKIES_REMOVE';
+
+var getName = exports.getName = function getName(prefix, itemName) {
+  return prefix + itemName;
+};
+
+var getCookie = exports.getCookie = function getCookie(name) {
+  return { type: REDUX_COOKIES_GET, name: name };
+};
+
+var setCookie = exports.setCookie = function setCookie(name, value) {
+  var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+  return { type: REDUX_COOKIES_SET, name: name, value: value, options: options };
+};
+
+var expireCookie = exports.expireCookie = function expireCookie(name) {
+  return { type: REDUX_COOKIES_EXPIRE, name: name };
+};
+
+var removeCookie = exports.removeCookie = function removeCookie(name, options) {
+  return { type: REDUX_COOKIES_REMOVE, name: name, options: options };
+};
+
+var createCookieMiddleware = exports.createCookieMiddleware = function createCookieMiddleware(cookies) {
+  var prefix = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+
+  var actionsMap = {};
+
+  REDUX_COOKIES_GET = getName(prefix, REDUX_COOKIES_GET);
+  REDUX_COOKIES_SET = getName(prefix, REDUX_COOKIES_SET);
+  REDUX_COOKIES_EXPIRE = getName(prefix, REDUX_COOKIES_EXPIRE);
+  REDUX_COOKIES_REMOVE = getName(prefix, REDUX_COOKIES_REMOVE);
+
+  actionsMap[REDUX_COOKIES_GET] = function (action) {
+    try {
+      return cookies.get(action.name);
+    } catch (e) {
+      return undefined;
+    }
+  };
+
+  actionsMap[REDUX_COOKIES_SET] = function (action) {
+    return cookies.set(action.name, action.value, action.options);
+  };
+
+  actionsMap[REDUX_COOKIES_EXPIRE] = function (action) {
+    return cookies.set(action.name, undefined);
+  };
+
+  actionsMap[REDUX_COOKIES_REMOVE] = function (action) {
+    // if cookies lib has remove support
+    if (cookies.remove) {
+      return cookies.remove(action.name, action.options);
+    }
+    return cookies.set(action.name, undefined);
+  };
+
+  if (process && process.env && "development" !== 'production') {
+    if (!('get' in cookies) || !('set' in cookies)) {
+      throw new Error('Your cookie object must implement get and set function,  {get : function(name){/*...*/}, set : function(name, value, options){/*...*/}}');
+    }
+  }
+
+  return function () {
+    return function (next) {
+      return function (action) {
+        var currentActionHandler = actionsMap[action.type];
+
+        if (currentActionHandler) {
+          return currentActionHandler(action);
+        }
+
+        return next(action);
+      };
+    };
+  };
+};
+
+exports.default = createCookieMiddleware;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 

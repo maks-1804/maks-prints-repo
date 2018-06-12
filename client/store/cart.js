@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getCookie, setCookie } from 'redux-cookie'
 
 /**
  * ACTION TYPES
@@ -52,6 +53,13 @@ export const retrieveOpenCart = user => {
     } catch (err) {
       console.log('Error getting cart: ', err.message)
     }
+  }
+}
+
+export const getCookieCart = () => {
+  return dispatch => {
+    const cart = dispatch(getCookie('cart'))
+    dispatch(getOpenCart(cart && JSON.parse(cart)) || [])
   }
 }
 

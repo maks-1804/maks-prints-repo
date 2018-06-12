@@ -10,6 +10,7 @@ import cart, { frontEndCartReducer } from './cart'
 import cartList from './cartList'
 import categories from './categories'
 import admin from './admin'
+// import { createCookieMiddleware } from 'redux-cookie'
 
 const reducer = combineReducers({
   user,
