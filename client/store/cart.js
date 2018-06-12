@@ -36,7 +36,6 @@ export const retrieveOpenCart = (user) => {
       const response = await axios.get(`/api/carts/open/${user.id}`)
       //response.data returns an array so accessing it's first element
       let openCart = response.data[0]
-      console.log('in store, openCart.products: ', openCart)
       openCart = openCart.products ? openCart : {...openCart, products: []}
       dispatch(getOpenCart(openCart))
       openCart.products && dispatch(updateNumItemsAndSubtotal(openCart.products))
