@@ -12,7 +12,7 @@ class SingleProduct extends Component {
   constructor() {
     super()
     this.state = {
-      selectedQuantity: 0
+      selectedQuantity: 1
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
