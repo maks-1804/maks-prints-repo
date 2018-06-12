@@ -25,6 +25,9 @@ class SingleProduct extends Component {
     if (!this.props.product) {
       this.props.fetchProducts()
     }
+    if (!this.props.openCart) {
+      this.props.getOpenCart(this.props.user)
+    }
     const toRemove = await this.cartQuantity()
     this.setState({
       removeAvailable: toRemove
@@ -113,7 +116,7 @@ class SingleProduct extends Component {
     let price = 0
     if (product) {
       quantity = product.inventoryQuantity
-      price = Math.floor(product.price / 100)
+      price = product.price / 100
       productContent = (
         <div className="container-fluid bg-light">
           <div className="row">
@@ -130,7 +133,7 @@ class SingleProduct extends Component {
                     <label>
                       {`Select Quantity - ${
                         product.inventoryQuantity
-                      } Available`}
+                      } Available, ${removeAvailable} in cart`}
                     </label>
                     <div>
                       <select
@@ -142,12 +145,14 @@ class SingleProduct extends Component {
                         <option value="" disabled selected>
                           Choose Quantity
                         </option>
-                        {Array.apply(
-                          null,
-                          new Array(quantity - removeAvailable)
-                        ).map((el, ind) => {
-                          return <option key={ind}>{ind + 1}</option>
-                        })}
+                        {quantity - removeAvailable > 0
+                          ? Array.apply(
+                              null,
+                              new Array(quantity - removeAvailable)
+                            ).map((el, ind) => {
+                              return <option key={ind}>{ind + 1}</option>
+                            })
+                          : null}
                       </select>
                     </div>
                   </form>
