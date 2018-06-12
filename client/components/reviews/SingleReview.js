@@ -14,9 +14,6 @@ const SingleReview = props => {
         {review.product ? (
           <div>
             <h2 className="header">{review.title}</h2>
-            <div className="card-image">
-              <img src={review.product.imageUrl} />
-            </div>
 
             <div className="card-content">
               <p>{`Review By: ${review.user.name}`}</p>

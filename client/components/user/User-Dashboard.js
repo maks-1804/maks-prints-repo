@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { loadAllReviews } from '../../store/reviews'
 import { SingleReview } from '../reviews'
+import { CartHistory } from '../cart'
+
 class UserDashboard extends React.Component {
   constructor() {
     super()
@@ -49,10 +51,10 @@ class UserDashboard extends React.Component {
           {/* Previous Orders */}
           <li>
             <div className="collapsible-header">
-              <i className="material-icons">history</i>Old Orders
+              <i className="material-icons">history</i>Order History
             </div>
             <div className="collapsible-body">
-              <span>Lorem ipsum dolor sit amet.</span>
+                <CartHistory />
             </div>
           </li>
 
@@ -64,7 +66,10 @@ class UserDashboard extends React.Component {
             <div className="collapsible-body">
               {userReviews.length ? (
                 userReviews.map(review => (
-                  <SingleReview key={review.id} review={review} />
+                  <div key={review.id}>
+                    <h5>Review for {review.product.title}:</h5>
+                    <SingleReview review={review} />
+                  </div>
                 ))
               ) : (
                 <div>
