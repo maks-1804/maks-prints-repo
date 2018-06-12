@@ -6,7 +6,7 @@ const CartProductCard = props => {
   // console.log(product)
   return (
     <div className='container'>
-      <div className='row align-items-center'>
+      <div className='row align-items-center cart-card'>
         <img src={product.imageUrl} className='col-2'/>
         <div className='column col-6'>
           <h4>{product.title}</h4>
@@ -27,7 +27,7 @@ const CartProductCard = props => {
                   onChange={(evt) => changeQuantity(evt, product)}
                 >
                   {Array.apply(null, new Array(product.inventoryQuantity)).map((el, ind) => {
-                    return <option key={ind}>{ind}</option>
+                    return <option key={ind}>{ind + 1}</option>
                   })}
                 </select>
               </form>)

@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { loadAllProducts } from '../../store/products'
 import ReviewList from '../reviews/Review-List'
 import { ReviewForm } from '../reviews'
-
 import { retreiveOpenCart, editTheCart } from '../../store/cart'
 //import { me } from '../../store/user'
 
@@ -25,17 +24,33 @@ class SingleProduct extends Component {
     }
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
     //get old cart products and update opencart with products we area adding
     const oldProducts = this.props.openCart.products
+    console.log('oldProducts:', oldProducts)
     const newProduct = this.props.product
     //put a quantity property on the new product object based on the dropdown
-    newProduct.productQuantity = this.state.selectedQuantity
-    const filteredProducts = oldProducts.filter(
-      product => product.id !== newProduct.id
-    )
-    //replace prev product value (if was there) with the updated quantity
+    //new quantity is prev quantity (if was there) plus selected quantity
+    let idx
+    let oldQuantity
+    let filteredProducts
+    const findById = function(product) {
+      return product.id === newProduct.id
+    }
+    if (oldProducts.find(findById) !== undefined) {
+      idx = oldProducts.indexOf(oldProducts.find(findById))
+
+      oldQuantity = await oldProducts[idx].cartProducts.productQuantity
+      newProduct.productQuantity =
+        Number(this.state.selectedQuantity) + Number(oldQuantity)
+      filteredProducts = oldProducts.filter(
+        product => product.id !== newProduct.id
+      )
+    } else {
+      filteredProducts = oldProducts
+      newProduct.productQuantity = this.state.selectedQuantity
+    }
     this.props.openCart.products = [...filteredProducts, newProduct]
     //now dispatch!
     this.props.addToCart(this.props.openCart, this.props.user)
