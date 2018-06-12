@@ -62,6 +62,7 @@ class SingleProduct extends Component {
     }
   }
 
+
   handleChange(evt) {
     this.setState({
       selectedQuantity: evt.target.value

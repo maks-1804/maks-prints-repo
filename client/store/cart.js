@@ -16,6 +16,7 @@ const CLOSE_CART = 'CLOSE_CART'
 const DELETE_PRODUCT_NO_USER = 'DELETE_PRODUCT_NO_USER'
 const UPDATE_NUM_AND_SUBTOTAL = 'UPDATE_NUM_AND_SUBTOTAL'
 const DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER'
+const UPDATE_NO_USER = 'UPDATE_NO_USER'
 
 /**
  * ACTION CREATORS
@@ -41,8 +42,16 @@ const deleteProductWithUser = cart => ({ type: DELETE_PRODUCT_WITH_USER, cart })
 export const fetchCart = () => {
   return dispatch => {
     const cart = dispatch(getCookie('cart'))
-    console.log(JSON.parse(cart))
     dispatch(getOpenCart((cart && JSON.parse(cart))))
+  }
+}
+
+
+
+const updateNoUser = (products) => {
+  return {
+    type: UPDATE_NO_USER,
+    products
   }
 }
 
@@ -67,6 +76,14 @@ export const retrieveOpenCart = user => {
 export const setCookieCart = () => {
   return (dispatch, getState) => {
     dispatch(setCookie('cart', getState().cart))
+    const numItems = getState().cart.products.reduce((acc, product) => {
+        return acc + Number(product.productQuantity)
+      }, 0)
+    console.log("DIS DA NUM ITEMS", numItems)
+    const subtotal = (getState().cart.products.reduce((acc, product) => {
+          return acc + product.price * Number(product.productQuantity)}, 0) / 100).toFixed(2)
+    console.log('the subtotal is', subtotal)
+    dispatch(updateNoUser(getState().cart.products))
   }
 }
 
@@ -115,8 +132,13 @@ export const editTheCart = (cart, user) => {
         console.log('Error editing cart: ', err.message)
       }
     }
-  } else {
+  }
+}
 
+export const mergeCart = (user) => {
+  return dispatch => {
+    const cart = dispatch(getCookie('cart'))
+    dispatch(editTheCart(cart, user))
   }
 }
 
@@ -194,6 +216,17 @@ export const frontEndCartReducer = (state = initialFrontCart, action) => {
         subtotal: (
           action.products.reduce((acc, product) => {
             return acc + product.price * product.cartProducts.productQuantity
+          }, 0) / 100
+        ).toFixed(2)
+      }
+    case UPDATE_NO_USER:
+      return {
+        numItemsInCart: action.products.reduce((acc, product) => {
+          return acc + Number(product.productQuantity)
+        }, 0),
+        subtotal: (
+          action.products.reduce((acc, product) => {
+            return acc + product.price * Number(product.productQuantity)
           }, 0) / 100
         ).toFixed(2)
       }
