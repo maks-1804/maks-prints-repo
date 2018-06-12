@@ -6,7 +6,7 @@ const CartProductCard = props => {
   const { product, cartStatus, changeQuantity, deleteItem } = props
   // console.log(product)
   return (
-    <div className='container'>
+    <div className='container z-depth-2'>
       <div className='row align-items-center cart-card'>
         <img src={product.imageUrl} className='col-2'/>
         <div className='column col-6'>
