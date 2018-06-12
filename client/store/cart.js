@@ -66,7 +66,7 @@ export const retrieveOpenCart = user => {
 
 export const setCookieCart = () => {
   return (dispatch, getState) => {
-    console.log(dispatch(setCookie('cart', JSON.stringify(getState().cart))))
+    dispatch(setCookie('cart', getState().cart))
   }
 }
 
@@ -115,6 +115,8 @@ export const editTheCart = (cart, user) => {
         console.log('Error editing cart: ', err.message)
       }
     }
+  } else {
+
   }
 }
 

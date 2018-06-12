@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { loadAllProducts } from '../../store/products'
 import ReviewList from '../reviews/ReviewList'
 import { ReviewForm } from '../reviews'
-import { retreiveOpenCart, editTheCart, setCookieCart } from '../../store/cart'
+import { retreiveOpenCart, editTheCart, setCookieCart, addProductNoUser } from '../../store/cart'
 //import { me } from '../../store/user'
 
 class SingleProduct extends Component {
@@ -28,6 +28,7 @@ class SingleProduct extends Component {
   async handleSubmit(event) {
     event.preventDefault()
     //get old cart products and update opencart with products we area adding
+    if (this.props.user.id) {
     const oldProducts = this.props.openCart.products
     console.log('oldProducts:', oldProducts)
     const newProduct = this.props.product
@@ -55,6 +56,10 @@ class SingleProduct extends Component {
     this.props.openCart.products = [...filteredProducts, newProduct]
     //now dispatch!
     this.props.addToCart(this.props.openCart, this.props.user)
+    } else {
+      this.props.addProductNoUser(this.props.product)
+      this.props.setCookieCart()
+    }
   }
 
   handleChange(evt) {
@@ -169,7 +174,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchProducts: () => dispatch(loadAllProducts()),
     getOpenCart: user => dispatch(retreiveOpenCart(user)),
     addToCart: (user, products) => dispatch(editTheCart(user, products)),
+    addProductNoUser: (product) => dispatch(addProductNoUser(product)),
     setCookieCart: () => dispatch(setCookieCart())
+
   }
 }
 

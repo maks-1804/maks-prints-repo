@@ -2757,6 +2757,11 @@ function (_Component) {
               case 0:
                 event.preventDefault(); //get old cart products and update opencart with products we area adding
 
+                if (!this.props.user.id) {
+                  _context.next = 21;
+                  break;
+                }
+
                 oldProducts = this.props.openCart.products;
                 console.log('oldProducts:', oldProducts);
                 newProduct = this.props.product; //put a quantity property on the new product object based on the dropdown
@@ -2767,33 +2772,39 @@ function (_Component) {
                 };
 
                 if (!(oldProducts.find(findById) !== undefined)) {
-                  _context.next = 14;
+                  _context.next = 15;
                   break;
                 }
 
                 idx = oldProducts.indexOf(oldProducts.find(findById));
-                _context.next = 9;
+                _context.next = 10;
                 return oldProducts[idx].cartProducts.productQuantity;
 
-              case 9:
+              case 10:
                 oldQuantity = _context.sent;
                 newProduct.productQuantity = Number(this.state.selectedQuantity) + Number(oldQuantity);
                 filteredProducts = oldProducts.filter(function (product) {
                   return product.id !== newProduct.id;
                 });
-                _context.next = 16;
+                _context.next = 17;
                 break;
 
-              case 14:
+              case 15:
                 filteredProducts = oldProducts;
                 newProduct.productQuantity = this.state.selectedQuantity;
 
-              case 16:
+              case 17:
                 this.props.openCart.products = _toConsumableArray(filteredProducts).concat([newProduct]); //now dispatch!
 
                 this.props.addToCart(this.props.openCart, this.props.user);
+                _context.next = 23;
+                break;
 
-              case 18:
+              case 21:
+                this.props.addProductNoUser(this.props.product);
+                this.props.setCookieCart();
+
+              case 23:
               case "end":
                 return _context.stop();
             }
@@ -2904,6 +2915,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     },
     addToCart: function addToCart(user, products) {
       return dispatch((0, _cart.editTheCart)(user, products));
+    },
+    addProductNoUser: function addProductNoUser(product) {
+      return dispatch((0, _cart.addProductNoUser)(product));
     },
     setCookieCart: function setCookieCart() {
       return dispatch((0, _cart.setCookieCart)());
@@ -3999,7 +4013,7 @@ exports.retrieveOpenCart = retrieveOpenCart;
 
 var setCookieCart = function setCookieCart() {
   return function (dispatch, getState) {
-    console.log(dispatch((0, _reduxCookie.setCookie)('cart', JSON.stringify(getState().cart))));
+    dispatch((0, _reduxCookie.setCookie)('cart', getState().cart));
   };
 };
 
@@ -4147,7 +4161,7 @@ var editTheCart = function editTheCart(cart, user) {
         };
       }()
     );
-  }
+  } else {}
 };
 
 exports.editTheCart = editTheCart;
