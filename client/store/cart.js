@@ -19,30 +19,40 @@ const DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER '
 /**
  * ACTION CREATORS
  */
-const getOpenCart = cart => ({type: GET_OPEN_CART, cart})
-const closeCart = () => ({type: CLOSE_CART})
-const addCart = cart => ({type: ADD_CART, cart})
-const editCart = cart => ({type: EDIT_CART, cart})
-export const updateNumItemsAndSubtotal = products => ({type: UPDATE_NUM_AND_SUBTOTAL, products})
-export const addProductNoUser = (product) => ({type: ADD_PRODUCT_NO_USER, product})
-export const deleteProductNoUser = (product) => ({type: DELETE_PRODUCT_NO_USER, product})
-const deleteProductWithUser = cart => ({type: DELETE_PRODUCT_WITH_USER, cart})
-
+const getOpenCart = cart => ({ type: GET_OPEN_CART, cart })
+const closeCart = () => ({ type: CLOSE_CART })
+const addCart = cart => ({ type: ADD_CART, cart })
+const editCart = cart => ({ type: EDIT_CART, cart })
+export const updateNumItemsAndSubtotal = products => ({
+  type: UPDATE_NUM_AND_SUBTOTAL,
+  products
+})
+export const addProductNoUser = product => ({
+  type: ADD_PRODUCT_NO_USER,
+  product
+})
+export const deleteProductNoUser = product => ({
+  type: DELETE_PRODUCT_NO_USER,
+  product
+})
+const deleteProductWithUser = cart => ({ type: DELETE_PRODUCT_WITH_USER, cart })
 
 /**THUNKS **/
-export const retrieveOpenCart = (user) => {
+export const retrieveOpenCart = user => {
   return async dispatch => {
     try {
       const response = await axios.get(`/api/carts/open/${user.id}`)
       //response.data returns an array so accessing it's first element
       let openCart = response.data[0]
       console.log('in store, openCart.products: ', openCart)
-      openCart = openCart.products ? openCart : {...openCart, products: []}
+      openCart = openCart.products ? openCart : { ...openCart, products: [] }
       dispatch(getOpenCart(openCart))
-      openCart.products && dispatch(updateNumItemsAndSubtotal(openCart.products))
+      openCart.products &&
+        dispatch(updateNumItemsAndSubtotal(openCart.products))
       // return openCart
+    } catch (err) {
+      console.log('Error getting cart: ', err.message)
     }
-    catch (err) {console.log('Error getting cart: ', err.message)}
   }
 }
 
@@ -55,19 +65,24 @@ export const createNewCart = (user, products) => {
       })
       const cart = response.data
       dispatch(addCart(cart))
+    } catch (err) {
+      console.log('Error creating cart: ', err.message)
     }
-    catch (err) { console.log('Error creating cart: ', err.message) }
   }
 }
 
 export const closeTheCart = cart => {
   return async dispatch => {
     try {
-      const response = await axios.patch(`/api/carts/${cart.id}`, {status: 'closed', date: new Date()})
+      const response = await axios.patch(`/api/carts/${cart.id}`, {
+        status: 'closed',
+        date: new Date()
+      })
       const closedCart = response.data
       dispatch(closeCart(closedCart))
+    } catch (err) {
+      console.log('Error closing cart: ', err.message)
     }
-    catch (err) { console.log('Error closing cart: ', err.message) }
   }
 }
 
@@ -79,10 +94,12 @@ export const editTheCart = (cart, user) => {
         user: user
       })
       const editedCart = response.data
+      console.log('dispatching edited cart:', editedCart)
       dispatch(editCart(editedCart))
       dispatch(updateNumItemsAndSubtotal(editedCart.products))
+    } catch (err) {
+      console.log('Error editing cart: ', err.message)
     }
-    catch (err) { console.log('Error editing cart: ', err.message)}
   }
 }
 
@@ -90,7 +107,9 @@ export const deleteTheProductWithUser = (cartId, productId) => {
   return async dispatch => {
     try {
       console.log('in store, ids: ', cartId, productId)
-      const response = await axios.put(`/api/carts/open/${productId}`, { cartId })
+      const response = await axios.put(`/api/carts/open/${productId}`, {
+        cartId
+      })
       const updatedCart = response.data
       dispatch(deleteProductWithUser(updatedCart))
       dispatch(updateNumItemsAndSubtotal(updatedCart.products))
@@ -99,7 +118,6 @@ export const deleteTheProductWithUser = (cartId, productId) => {
     }
   }
 }
-
 
 /**DEFAULT STATE **/
 const initialCart = {
@@ -110,7 +128,7 @@ const initialCart = {
 export default (state = initialCart, action) => {
   switch (action.type) {
     case ADD_PRODUCT_NO_USER: {
-      return {...state, products: [...state.products, action.product]}
+      return { ...state, products: [...state.products, action.product] }
     }
     case GET_OPEN_CART: {
       return action.cart
@@ -121,7 +139,12 @@ export default (state = initialCart, action) => {
     case DELETE_PRODUCT_WITH_USER:
       return action.cart
     case DELETE_PRODUCT_NO_USER: {
-      return {...state, products: state.products.filter(product => product.id !== action.product.id)}
+      return {
+        ...state,
+        products: state.products.filter(
+          product => product.id !== action.product.id
+        )
+      }
     }
     case ADD_CART: {
       return action.cart
@@ -129,7 +152,8 @@ export default (state = initialCart, action) => {
     case EDIT_CART: {
       return action.cart
     }
-    default: return state
+    default:
+      return state
   }
 }
 
@@ -145,16 +169,18 @@ const initialFrontCart = {
 export const frontEndCartReducer = (state = initialFrontCart, action) => {
   switch (action.type) {
     case UPDATE_NUM_AND_SUBTOTAL:
-      return {...state,
-          numItemsInCart: action.products.reduce( (acc, product) => {
-            return acc + product.cartProducts.productQuantity
-            }, 0),
-          subtotal: (action.products.reduce( (acc, product) => {
-            return acc + (product.price * product.cartProducts.productQuantity)
-            }, 0) / 100).toFixed(2)
-          }
+      return {
+        ...state,
+        numItemsInCart: action.products.reduce((acc, product) => {
+          return acc + product.cartProducts.productQuantity
+        }, 0),
+        subtotal: (
+          action.products.reduce((acc, product) => {
+            return acc + product.price * product.cartProducts.productQuantity
+          }, 0) / 100
+        ).toFixed(2)
+      }
     default:
       return state
   }
-
 }
