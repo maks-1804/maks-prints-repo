@@ -2,17 +2,21 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 // import CartProductCard from './Cart-ProductCard'
-import { getCartsForUser } from '../../store/cartList'
+import { getCartsForUser, getAllCarts } from '../../store/cartList'
 import CartHistoryCard from './Cart-HistoryCard'
 
 class CartHistory extends Component {
   componentDidMount() {
-    this.props.getCarts()
+    if (this.props.isAdmin) {
+      this.props.getAllCarts()
+    } else {
+      this.props.getCarts()
+    }
   }
 
   render() {
     const orders = this.props.orderHistory
-    // console.log('in history comp: ', orders)
+
     return (
       <div>
           <div>
@@ -28,7 +32,7 @@ class CartHistory extends Component {
             {orders.filter( order => {
               return order.status !== 'open'
             }).sort( (a, b) => a.date < b.date).map( order => {
-              return <CartHistoryCard key={order.id} order={order}/>
+              return <CartHistoryCard key={order.id} order={order} />
             })}
           </div>
       </div>
@@ -38,13 +42,15 @@ class CartHistory extends Component {
 
 const mapState = state => {
   return {
+    isAdmin: !!state.user.isAdmin,
     orderHistory: state.cartList
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    getCarts: () => dispatch(getCartsForUser())
+    getCarts: () => dispatch(getCartsForUser()),
+    getAllCarts: () => dispatch(getAllCarts())
   }
 }
 

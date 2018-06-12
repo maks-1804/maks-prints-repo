@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { loadAllProducts, deleteProduct } from '../../store/products'
 import { ProductCard } from '../shop'
+import { CartHistory } from '../cart'
 
 class AdminDashboard extends React.Component {
   componentDidMount() {
@@ -36,11 +37,14 @@ class AdminDashboard extends React.Component {
         </div>
 
         <div>
-          <h3>Order Management</h3>
+          <h4>Order Management</h4>
+          <div>
+            <CartHistory />
+          </div>
         </div>
 
         <div>
-          <h3>User Management</h3>
+          <h4>User Management</h4>
           <button type="button">
             <Link to="/admin/users">Edit Users</Link>
           </button>
