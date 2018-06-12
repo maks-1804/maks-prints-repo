@@ -1,3 +1,3 @@
-export { ReviewList } from './Review-List'
-export { default as ReviewForm } from './Review-Form'
-export { default as SingleReview } from './Single-Review'
+export { ReviewList } from './ReviewList'
+export { default as ReviewForm } from './ReviewForm'
+export { default as SingleReview } from './SingleReview'
