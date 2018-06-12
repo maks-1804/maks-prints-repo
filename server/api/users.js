@@ -37,7 +37,7 @@ router.put('/:id', isAdminOrUser, async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-});
+})
 
 router.post('/', async (req, res, next) => {
   try {
