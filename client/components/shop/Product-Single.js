@@ -16,6 +16,7 @@ class SingleProduct extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleDropdown = this.handleDropdown.bind(this)
   }
 
   componentDidMount() {
@@ -62,6 +63,12 @@ class SingleProduct extends Component {
     })
   }
 
+  handleDropdown() {
+    $(document).ready(function(){
+      $('select').formSelect()
+    })
+  }
+
   render() {
     const { product } = this.props
 
@@ -88,17 +95,21 @@ class SingleProduct extends Component {
                     <label>
                       {`Select Quantity - ${
                         product.inventoryQuantity
-                      } available`}
+                      } Available`}
                     </label>
-                    <select
-                      name="product-quantity"
-                      value={this.state.selectedQuantity}
-                      onChange={this.handleChange}
-                    >
-                      {Array.apply(null, new Array(quantity)).map((el, ind) => {
-                        return <option key={ind}>{ind + 1}</option>
-                      })}
-                    </select>
+                    <div>
+                      <select
+                        className="browser-default"
+                        name="product-quantity"
+                        value={this.state.selectedQuantity}
+                        onChange={this.handleChange}
+                      >
+                      <option value="" disabled selected>Choose Quantity</option>
+                        {Array.apply(null, new Array(quantity)).map((el, ind) => {
+                          return <option key={ind}>{ind + 1}</option>
+                        })}
+                      </select>
+                    </div>
                   </form>
                   <h5>Subtotal: ${this.state.selectedQuantity * price}</h5>
                   <button type="submit" onClick={this.handleSubmit}>
