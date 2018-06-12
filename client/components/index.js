@@ -4,10 +4,10 @@
  * having to figure out which file they belong to!
  */
 export { default as Navbar } from './Navbar'
-export { Login, Signup } from './auth-form'
-export { default as ProductList } from './shop/product-list'
+export { Login, Signup } from './AuthForm'
+export { default as ProductList } from './shop/ProductList'
 export { default as NavCategory } from './shop'
-export { default as ProductSingle } from './shop/Product-Single'
+export { default as ProductSingle } from './shop/ProductSingle'
 export { UserDashboard, UserEdit } from './user'
 export { AdminDashboard, AddProduct } from './admin'
 //!!!!!!!

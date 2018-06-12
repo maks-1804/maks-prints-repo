@@ -1,4 +1,4 @@
-export { ProductCard } from './product-card'
-export { ProductList } from './product-list'
-export { NavCategory } from './nav-category'
-export { ProductSingle } from './Product-Single'
+export { ProductCard } from './ProductCard'
+export { ProductList } from './ProductList'
+export { NavCategory } from './NavCategory'
+export { ProductSingle } from './ProductSingle'
