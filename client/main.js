@@ -93,7 +93,7 @@ const mapDispatch = dispatch => {
     fetchCart: () => dispatch(fetchCart())
   }
 }
-
+//!!!!!!!
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the  changes
 export default withRouter(connect(mapState, mapDispatch)(Main))

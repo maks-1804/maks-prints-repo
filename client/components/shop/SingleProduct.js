@@ -61,7 +61,7 @@ class SingleProduct extends Component {
       this.props.setCookieCart()
     }
   }
-
+//!!!!!!!
 
   handleChange(evt) {
     this.setState({

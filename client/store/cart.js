@@ -101,7 +101,7 @@ export const createNewCart = (user, products) => {
     }
   }
 }
-
+//!!!!!!!!!
 export const closeTheCart = cart => {
   return async dispatch => {
     try {

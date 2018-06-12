@@ -12,7 +12,7 @@ import categories from './categories'
 import admin from './admin'
 import { createCookieMiddleware } from 'redux-cookie'
 import Cookies from 'js-cookie'
-
+//!!!!!!
 const reducer = combineReducers({
   user,
   products,

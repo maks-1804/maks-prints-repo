@@ -39,7 +39,7 @@ export const auth = (email, password, method) =>
         dispatch(getUser({ error: authError }))
       })
       .catch(dispatchOrHistoryErr => console.error(dispatchOrHistoryErr))
-
+//!!!!!!!!
 export const logout = () =>
   dispatch =>
     axios.post('/auth/logout')
