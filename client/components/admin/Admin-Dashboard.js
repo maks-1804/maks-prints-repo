@@ -41,6 +41,7 @@ class AdminDashboard extends React.Component {
 
         <div>
           <h3>User Management</h3>
+          <Link to="/admin/users">Edit Users</Link>
         </div>
       </div>
     )
