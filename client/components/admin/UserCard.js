@@ -37,7 +37,7 @@ class UserCard extends Component {
             <form onSubmit={this.handleSubmit}>
               <div className="radio">
                 <label>
-                  <input type="radio" name="admin" checked={this.state.selectedValue === "admin"} onChange={this.handleChange}/>
+                  <input type="radio" name="admin" checked={this.state.selectedValue === "admin"} onChange={this.handleChange} />
                   Administrator
                 </label>
               </div>

@@ -13,6 +13,14 @@ router.get('/', async (req, res, next) => {
   catch (err) { next(err) }
 })
 
+router.get('/admin', isAdmin, async (req, res, next) => {
+  try {
+    const carts = await Cart.findAll({ include: [{ all: true }] })
+    if (!carts) { res.sendStatus(404) }
+    else { res.json(carts) }
+  } catch (err) { next(err) }
+})
+
 router.get('/:id', async (req, res, next) => {
   try {
     if (!req.user) { res.sendStatus(403) }
@@ -120,13 +128,7 @@ router.put('/open/:productId', async (req, res, next) => {
 
 //-----------------------ADMIN ROUTES--------------------------\\
 
-router.get('/admin', isAdmin, async (req, res, next) => {
-  try {
-    const carts = await Cart.findAll({ include: [{ all: true }] })
-    if (!carts) { res.sendStatus(404) }
-    else { res.json(carts) }
-  } catch (err) { next(err) }
-})
+
 
 router.get('/admin/:id', isAdmin, async (req, res, next) => {
   try {

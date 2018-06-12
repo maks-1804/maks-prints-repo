@@ -88,8 +88,8 @@ class OpenCart extends Component {
       </div>
       <div className='container-fluid cart'>
         {/* if a user is logged in, they can see their order history: */}
-        {isLoggedIn &&
-          <CartHistory />}
+        {/* {isLoggedIn &&
+          <CartHistory />} */}
       </div>
       </div>
     )
