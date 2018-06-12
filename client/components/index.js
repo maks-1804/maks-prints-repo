@@ -9,9 +9,10 @@ export { default as ProductList } from './shop/product-list'
 export { default as NavCategory } from './shop'
 export { default as ProductSingle } from './shop/Product-Single'
 export { UserDashboard, UserEdit } from './user'
-export { AdminDashboard } from './admin'
+export { AdminDashboard, AddProduct } from './admin'
 
 export { default as EditProduct } from './admin/EditProduct'
+export { default as AllUsers } from './admin/AllUsers'
 
 export { ReviewList } from './reviews'
 

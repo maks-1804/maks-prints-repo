@@ -7,7 +7,7 @@ import NavCategory from './nav-category'
 import ProductCard from './product-card'
 import { loadAllProducts } from '../../store/products'
 import { loadAllCategories } from '../../store/categories'
-import { retrieveOpenCart } from '../../store/carts'
+import { retrieveOpenCart } from '../../store/cart'
 
 import axios from 'axios'
 
