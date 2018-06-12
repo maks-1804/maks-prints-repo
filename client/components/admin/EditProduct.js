@@ -15,13 +15,13 @@ class ProductEdit extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount(){
-    if (!this.props.product) { this.props.loadProducts()
-  }
+    if (!this.props.product) { this.props.loadProducts()  }
   }
 
   static getDerivedStateFromProps(props, state) {
 
     if (props.product && props.product.title !== state.title) {
+      console.log(props.product.imageUrl)
       return {
         title: props.product.title,
         description: props.product.description,
@@ -75,7 +75,7 @@ class ProductEdit extends Component {
                 className="form-control"
                 value={this.state.imageUrl}
                 type="text"
-                name="image"
+                name="imageUrl"
                 onChange={this.handleChange}
                 placeholder="Image"
                 required
