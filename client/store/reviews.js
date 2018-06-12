@@ -34,12 +34,14 @@ export const loadAllReviews = () => {
     }
   }
 }
-
-export const addReview = review => {
+//need to interpolate to add to correct product
+//api/reviews/:productId
+export const addReview = (review, id) => {
   return async dispatch => {
     try {
-      const response = await axios.post('/api/reviews', review)
+      const response = await axios.post(`/api/reviews/${id}`, review)
       const newReview = response.data
+      console.log('dispatching new review thunk,', newReview)
       dispatch(addNewReview(newReview))
     } catch (err) {
       console.log('Error adding new review: ', err.message)

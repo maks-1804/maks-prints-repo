@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { addReview } from '../../store/reviews'
 
 class ReviewForm extends Component {
   constructor() {
@@ -17,7 +18,16 @@ class ReviewForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    //submit the review and reset to blank inputs
+    //construct the review with necessary info from state
+    //userId will come from req.user
+    const newReview = {
+      title: this.state.title,
+      content: this.state.content,
+      rating: this.state.rating
+    }
+    console.log('handling review submit,', newReview, this.props.product.id)
+    this.props.postReview(newReview, this.props.product.id)
+    //reset form to blank vals
     this.setState({
       title: '',
       content: '',
@@ -59,5 +69,18 @@ class ReviewForm extends Component {
     )
   }
 }
-
-export default ReviewForm
+const mapStateToProps = (state, ownProps) => {
+  const productId = Number(ownProps.match.params.productId)
+  return {
+    user: state.user,
+    product: state.products.filter(product => product.id === productId)[0]
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    postReview: (review, productId) => dispatch(addReview(review, productId))
+  }
+}
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ReviewForm)
+)
