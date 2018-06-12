@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-import SearchBar from './Navbar-Search'
+import SearchBar from './NavbarSearch'
 import { logout } from '../store'
 
 const Navbar = props => {
