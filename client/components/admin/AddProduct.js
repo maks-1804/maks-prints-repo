@@ -1,48 +1,48 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { addProduct } from '../../store/products';
-import { loadAllCategories } from '../../store/categories';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { addProduct } from '../../store/products'
+import { loadAllCategories } from '../../store/categories'
 
 class AddProduct extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       title: '',
       image: '',
       description: '',
       price: '',
       categories: []
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.props.fetchCategories();
+    this.props.fetchCategories()
   }
 
   handleChange(evt) {
     const value =
       evt.target.type === 'checkbox'
         ? this.state.categories.push(evt.target.value)
-        : evt.target.value;
+        : evt.target.value
     this.setState({
       [evt.target.name]: value
-    });
+    })
   }
 
   handleSubmit(evt) {
-    evt.preventDefault();
-    const newProduct = this.state;
-    newProduct.categories = this.state.categories;
-    this.props.addProduct(newProduct);
+    evt.preventDefault()
+    const newProduct = this.state
+    newProduct.categories = this.state.categories
+    this.props.addProduct(newProduct)
     this.setState({
       title: '',
       image: '',
       description: '',
       price: ''
-    });
+    })
   }
 
   render() {
@@ -114,7 +114,7 @@ class AddProduct extends Component {
                         <span>{category.name}</span>
                       </label>
                     </p>
-                  );
+                  )
                 })}
               </div>
 
@@ -132,26 +132,26 @@ class AddProduct extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => {
   return {
     categories: state.categories
-  };
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addProduct: product => dispatch(addProduct(product, ownProps)),
     fetchCategories: () => dispatch(loadAllCategories())
-  };
-};
+  }
+}
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
   )(AddProduct)
-);
+)

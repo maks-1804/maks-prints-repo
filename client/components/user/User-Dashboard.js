@@ -1,35 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { loadAllReviews } from '../../store/reviews';
-import { SingleReview } from '../reviews';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { loadAllReviews } from '../../store/reviews'
+import { SingleReview } from '../reviews'
 class UserDashboard extends React.Component {
   constructor() {
-    super();
-    this.openSection = this.openSection.bind(this);
+    super()
+    this.openSection = this.openSection.bind(this)
   }
 
   componentDidMount() {
-    this.props.fetchReviews();
+    this.props.fetchReviews()
   }
 
   openSection() {
-    console.log('clicking here!');
     $(document).ready(function() {
-      $('.collapsible').collapsible();
-    });
+      $('.collapsible').collapsible()
+    })
   }
 
   render() {
-    const { id, name, email, address } = this.props;
+    const { id, name, email, address } = this.props
     const userReviews = this.props.reviews.filter(
       review => review.userId === id
-    );
+    )
 
     return (
       <div className="container">
         <h3>Welcome back, {name}!</h3>
+        <p>Thanks for shopping with us!</p>
 
         <ul className="collapsible">
           {/* Account Info */}
@@ -38,11 +38,11 @@ class UserDashboard extends React.Component {
               <i className="material-icons">info</i>My Info
             </div>
             <div className="collapsible-body">
+              <p>{`Email: ${email}`}</p>
+              <p>{`Address: ${address}`}</p>
               <Link to={`/${id}/edit`}>
-                <button type="button">Edit Account</button>
+                <button className="waves-effect waves-light btn" type="button">Edit Account</button>
               </Link>
-              <p>{email}</p>
-              <p>{address}</p>
             </div>
           </li>
 
@@ -75,7 +75,7 @@ class UserDashboard extends React.Component {
           </li>
         </ul>
       </div>
-    );
+    )
 
     // return (
     //   <div>
@@ -127,19 +127,19 @@ const mapState = state => {
     email: state.user.email,
     address: state.user.address,
     reviews: state.reviews
-  };
-};
+  }
+}
 
 const mapDispatch = dispatch => {
   return {
     fetchReviews: () => dispatch(loadAllReviews())
-  };
-};
+  }
+}
 
 export default connect(
   mapState,
   mapDispatch
-)(UserDashboard);
+)(UserDashboard)
 
 /**
  * PROP TYPES
@@ -148,4 +148,4 @@ UserDashboard.propTypes = {
   id: PropTypes.number.isRequired,
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
-};
+}

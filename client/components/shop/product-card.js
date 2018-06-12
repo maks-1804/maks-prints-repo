@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 export const ProductCard = props => {
-  const { product, isAdmin, deleteProduct } = props;
+  const { product, isAdmin, deleteProduct } = props
 
   return (
     <div className="row">
@@ -31,7 +31,7 @@ export const ProductCard = props => {
         </div>
       </div>
     </div>
-  );
+  )
 
   // return (
   //   <div>
@@ -55,6 +55,6 @@ export const ProductCard = props => {
   //     </div>
   //   </div>
   // )
-};
+}
 
 export default ProductCard

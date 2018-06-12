@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import PropTypes from 'prop-types'
+import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 const SingleReview = props => {
-  const { review } = props;
+  const { review } = props
   //the moment library lets us get relative time easily:
-  const timeSince = moment(review.createdAt).fromNow();
+  const timeSince = moment(review.createdAt).fromNow()
 
   return (
     <div className="col s12 m7">
@@ -38,7 +38,7 @@ const SingleReview = props => {
         )}
       </div>
     </div>
-  );
+  )
 
   // return (
   //   <div className="container-review-single">
@@ -47,6 +47,6 @@ const SingleReview = props => {
   //     <p>{review.content}</p>
   //   </div>
   // )
-};
+}
 
-export default SingleReview;
+export default SingleReview

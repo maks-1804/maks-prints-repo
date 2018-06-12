@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
-import SearchBar from './Navbar-Search';
-import { logout } from '../store';
+import SearchBar from './Navbar-Search'
+import { logout } from '../store'
 
 const Navbar = props => {
   const {
@@ -14,7 +14,7 @@ const Navbar = props => {
     id,
     numberOfItems,
     subtotal
-  } = props;
+  } = props
 
   return (
     <div className="navbar-fixed">
@@ -80,8 +80,8 @@ const Navbar = props => {
         </div>
       </nav>
     </div>
-  );
-};
+  )
+}
 
 /**
  * CONTAINER
@@ -93,21 +93,21 @@ const mapState = state => {
     id: state.user.id,
     numberOfItems: state.frontEndCartReducer.numItemsInCart,
     subtotal: state.frontEndCartReducer.subtotal
-  };
-};
+  }
+}
 
 const mapDispatch = dispatch => {
   return {
     handleClick() {
-      dispatch(logout());
+      dispatch(logout())
     }
-  };
-};
+  }
+}
 
 export default connect(
   mapState,
   mapDispatch
-)(Navbar);
+)(Navbar)
 
 /**
  * PROP TYPES
@@ -115,4 +115,4 @@ export default connect(
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
-};
+}

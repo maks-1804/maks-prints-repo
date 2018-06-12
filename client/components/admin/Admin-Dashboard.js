@@ -1,13 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { loadAllProducts, deleteProduct } from '../../store/products';
-import { ProductCard } from '../shop';
+import { loadAllProducts, deleteProduct } from '../../store/products'
+import { ProductCard } from '../shop'
 
 class AdminDashboard extends React.Component {
   componentDidMount() {
-    this.props.fetchProducts();
+    this.props.fetchProducts()
   }
 
   render() {
@@ -43,7 +43,7 @@ class AdminDashboard extends React.Component {
           <h3>User Management</h3>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -51,17 +51,17 @@ const mapState = state => {
   return {
     products: state.products,
     isAdmin: !!state.user.isAdmin
-  };
-};
+  }
+}
 
 const mapDispatch = dispatch => {
   return {
     fetchProducts: () => dispatch(loadAllProducts()),
     deleteProduct: id => dispatch(deleteProduct(id))
-  };
-};
+  }
+}
 
 export default connect(
   mapState,
   mapDispatch
-)(AdminDashboard);
+)(AdminDashboard)

@@ -55,12 +55,18 @@ class UserEdit extends React.Component {
     }
   }
 
+
   render() {
+
     return (
-      <div className='container'>
-        <form onSubmit={this.handleSubmit}>
-          <div className='row'>
-            <label htmlFor='name'>Name</label>
+      <div className="container">
+      <div>
+        <h4>{`Update ${this.props.user.name}'s Info`}</h4>
+      </div>
+      <div className="row">
+        <form className="col s12" onSubmit={this.handleSubmit}>
+          <div className="input-field col s12">
+            <label className="active" htmlFor='name'>Name</label>
             <input
               value={this.state.name}
               type='text'
@@ -69,8 +75,8 @@ class UserEdit extends React.Component {
               placeholder='Name'
               required />
           </div>
-          <div className='row'>
-            <label htmlFor='email'>Email</label>
+          <div className='input-field col s12'>
+            <label className="active" htmlFor='email'>Email</label>
             <input
               value={this.state.email}
               type='text'
@@ -79,23 +85,29 @@ class UserEdit extends React.Component {
               placeholder='Email'
               required />
           </div>
-          <div className='row'>
-            <label htmlFor='password'>Password</label>
+          <div className='input-field col s12'>
+            <label className="active" htmlFor='password'>Password</label>
             <input
               id='inputPassword'
               value={this.state.password}
-              type='password'
+              type="password"
               name='password'
               onChange={this.handleChange}
               placeholder='Password'
               required />
           </div>
-          <div className='row'>
-            <input type='checkbox' onClick={this.togglePassword} />
-            <label>Show Password</label>
+
+          <div className='input-field col s12'>
+          <div>
+            <label>
+            <input className="active" type='checkbox' className="filled-in" onClick={this.togglePassword} />
+            <span>Show Password</span>
+            </label>
           </div>
-          <div className='row'>
-            <label htmlFor='password'>Address</label>
+
+          </div>
+          <div className='input-field col s12'>
+            <label className="active" htmlFor='password'>Address</label>
             <input
               value={this.state.address}
               type='text'
@@ -103,8 +115,12 @@ class UserEdit extends React.Component {
               onChange={this.handleChange}
               placeholder='Address' />
           </div>
-          <button type='submit'>Submit</button>
-        </form>
+
+            <div className="center-align">
+              <button className="btn-large waves-effect waves-light" type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
       </div>
     )
   }
