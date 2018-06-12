@@ -27,10 +27,24 @@ class ProductEdit extends Component {
   // }
 
   componentDidMount(){
-    if (!this.props.product) { this.props.loadProducts() }
-    //!!!!
+    if (!this.props.product) { this.props.loadProducts()
+  }
   }
 
+  static getDerivedStateFromProps(props, state) {
+
+    if (props.product && props.product.title !== state.title) {
+      return {
+        title: props.product.title,
+        description: props.product.description,
+        imageUrl: props.product.imageUrl,
+        price: props.product.price
+      }
+    }
+    else {
+      return null
+    }
+  }
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -118,9 +132,7 @@ class ProductEdit extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const id = Number(ownProps.match.params.productId)
-  console.log(id)
   const product = state.products.find(elem => elem.id === id)
-  console.log(state.products)
   return {
     product: product
   }
