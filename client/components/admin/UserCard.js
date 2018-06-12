@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { updateUser } from '../../store/user'
+import { deleteUser } from '../../store/admin'
 import { connect } from 'react-redux'
 
 class UserCard extends Component {
@@ -47,6 +48,7 @@ class UserCard extends Component {
                 </label>
               </div>
               <button type="submit">Submit</button>
+              <button type="button" onClick={() => this.props.deleteUser(this.props.user.id)}>Delete</button>
             </form>
           </div>
         </div>
@@ -55,9 +57,10 @@ class UserCard extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    editUser: (id, user) => dispatch(updateUser(id, user))
+    editUser: (id, user) => dispatch(updateUser(id, user)),
+    deleteUser: (id) => dispatch(deleteUser(id))
   }
 }
 

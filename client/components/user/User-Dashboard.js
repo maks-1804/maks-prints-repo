@@ -76,47 +76,6 @@ class UserDashboard extends React.Component {
         </ul>
       </div>
     )
-
-    // return (
-    //   <div>
-    //     <div>
-    //       <h3>Welcome back, {name}!</h3>
-    //     </div>
-
-    //     <div>
-    //       <h3>My Info</h3>
-    //       <p>{email}</p>
-    //       <p>{address}</p>
-    //       <Link to={`/${id}/edit`}>
-    //         <button type="button">Edit Account</button>
-    //       </Link>
-    //     </div>
-
-    //     <div>
-    //       <h3>My Cart</h3>
-    //     </div>
-
-    //     <div>
-    //       <h3>Previous Orders</h3>
-    //     </div>
-
-    //     <div>
-    //       <h3>My Reviews</h3>
-    //       {
-    //         userReviews.length ?
-    //           userReviews.map((review) =>
-    //             (
-    //               <SingleReview key={review.id} review={review} />
-    //             )
-    //           )
-    //           :
-    //           <div>
-    //             <p>No reviews found!</p>
-    //           </div>
-    //       }
-    //     </div>
-    //   </div>
-    // )
   }
 }
 
