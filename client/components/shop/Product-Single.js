@@ -24,18 +24,52 @@ class SingleProduct extends Component {
     }
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
     //get old cart products and update opencart with products we area adding
     const oldProducts = this.props.openCart.products
+    console.log('oldProducts:', oldProducts)
     const newProduct = this.props.product
     //put a quantity property on the new product object based on the dropdown
-    newProduct.productQuantity = this.state.selectedQuantity
-    const filteredProducts = oldProducts.filter(
-      product => product.id !== newProduct.id
-    )
+    //new quantity is prev quantity (if was there) plus selected quantity
+    let idx
+    let oldQuantity
+    let filteredProducts
+    const findById = function(product) {
+      return product.id === newProduct.id
+    }
+    if (oldProducts.find(findById) !== undefined) {
+      //finding index correctly
+      idx = oldProducts.indexOf(oldProducts.find(findById))
+      console.log('index', idx)
+      console.log(
+        'oldproductsFOUND',
+        oldProducts[idx].cartProducts.productQuantity
+      )
+      oldQuantity = await oldProducts[idx].cartProducts.productQuantity
+      newProduct.productQuantity =
+        Number(this.state.selectedQuantity) + Number(oldQuantity)
+      console.log('old', oldQuantity, 'new', newProduct.productQuantity)
+      filteredProducts = oldProducts.filter(
+        product => product.id !== newProduct.id
+      )
+    } else {
+      filteredProducts = oldProducts
+      newProduct.productQuantity = this.state.selectedQuantity
+    }
+    // if (oldProducts.includes(newProduct)) {
+    //   idx = oldProducts.indexOf(newProduct)
+    //   oldQuantity = oldProducts[idx].productQuantity
+    //   newProduct.productQuantity = this.state.selectedQuantity + oldQuantity
+    // } else {
+    //   newProduct.productQuantity = this.state.selectedQuantity
+    // }
+    // filteredProducts = oldProducts.filter(
+    //   product => product.id !== newProduct.id
+    // )
     //replace prev product value (if was there) with the updated quantity
     this.props.openCart.products = [...filteredProducts, newProduct]
+    console.log(this.props.openCart.products)
     //now dispatch!
     this.props.addToCart(this.props.openCart, this.props.user)
   }
