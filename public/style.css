@@ -48,27 +48,27 @@ img {
 
 
 /* Cart Styles */
-.cart {
+/* .cart {
   padding: 30px;
   margin: 10, 10 auto;
-}
+} */
 
 .btm-brdr {
   border-bottom: 1px solid black;
 }
 
-div.row.btm-brdr {
+/* div.row.btm-brdr {
   margin-left: 180px;
   margin-right: 180px;
-}
+} */
 
 #current-cart {
   margin-left: 180px;
 }
 
-#order-history {
+/* #order-history {
   margin-left: 180px;
-}
+} */
 
 .summary {
   padding: 20px;
@@ -82,8 +82,8 @@ div.row.btm-brdr {
   background: #c2d2df2d;
 }
 
-#history-card {
+/* #history-card {
   margin-left: 180px;
-}
+} */
 
 

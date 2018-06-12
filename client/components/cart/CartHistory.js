@@ -6,53 +6,35 @@ import { getCartsForUser } from '../../store/cartList'
 import CartHistoryCard from './Cart-HistoryCard'
 
 class CartHistory extends Component {
-  constructor() {
-    super()
-    this.state = {
-      toggleOn: false
-    }
-    this.toggleView = this.toggleView.bind(this)
-  }
-
   componentDidMount() {
     this.props.getCarts()
   }
 
-  toggleView(evt) {
-    evt.preventDefault()
-    const toggle = this.state.toggleOn
-    this.setState({toggleOn: !toggle})
-  }
-
   render() {
-    const { toggleOn } = this.state
     const orders = this.props.orderHistory
     // console.log('in history comp: ', orders)
     return (
-      <div >
-        <div className='row' onClick={this.toggleView}>
-          <h2 id='order-history'>Order History</h2>
-          {!toggleOn
-          ? <i className="fas fa-sort-down fa-2x col-2"></i>
-          : <i className="fas fa-sort-up fa-2x col-2 align-self-end"></i>}
-        </div>
-        {toggleOn && (
+      <div>
           <div>
-            <div className='row btm-brdr'>
-              <p className='col-2'>Date</p>
-              <p className='col-6'>Order Details</p>
-              <p className='col-2'>Status</p>
-            </div>
+            <table>
+            <thead>
+            <tr>
+              <th className="left-align col s4">Date</th>
+              <th className="left-align col s6">Order Details</th>
+              <th className="right-align col s2">Status</th>
+            </tr>
+            </thead>
+            </table>
             {orders.filter( order => {
               return order.status !== 'open'
             }).sort( (a, b) => a.date < b.date).map( order => {
               return <CartHistoryCard key={order.id} order={order}/>
             })}
           </div>
-        )}
       </div>
     )}
 }
+
 
 const mapState = state => {
   return {
