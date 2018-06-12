@@ -145,7 +145,7 @@ class SingleProduct extends Component {
                         <option value="" disabled selected>
                           Choose Quantity
                         </option>
-                        {quantity - removeAvailable > 0
+                        {quantity - Number(removeAvailable) > 0
                           ? Array.apply(
                               null,
                               new Array(quantity - removeAvailable)
