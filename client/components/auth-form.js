@@ -11,7 +11,7 @@ const AuthForm = (props) => {
 
   return (
     <div className="container">
-    <div className="row">
+    <div className="row valign-wrapper center-align">
 
       <div className="center-align col s4 z-depth-1">
       <h5>Log In</h5>
@@ -37,7 +37,6 @@ const AuthForm = (props) => {
     </div>
   )
 }
-
 
 /**
  * CONTAINER
