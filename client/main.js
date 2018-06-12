@@ -18,6 +18,7 @@ import {
 //import ProductList from './components/shop/product-list'
 import ReviewList from './components/reviews/ReviewList'
 import { me } from './store'
+import { fetchCart } from './store/cart'
 
 /**
  * COMPONENT
@@ -25,6 +26,7 @@ import { me } from './store'
 class Main extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchCart()
   }
 
   render() {
@@ -87,7 +89,8 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-    }
+    },
+    fetchCart: () => dispatch(fetchCart())
   }
 }
 

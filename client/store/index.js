@@ -10,7 +10,8 @@ import cart, { frontEndCartReducer } from './cart'
 import cartList from './cartList'
 import categories from './categories'
 import admin from './admin'
-// import { createCookieMiddleware } from 'redux-cookie'
+import { createCookieMiddleware } from 'redux-cookie'
+import Cookies from 'js-cookie'
 
 const reducer = combineReducers({
   user,
@@ -23,7 +24,7 @@ const reducer = combineReducers({
   admin,
   cartList })
 const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }), createCookieMiddleware(Cookies))
 )
 const store = createStore(reducer, middleware)
 

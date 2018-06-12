@@ -2904,6 +2904,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     },
     addToCart: function addToCart(user, products) {
       return dispatch((0, _cart.editTheCart)(user, products));
+    },
+    setCookieCart: function setCookieCart() {
+      return dispatch((0, _cart.setCookieCart)());
     }
   };
 };
@@ -3539,6 +3542,8 @@ var _ReviewList = _interopRequireDefault(__webpack_require__(/*! ./components/re
 
 var _store = __webpack_require__(/*! ./store */ "./client/store/index.js");
 
+var _cart = __webpack_require__(/*! ./store/cart */ "./client/store/cart.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -3577,6 +3582,7 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.loadInitialData();
+      this.props.fetchCart();
     }
   }, {
     key: "render",
@@ -3667,6 +3673,9 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     loadInitialData: function loadInitialData() {
       dispatch((0, _store.me)());
+    },
+    fetchCart: function fetchCart() {
+      return dispatch((0, _cart.fetchCart)());
     }
   };
 }; // The `withRouter` wrapper makes sure that updates are not blocked
@@ -3823,7 +3832,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.frontEndCartReducer = exports.default = exports.deleteTheProductWithUser = exports.editTheCart = exports.closeTheCart = exports.createNewCart = exports.getCookieCart = exports.retrieveOpenCart = exports.deleteProductNoUser = exports.addProductNoUser = exports.updateNumItemsAndSubtotal = void 0;
+exports.frontEndCartReducer = exports.default = exports.deleteTheProductWithUser = exports.editTheCart = exports.closeTheCart = exports.createNewCart = exports.setCookieCart = exports.retrieveOpenCart = exports.fetchCart = exports.deleteProductNoUser = exports.addProductNoUser = exports.updateNumItemsAndSubtotal = void 0;
 
 var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
@@ -3859,7 +3868,7 @@ var ADD_PRODUCT_NO_USER = 'ADD_PRODUCT_NO_USER';
 var CLOSE_CART = 'CLOSE_CART';
 var DELETE_PRODUCT_NO_USER = 'DELETE_PRODUCT_NO_USER';
 var UPDATE_NUM_AND_SUBTOTAL = 'UPDATE_NUM_AND_SUBTOTAL';
-var DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER ';
+var DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER';
 /**
  * ACTION CREATORS
  */
@@ -3924,8 +3933,18 @@ var deleteProductWithUser = function deleteProductWithUser(cart) {
     cart: cart
   };
 };
+
+var fetchCart = function fetchCart() {
+  return function (dispatch) {
+    var cart = dispatch((0, _reduxCookie.getCookie)('cart'));
+    console.log(JSON.parse(cart));
+    dispatch(getOpenCart(cart && JSON.parse(cart)));
+  };
+};
 /**THUNKS **/
 
+
+exports.fetchCart = fetchCart;
 
 var retrieveOpenCart = function retrieveOpenCart(user) {
   return (
@@ -3978,14 +3997,13 @@ var retrieveOpenCart = function retrieveOpenCart(user) {
 
 exports.retrieveOpenCart = retrieveOpenCart;
 
-var getCookieCart = function getCookieCart() {
-  return function (dispatch) {
-    var cart = dispatch((0, _reduxCookie.getCookie)('cart'));
-    dispatch(getOpenCart(cart && JSON.parse(cart)) || []);
+var setCookieCart = function setCookieCart() {
+  return function (dispatch, getState) {
+    console.log(dispatch((0, _reduxCookie.setCookie)('cart', JSON.stringify(getState().cart))));
   };
 };
 
-exports.getCookieCart = getCookieCart;
+exports.setCookieCart = setCookieCart;
 
 var createNewCart = function createNewCart(user, products) {
   return (
@@ -4084,51 +4102,52 @@ var closeTheCart = function closeTheCart(cart) {
 exports.closeTheCart = closeTheCart;
 
 var editTheCart = function editTheCart(cart, user) {
-  return (
-    /*#__PURE__*/
-    function () {
-      var _ref4 = _asyncToGenerator(
+  if (user.id) {
+    return (
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4(dispatch) {
-        var response, editedCart;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
-                return _axios.default.put("/api/carts/open", {
-                  products: cart.products,
-                  user: user
-                });
+      function () {
+        var _ref4 = _asyncToGenerator(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee4(dispatch) {
+          var response, editedCart;
+          return regeneratorRuntime.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _context4.prev = 0;
+                  _context4.next = 3;
+                  return _axios.default.put("/api/carts/open", {
+                    products: cart.products,
+                    user: user
+                  });
 
-              case 3:
-                response = _context4.sent;
-                editedCart = response.data;
-                console.log('dispatching edited cart:', editedCart);
-                dispatch(editCart(editedCart));
-                dispatch(updateNumItemsAndSubtotal(editedCart.products));
-                _context4.next = 13;
-                break;
+                case 3:
+                  response = _context4.sent;
+                  editedCart = response.data;
+                  dispatch(editCart(editedCart));
+                  dispatch(updateNumItemsAndSubtotal(editedCart.products));
+                  _context4.next = 12;
+                  break;
 
-              case 10:
-                _context4.prev = 10;
-                _context4.t0 = _context4["catch"](0);
-                console.log('Error editing cart: ', _context4.t0.message);
+                case 9:
+                  _context4.prev = 9;
+                  _context4.t0 = _context4["catch"](0);
+                  console.log('Error editing cart: ', _context4.t0.message);
 
-              case 13:
-              case "end":
-                return _context4.stop();
+                case 12:
+                case "end":
+                  return _context4.stop();
+              }
             }
-          }
-        }, _callee4, this, [[0, 10]]);
-      }));
+          }, _callee4, this, [[0, 9]]);
+        }));
 
-      return function (_x4) {
-        return _ref4.apply(this, arguments);
-      };
-    }()
-  );
+        return function (_x4) {
+          return _ref4.apply(this, arguments);
+        };
+      }()
+    );
+  }
 };
 
 exports.editTheCart = editTheCart;
@@ -4521,11 +4540,14 @@ var _categories = _interopRequireDefault(__webpack_require__(/*! ./categories */
 
 var _admin = _interopRequireDefault(__webpack_require__(/*! ./admin */ "./client/store/admin.js"));
 
+var _reduxCookie = __webpack_require__(/*! redux-cookie */ "./node_modules/redux-cookie/lib/index.js");
+
+var _jsCookie = _interopRequireDefault(__webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js"));
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { createCookieMiddleware } from 'redux-cookie'
 var reducer = (0, _redux.combineReducers)({
   user: _user.default,
   products: _products.default,
@@ -4539,7 +4561,7 @@ var reducer = (0, _redux.combineReducers)({
 });
 var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk.default, (0, _reduxLogger.default)({
   collapsed: true
-})));
+}), (0, _reduxCookie.createCookieMiddleware)(_jsCookie.default)));
 var store = (0, _redux.createStore)(reducer, middleware);
 var _default = store;
 exports.default = _default;
@@ -26770,6 +26792,186 @@ module.exports = invariant;
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/js-cookie/src/js.cookie.js":
+/*!*************************************************!*\
+  !*** ./node_modules/js-cookie/src/js.cookie.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * JavaScript Cookie v2.2.0
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+;(function (factory) {
+	var registeredInModuleLoader = false;
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		registeredInModuleLoader = true;
+	}
+	if (true) {
+		module.exports = factory();
+		registeredInModuleLoader = true;
+	}
+	if (!registeredInModuleLoader) {
+		var OldCookies = window.Cookies;
+		var api = window.Cookies = factory();
+		api.noConflict = function () {
+			window.Cookies = OldCookies;
+			return api;
+		};
+	}
+}(function () {
+	function extend () {
+		var i = 0;
+		var result = {};
+		for (; i < arguments.length; i++) {
+			var attributes = arguments[ i ];
+			for (var key in attributes) {
+				result[key] = attributes[key];
+			}
+		}
+		return result;
+	}
+
+	function init (converter) {
+		function api (key, value, attributes) {
+			var result;
+			if (typeof document === 'undefined') {
+				return;
+			}
+
+			// Write
+
+			if (arguments.length > 1) {
+				attributes = extend({
+					path: '/'
+				}, api.defaults, attributes);
+
+				if (typeof attributes.expires === 'number') {
+					var expires = new Date();
+					expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
+					attributes.expires = expires;
+				}
+
+				// We're using "expires" because "max-age" is not supported by IE
+				attributes.expires = attributes.expires ? attributes.expires.toUTCString() : '';
+
+				try {
+					result = JSON.stringify(value);
+					if (/^[\{\[]/.test(result)) {
+						value = result;
+					}
+				} catch (e) {}
+
+				if (!converter.write) {
+					value = encodeURIComponent(String(value))
+						.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+				} else {
+					value = converter.write(value, key);
+				}
+
+				key = encodeURIComponent(String(key));
+				key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+				key = key.replace(/[\(\)]/g, escape);
+
+				var stringifiedAttributes = '';
+
+				for (var attributeName in attributes) {
+					if (!attributes[attributeName]) {
+						continue;
+					}
+					stringifiedAttributes += '; ' + attributeName;
+					if (attributes[attributeName] === true) {
+						continue;
+					}
+					stringifiedAttributes += '=' + attributes[attributeName];
+				}
+				return (document.cookie = key + '=' + value + stringifiedAttributes);
+			}
+
+			// Read
+
+			if (!key) {
+				result = {};
+			}
+
+			// To prevent the for loop in the first place assign an empty array
+			// in case there are no cookies at all. Also prevents odd result when
+			// calling "get()"
+			var cookies = document.cookie ? document.cookie.split('; ') : [];
+			var rdecode = /(%[0-9A-Z]{2})+/g;
+			var i = 0;
+
+			for (; i < cookies.length; i++) {
+				var parts = cookies[i].split('=');
+				var cookie = parts.slice(1).join('=');
+
+				if (!this.json && cookie.charAt(0) === '"') {
+					cookie = cookie.slice(1, -1);
+				}
+
+				try {
+					var name = parts[0].replace(rdecode, decodeURIComponent);
+					cookie = converter.read ?
+						converter.read(cookie, name) : converter(cookie, name) ||
+						cookie.replace(rdecode, decodeURIComponent);
+
+					if (this.json) {
+						try {
+							cookie = JSON.parse(cookie);
+						} catch (e) {}
+					}
+
+					if (key === name) {
+						result = cookie;
+						break;
+					}
+
+					if (!key) {
+						result[name] = cookie;
+					}
+				} catch (e) {}
+			}
+
+			return result;
+		}
+
+		api.set = api;
+		api.get = function (key) {
+			return api.call(api, key);
+		};
+		api.getJSON = function () {
+			return api.apply({
+				json: true
+			}, [].slice.call(arguments));
+		};
+		api.defaults = {};
+
+		api.remove = function (key, attributes) {
+			api(key, '', extend(attributes, {
+				expires: -1
+			}));
+		};
+
+		api.withConverter = init;
+
+		return api;
+	}
+
+	return init(function () {});
+}));
 
 
 /***/ }),

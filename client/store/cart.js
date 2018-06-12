@@ -15,7 +15,7 @@ const ADD_PRODUCT_NO_USER = 'ADD_PRODUCT_NO_USER'
 const CLOSE_CART = 'CLOSE_CART'
 const DELETE_PRODUCT_NO_USER = 'DELETE_PRODUCT_NO_USER'
 const UPDATE_NUM_AND_SUBTOTAL = 'UPDATE_NUM_AND_SUBTOTAL'
-const DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER '
+const DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER'
 
 /**
  * ACTION CREATORS
@@ -38,6 +38,14 @@ export const deleteProductNoUser = product => ({
 })
 const deleteProductWithUser = cart => ({ type: DELETE_PRODUCT_WITH_USER, cart })
 
+export const fetchCart = () => {
+  return dispatch => {
+    const cart = dispatch(getCookie('cart'))
+    console.log(JSON.parse(cart))
+    dispatch(getOpenCart((cart && JSON.parse(cart))))
+  }
+}
+
 /**THUNKS **/
 export const retrieveOpenCart = user => {
   return async dispatch => {
@@ -56,10 +64,9 @@ export const retrieveOpenCart = user => {
   }
 }
 
-export const getCookieCart = () => {
-  return dispatch => {
-    const cart = dispatch(getCookie('cart'))
-    dispatch(getOpenCart(cart && JSON.parse(cart)) || [])
+export const setCookieCart = () => {
+  return (dispatch, getState) => {
+    console.log(dispatch(setCookie('cart', JSON.stringify(getState().cart))))
   }
 }
 
@@ -94,18 +101,19 @@ export const closeTheCart = cart => {
 }
 
 export const editTheCart = (cart, user) => {
-  return async dispatch => {
-    try {
-      const response = await axios.put(`/api/carts/open`, {
-        products: cart.products,
-        user: user
-      })
-      const editedCart = response.data
-      console.log('dispatching edited cart:', editedCart)
-      dispatch(editCart(editedCart))
-      dispatch(updateNumItemsAndSubtotal(editedCart.products))
-    } catch (err) {
-      console.log('Error editing cart: ', err.message)
+  if (user.id){
+    return async dispatch => {
+      try {
+        const response = await axios.put(`/api/carts/open`, {
+          products: cart.products,
+          user: user
+        })
+        const editedCart = response.data
+        dispatch(editCart(editedCart))
+        dispatch(updateNumItemsAndSubtotal(editedCart.products))
+      } catch (err) {
+        console.log('Error editing cart: ', err.message)
+      }
     }
   }
 }

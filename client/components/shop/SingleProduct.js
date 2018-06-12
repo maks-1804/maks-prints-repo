@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { loadAllProducts } from '../../store/products'
 import ReviewList from '../reviews/ReviewList'
 import { ReviewForm } from '../reviews'
-import { retreiveOpenCart, editTheCart } from '../../store/cart'
+import { retreiveOpenCart, editTheCart, setCookieCart } from '../../store/cart'
 //import { me } from '../../store/user'
 
 class SingleProduct extends Component {
@@ -168,7 +168,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchProducts: () => dispatch(loadAllProducts()),
     getOpenCart: user => dispatch(retreiveOpenCart(user)),
-    addToCart: (user, products) => dispatch(editTheCart(user, products))
+    addToCart: (user, products) => dispatch(editTheCart(user, products)),
+    setCookieCart: () => dispatch(setCookieCart())
   }
 }
 
