@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { updateUser } from '../../store/user'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
 class UserCard extends Component {
   constructor(props) {

@@ -23,7 +23,10 @@ class AddProduct extends Component {
   }
 
   handleChange(evt) {
-    const value = evt.target.type === 'checkbox' ? this.state.categories.push(evt.target.value) : evt.target.value
+    const value =
+      evt.target.type === 'checkbox'
+        ? this.state.categories.push(evt.target.value)
+        : evt.target.value
     this.setState({
       [evt.target.name]: value
     })
@@ -47,96 +50,93 @@ class AddProduct extends Component {
       <div>
         <div className="container">
           <div>
-            <h3>Add a new product</h3>
+            <h4>Add a new product</h4>
           </div>
 
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group-row">
-              <label htmlFor="title" className="col-4">Title</label>
-              <div className="col-8">
+          <div className="row">
+            <form className="col s12" onSubmit={this.handleSubmit}>
+              <div className="input-field col s12">
+                <label htmlFor="title">Title</label>
                 <input
-                  className="form-control"
                   type="text"
                   name="title"
                   onChange={this.handleChange}
-                  placeholder="Title"
                   required
                 />
               </div>
-            </div>
-            <div className="form-group-row">
-              <label htmlFor="image" className="col-4">Image</label>
-              <div className="col-8">
+
+              <div className="input-field col s12">
+                <label htmlFor="image">Image</label>
                 <input
-                  className="form-control"
                   type="text"
                   name="image"
                   onChange={this.handleChange}
-                  placeholder="Image"
                   required
                 />
               </div>
-            </div>
-            <div className="form-group-row">
-              <label htmlFor="description" className="col-4">Description</label>
-              <div className="col-8">
+
+              <div className="input-field col s12">
+                <label htmlFor="description">Description</label>
                 <input
-                  className="form-control"
+                  className="materialize-textarea"
                   type="text"
                   name="description"
                   onChange={this.handleChange}
-                  placeholder="Description"
                   required
                 />
               </div>
-            </div>
-            <div className="form-group-row">
-              <label htmlFor="price" className="col-4">Price</label>
-              <div className="col-8">
+
+              <div className="input-field col s12">
+                <label htmlFor="price">Price</label>
                 <input
-                  className="form-control"
                   type="text"
                   name="price"
                   onChange={this.handleChange}
-                  placeholder="Price"
                   required
                 />
               </div>
-            </div>
 
-            <div className="form-group-row">
-              <label>Category:</label>
-              {
-                this.props.categories.map((category) => {
+              <div>
+                <h6>Category:</h6>
+              </div>
+
+              <div className="input-field col s12">
+                {this.props.categories.map(category => {
                   return (
-                    <div key={category.id} className="form-group-row">
-                      <div className="col-8">
-                        <label className="col-4">{category.name}</label>
+                    <p key={category.id}>
+                      <label>
                         <input
-                          className="form-control"
                           type="checkbox"
+                          className="filled-in"
                           value={category.name}
                           onChange={this.handleChange}
                         />
-                      </div>
-                    </div>
+                        <span>{category.name}</span>
+                      </label>
+                    </p>
                   )
-                })
-              }
-            </div>
+                })}
+              </div>
 
-            <button type="submit" onClick={this.handleSubmit}>
-              Submit
-            </button>
-
-          </form>
+              <div className="center-align">
+                <button
+                  className="btn-large waves-effect waves-light"
+                  type="submit"
+                  onClick={this.handleSubmit}
+                >
+                  Submit
+                  <i className="material-icons right">send</i>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.categories
   }
@@ -149,4 +149,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddProduct))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AddProduct)
+)

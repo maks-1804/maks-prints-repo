@@ -13,21 +13,24 @@ class AdminDashboard extends React.Component {
   render() {
     return (
       <div className="container">
+        <h1>Manage your Store</h1>
         <div>
-          <h3>Product Management</h3>
-          <div>
+          <h4>Product Management</h4>
+          <div className="row">
             <div>
-              <h4>Add a new product</h4>
               <Link to="/admin/product/add">
-                <button type="button">Add Product</button>
+                <button className="btn-large waves-effect waves-light" type="button">Add Product</button>
               </Link>
             </div>
-            <div>
-              {
-                this.props.products.map(product => (
-                  <ProductCard key={product.id} product={product} isAdmin={this.props.isAdmin} deleteProduct={this.props.deleteProduct} />
-                ))
-              }
+            <div className="card-columns">
+              {this.props.products.map(product => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  isAdmin={this.props.isAdmin}
+                  deleteProduct={this.props.deleteProduct}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -38,26 +41,27 @@ class AdminDashboard extends React.Component {
 
         <div>
           <h3>User Management</h3>
-
         </div>
       </div>
     )
   }
 }
 
-const mapState = (state) => {
+const mapState = state => {
   return {
     products: state.products,
     isAdmin: !!state.user.isAdmin
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
     fetchProducts: () => dispatch(loadAllProducts()),
-    deleteProduct: (id) => dispatch(deleteProduct(id))
-
+    deleteProduct: id => dispatch(deleteProduct(id))
   }
 }
 
-export default connect(mapState, mapDispatch)(AdminDashboard)
+export default connect(
+  mapState,
+  mapDispatch
+)(AdminDashboard)
