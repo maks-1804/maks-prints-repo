@@ -14,18 +14,6 @@ class ProductEdit extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.product.title !== prevState.title) {
-  //     return {
-  //       title: nextProps.product.title,
-  //       image: nextProps.product.imageUrl,
-  //       description: nextProps.user.imageUrl,
-  //       price: nextProps.user.price
-  //     }
-  //   }
-  // }
-
   componentDidMount(){
     if (!this.props.product) { this.props.loadProducts()
   }
@@ -85,7 +73,7 @@ class ProductEdit extends Component {
             <div className="col-8">
               <input
                 className="form-control"
-                value={this.state.image}
+                value={this.state.imageUrl}
                 type="text"
                 name="image"
                 onChange={this.handleChange}
