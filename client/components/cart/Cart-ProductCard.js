@@ -9,7 +9,9 @@ const CartProductCard = props => {
       <div className='row align-items-center cart-card'>
         <img src={product.imageUrl} className='col-2'/>
         <div className='column col-6'>
-          <h4>{product.title}</h4>
+          <Link to={`/shop/product/${product.Id}`}>
+            <h4>{product.title}</h4>
+          </Link>
           <p>{product.description}</p>
           {cartStatus === 'open' &&
           <button
