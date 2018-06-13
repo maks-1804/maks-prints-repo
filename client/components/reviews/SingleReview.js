@@ -9,41 +9,23 @@ const SingleReview = props => {
   const timeSince = moment(review.createdAt).fromNow()
 
   return (
-    <div className="col s12 m7">
+    <div className="col s12 m7" >
       <div className="card horizontal">
-        {review.product ? (
-          <div>
-            <h2 className="header">{review.title}</h2>
-
-            <div className="card-content">
-              <p>{`Review By: ${review.user.name}`}</p>
-              <p>{`${timeSince}`}</p>
-              <p>{review.content}</p>
-            </div>
-
-            <div className="card-action">
-              <Link to={`/shop/product/${review.productId}`}>See Print</Link>
-            </div>
-          </div>
-        ) : (
-          <div className="container-review-single">
-            <h4>{review.title}</h4>
-            <h6>{`Review by User: ${review.userId}`}</h6>
-            <h6>{`${timeSince}`}</h6>
-            <p>{review.content}</p>
-          </div>
-        )}
+        <div className="container-review-single">
+          <h5>{review.title}</h5>
+          <p>{`Review by User: ${review.user.name}`}</p>
+          <p>Rated: {
+            review.rating === 'happy' ?
+              <i className="material-icons">sentiment_very_satisfied</i>
+              : <i className="material-icons">sentiment_very_dissatisfied</i>
+          }
+          </p>
+          <p>{`${timeSince}`}</p>
+          <p>{review.content}</p>
+        </div>
       </div>
-    </div>
+    </div >
   )
-
-  // return (
-  //   <div className="container-review-single">
-  //     <h4>{review.title}</h4>
-  //     <h6>{`review by user: ${review.userId}, ${timeSince}`}</h6>
-  //     <p>{review.content}</p>
-  //   </div>
-  // )
 }
 
 export default SingleReview

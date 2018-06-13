@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const CartProductCard = props => {
   const { product, cartStatus, changeQuantity, deleteItem } = props
-  // console.log(product)
+
   return (
     <div className='container z-depth-2'>
       <div className='row align-items-center cart-card'>

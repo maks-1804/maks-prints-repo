@@ -13,43 +13,53 @@ class UserCard extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit(evt){
+  handleSubmit(evt) {
     evt.preventDefault()
     const id = this.props.user.id
-    this.state.selectedValue === 'user' ? this.props.editUser(id, {isAdmin: false}) : this.props.editUser(id, {isAdmin: true})
+    this.state.selectedValue === 'user' ? this.props.editUser(id, { isAdmin: false }) : this.props.editUser(id, { isAdmin: true })
   }
 
-  handleChange(evt){
+  handleChange(evt) {
     this.setState({
       selectedValue: evt.target.name
     })
   }
 
-  render(){
+  render() {
     return (
       <div className="card">
         <div className="row">
-          <div className="col-7">
+          <div className="col s7">
             <h3>{this.props.user.name}</h3>
-            <p>Email: {this.props.user.email}</p>
+            <p>{this.props.user.email}</p>
           </div>
-          <div className="col-5">
+          <div className="col s5">
+
+            {/* Change User Type */}
             <form onSubmit={this.handleSubmit}>
               <div className="radio">
                 <label>
-                  <input type="radio" name="admin" checked={this.state.selectedValue === "admin"} onChange={this.handleChange} />
-                  Administrator
+                  <input className="with-gap" type="radio" name="admin" checked={this.state.selectedValue === "admin"} onChange={this.handleChange} />
+                  <span>
+                    Administrator
+                  </span>
                 </label>
               </div>
               <div className="radio">
                 <label>
-                  <input type="radio" name="user" checked={this.state.selectedValue === "user"} onChange={this.handleChange}/>
-                  User
+                  <input className="with-gap" type="radio" name="user" checked={this.state.selectedValue === "user"} onChange={this.handleChange} />
+                  <span>
+                    User
+                  </span>
                 </label>
               </div>
-              <button type="submit">Submit</button>
-              <button type="button" onClick={() => this.props.deleteUser(this.props.user.id)}>Delete</button>
+              <button className="waves-effect waves-light btn-small" type="submit">Change</button>
             </form>
+
+            {/* Delete a User */}
+            <div className="col s5">
+              <button className="waves-effect waves-light btn" type="button" onClick={() => this.props.deleteUser(this.props.user.id)}>Delete User</button>
+            </div>
           </div>
         </div>
       </div>
