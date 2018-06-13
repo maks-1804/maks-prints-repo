@@ -23,8 +23,8 @@ class CartHistory extends Component {
             <table>
             <thead>
             <tr>
-              <th className="left-align col s4">Date</th>
-              <th className="left-align col s6">Order Details</th>
+              <th className="push-l1" style={{width: '22%'}}>Date</th>
+              <th className="left-align col s6 offset-m2">Order Details</th>
               <th className="right-align col s2">Status</th>
             </tr>
             </thead>

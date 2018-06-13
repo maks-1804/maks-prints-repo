@@ -7,25 +7,27 @@ const CartHistoryCard = props => {
 
   return (
     <div className='row cart-card' id='history-card'>
-     <table>
-      <tr>
-      <td className="col s4 left-align">{date.slice(0, 10)}</td>
-      <td>
-        <div className='column col s6 left-align'>
-          {products.map( product => {
-            // return <p key={product.id}> hi</p>
-            return (<p key={product.id}>{product.title}</p>)
-          })}
-        </div>
-      </td>
-        <td className="column col s2 right-align">
-          <p>{status}</p>
-          {status === 'processing' && (
-            <button type='button'>Cancel Order</button>
-          )}
-        </td>
-      </tr>
-    </table>
+      <table>
+        <tr>
+          <td className="col-2" style={{width: '20%'}}>
+            <p>{date.slice(0, 10)}</p>
+          </td>
+          <td className='col-6 align-items-left'>
+            <div className='column'>
+              {products.map( product => {
+                // return <p key={product.id}> hi</p>
+                return (<p key={product.id}>{product.title}</p>)
+              })}
+            </div>
+          </td>
+          <td className="column col-2 align-items-right">
+              <p>{status}</p>
+              {status === 'processing' && (
+                <button type='button'>Cancel Order</button>
+              )}
+          </td>
+        </tr>
+      </table>
     </div>
   )
 }
