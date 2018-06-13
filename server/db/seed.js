@@ -224,7 +224,7 @@ const seed = async () => {
     await gg.setCategories([selfies])
     await linda.setCategories([selfies])
     await pupper.setCategories([selfies, animals])
-
+//!!!!
     //add products to the carts
     await cart1.setProducts([yellowstone, patagonia])
     await cart2.setProducts([yellowstone, glacier, redwoods])
