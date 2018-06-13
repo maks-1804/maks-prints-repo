@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 import SearchBar from './NavbarSearch'
 import { logout } from '../store'
+import { clearCartOnLogout } from '../store/cart'
 
 const Navbar = props => {
   const {
@@ -105,6 +106,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+      dispatch(clearCartOnLogout())
     }
   }
 }
