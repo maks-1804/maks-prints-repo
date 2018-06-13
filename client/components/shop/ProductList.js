@@ -44,28 +44,28 @@ class ProductList extends Component {
         <div className="row">
           {this.props.products.length && <div />}
           <NavCategory categories={this.props.categories} />
-          <div className="col-9">
-            <div className="card-columns">
-              {
-                this.props.match.params.categoryName
-                  ? products.filter(product => categoryMap[product.title].includes(this.props.match.params.categoryName))
-                    .map(product => {
-                      return (
-                        <div key={product.id}>
-                          <ProductCard key={product.id} product={product} />
-                        </div>)
-                    })
-                  : products.map(product => {
+
+          <div className="card-columns">
+            {
+              this.props.match.params.categoryName
+                ? products.filter(product => categoryMap[product.title].includes(this.props.match.params.categoryName))
+                  .map(product => {
                     return (
                       <div key={product.id}>
                         <ProductCard key={product.id} product={product} />
-                      </div>
-                    )
-                  })}
-            </div>
+                      </div>)
+                  })
+                : products.map(product => {
+                  return (
+                    <div key={product.id}>
+                      <ProductCard key={product.id} product={product} />
+                    </div>
+                  )
+                })}
           </div>
         </div>
       </div>
+
     )
   }
 }

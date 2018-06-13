@@ -15,14 +15,18 @@ class AdminDashboard extends React.Component {
     return (
       <div className="container">
         <h1>Manage your Store</h1>
+        <hr />
         <div>
-          <h4>Product Management</h4>
           <div className="row">
-            <div>
+            <div className="col s8">
+              <h4>Product Management</h4>
+            </div>
+            <div className="col s4 valign-wrapper">
               <Link to="/admin/product/add">
                 <button className="btn-large waves-effect waves-light" type="button">Add Product</button>
               </Link>
             </div>
+          </div>
             <div className="card-columns">
               {this.props.products.map(product => (
                 <ProductCard
@@ -33,7 +37,7 @@ class AdminDashboard extends React.Component {
                 />
               ))}
             </div>
-          </div>
+            <hr />
         </div>
 
         <div>
@@ -41,13 +45,18 @@ class AdminDashboard extends React.Component {
           <div>
             <CartHistory />
           </div>
+          <hr />
         </div>
 
-        <div>
-          <h4>User Management</h4>
-          <button type="button">
-            <Link to="/admin/users">Edit Users</Link>
-          </button>
+        <div className="row">
+          <div className="col s8">
+            <h4>User Management</h4>
+          </div>
+          <div className="col s4 valign-wrapper">
+            <Link to="/admin/users">
+              <button className="btn-large waves-effect waves-light" type="button">Edit Users</button>
+            </Link>
+          </div>
         </div>
       </div>
     )

@@ -18,11 +18,11 @@ const AuthForm = (props) => {
       <form onSubmit={handleSubmit} name={name}>
         <div className="input-field">
           <label className="active" htmlFor="email"><span>Email</span></label>
-          <input className="validate" name="email" type="text" />
+          <input className="validate active" name="email" type="text" />
         </div>
         <div className="input-field">
-          <label className="active" htmlFor="password"><span>Password</span></label>
-          <input className="validate" name="password" type="password" />
+          <label htmlFor="password"><span>Password</span></label>
+          <input className="validate active" name="password" type="password" />
         </div>
         <div className="center-align">
           <button className="btn-large waves-effect waves-light" type="submit">{displayName}</button>

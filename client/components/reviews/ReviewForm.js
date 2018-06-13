@@ -38,28 +38,36 @@ class ReviewForm extends Component {
   }
   render() {
     return (
-      <div className="container-form">
-        <form onSubmit={this.handleSubmit}>
-          <label>Add a Review</label>
+      <div className="container">
+        <form className="col s8" onSubmit={this.handleSubmit}>
+          <h5>Add a Review</h5>
           <input
             type="text"
             value={this.state.title}
             onChange={this.handleChange}
             name="title"
+            placeholder="Review Title"
           />
-          <textarea
-            type="text"
-            value={this.state.content}
-            onChange={this.handleChange}
-            name="content"
-          />
+
+          <div className="row">
+            <textarea
+              className="materialize-textarea"
+              type="text"
+              value={this.state.content}
+              onChange={this.handleChange}
+              name="content"
+              placeholder="Review content here"
+            />
+          </div>
+
           <select
+            className="browser-default"
             name="rating"
             value={this.state.rating}
             onChange={this.handleChange}
           >
-            <option>happy</option>
-            <option>sad</option>
+            <option>Happy</option>
+            <option>Sad</option>
           </select>
           <button type="submit">Submit Review</button>
         </form>

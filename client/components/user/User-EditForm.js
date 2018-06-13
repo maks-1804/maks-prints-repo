@@ -64,6 +64,8 @@ class UserEdit extends React.Component {
       </div>
       <div className="row">
         <form className="col s12" onSubmit={this.handleSubmit}>
+
+          <div className="row">
           <div className="input-field col s12">
             <label className="active" htmlFor='name'>Name</label>
             <input
@@ -71,9 +73,9 @@ class UserEdit extends React.Component {
               type='text'
               name='name'
               onChange={this.handleChange}
-              placeholder='Name'
               required />
           </div>
+
           <div className='input-field col s12'>
             <label className="active" htmlFor='email'>Email</label>
             <input
@@ -81,10 +83,12 @@ class UserEdit extends React.Component {
               type='text'
               name='email'
               onChange={this.handleChange}
-              placeholder='Email'
               required />
           </div>
-          <div className='input-field col s12'>
+              </div>
+
+          <div className="row">
+          <div className='input-field col s6'>
             <label className="active" htmlFor='password'>Password</label>
             <input
               id='inputPassword'
@@ -92,19 +96,20 @@ class UserEdit extends React.Component {
               type="password"
               name='password'
               onChange={this.handleChange}
-              placeholder='Password'
               required />
           </div>
 
-          <div className='input-field col s12'>
+          <div className='input-field col s6'>
           <div>
             <label>
             <input className="active" type='checkbox' className="filled-in" onClick={this.togglePassword} />
             <span>Show Password</span>
             </label>
           </div>
+              </div>
 
           </div>
+            <div className="row">
           <div className='input-field col s12'>
             <label className="active" htmlFor='password'>Address</label>
             <input
@@ -112,8 +117,9 @@ class UserEdit extends React.Component {
               type='text'
               name='address'
               onChange={this.handleChange}
-              placeholder='Address' />
+             />
           </div>
+            </div>
 
             <div className="center-align">
               <button className="btn-large waves-effect waves-light" type="submit">Submit</button>

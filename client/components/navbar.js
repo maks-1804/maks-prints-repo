@@ -49,7 +49,7 @@ const Navbar = props => {
                   </li>
                 ) : (
                   <li>
-                    <NavLink to={`/${id}/dashboard`}>My Account</NavLink>
+                      <NavLink to={`/${id}/dashboard`}>My Account</NavLink>
                   </li>
                 )}
                 <li>
@@ -63,10 +63,10 @@ const Navbar = props => {
             <div>
               <ul>
                 <li>
-                  <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/login">Login</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/signup">Sign Up</NavLink>
+                    <NavLink to="/signup">Sign Up</NavLink>
                 </li>
               </ul>
             </div>

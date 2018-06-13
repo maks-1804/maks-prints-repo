@@ -17,7 +17,7 @@ class UserDashboard extends React.Component {
   }
 
   openSection() {
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('.collapsible').collapsible()
     })
   }
@@ -54,7 +54,7 @@ class UserDashboard extends React.Component {
               <i className="material-icons">history</i>Order History
             </div>
             <div className="collapsible-body">
-                <CartHistory />
+              <CartHistory />
             </div>
           </li>
 
@@ -68,14 +68,17 @@ class UserDashboard extends React.Component {
                 userReviews.map(review => (
                   <div key={review.id}>
                     <h5>Review for {review.product.title}:</h5>
+                    <div className="card-action">
+                      <Link to={`/shop/product/${review.productId}`}>See Print</Link>
+                    </div>
                     <SingleReview review={review} />
                   </div>
                 ))
               ) : (
-                <div>
-                  <p>No reviews found!</p>
-                </div>
-              )}
+                  <div>
+                    <p>No reviews found!</p>
+                  </div>
+                )}
             </div>
           </li>
         </ul>

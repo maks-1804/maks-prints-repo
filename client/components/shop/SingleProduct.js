@@ -38,14 +38,14 @@ class SingleProduct extends Component {
     event.preventDefault()
     //get old cart products and update opencart with products we area adding
     const oldProducts = this.props.openCart.products
-    console.log('oldProducts:', oldProducts)
+
     const newProduct = this.props.product
     //put a quantity property on the new product object based on the dropdown
     //new quantity is prev quantity (if was there) plus selected quantity
     let idx
     let oldQuantity
     let filteredProducts
-    const findById = function(product) {
+    const findById = function (product) {
       return product.id === newProduct.id
     }
     if (oldProducts.find(findById) !== undefined) {
@@ -77,7 +77,7 @@ class SingleProduct extends Component {
     const newProduct = this.props.product
     let idx
     let oldQuantity
-    const findById = function(product) {
+    const findById = function (product) {
       return product.id === newProduct.id
     }
     if (oldProducts.find(findById) !== undefined) {
@@ -102,7 +102,7 @@ class SingleProduct extends Component {
   }
 
   handleDropdown() {
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('select').formSelect()
     })
   }
@@ -133,7 +133,7 @@ class SingleProduct extends Component {
                     <label>
                       {`Select Quantity - ${
                         product.inventoryQuantity
-                      } Available, ${removeAvailable} in cart`}
+                        } Available, ${removeAvailable} in cart`}
                     </label>
                     <div>
                       <select
@@ -147,11 +147,11 @@ class SingleProduct extends Component {
                         </option>
                         {quantity - Number(removeAvailable) > 0
                           ? Array.apply(
-                              null,
-                              new Array(quantity - removeAvailable)
-                            ).map((el, ind) => {
-                              return <option key={ind}>{ind + 1}</option>
-                            })
+                            null,
+                            new Array(quantity - removeAvailable)
+                          ).map((el, ind) => {
+                            return <option key={ind}>{ind + 1}</option>
+                          })
                           : null}
                       </select>
                     </div>
@@ -185,10 +185,10 @@ class SingleProduct extends Component {
               <ReviewList />
             </div>
           ) : (
-            <div>
-              <h3>No reviews for this product yet</h3>
-            </div>
-          )}
+              <div>
+                <h3>No reviews for this product yet</h3>
+              </div>
+            )}
         </div>
         <div>
           <ReviewForm />
@@ -198,8 +198,6 @@ class SingleProduct extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  // console.log('what are ownProps', ownProps)
-  // console.log('state open cart? ', state.cart)
   const id = Number(ownProps.match.params.productId)
   return {
     product: state.products.filter(product => product.id === id)[0],
@@ -208,8 +206,7 @@ const mapStateToProps = (state, ownProps) => {
     openCart: state.cart
   }
 }
-const mapDispatchToProps = (dispatch, ownProps) => {
-  //console.log('doI have? ', ownProps)
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchProducts: () => dispatch(loadAllProducts()),
     getOpenCart: user => dispatch(retreiveOpenCart(user)),

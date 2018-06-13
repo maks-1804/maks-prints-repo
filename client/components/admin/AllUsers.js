@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchUsers } from '../../store/admin'
 import UserCard from './UserCard'
@@ -8,11 +8,12 @@ class AllUsers extends Component {
     this.props.getUsers()
   }
 
-  render(){
-    const {users} = this.props
+  render() {
+    const { users } = this.props
+
     return (
       <div className="card-columns">
-        {users.map(user => {return <UserCard key={user.id} user={user} />})}
+        {users.map(user => { return <UserCard key={user.id} user={user} /> })}
       </div>
     )
   }
