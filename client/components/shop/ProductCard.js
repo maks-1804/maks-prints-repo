@@ -21,9 +21,9 @@ export const ProductCard = props => {
           {isAdmin && (
             <div className="card-action">
               <Link to={`/admin/product/edit/${product.id}`}>
-                <button type="button">Edit</button>
+                <button className="waves-effect waves-light btn-small" type="button">Edit</button>
               </Link>
-              <button type="button" onClick={() => deleteProduct(product.id)}>
+              <button className="waves-effect waves-light btn-small" type="button" onClick={() => deleteProduct(product.id)}>
                 Delete
               </button>
             </div>

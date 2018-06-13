@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getCookie, setCookie } from 'redux-cookie'
+// import { getCookie, setCookie } from 'redux-cookie'
 
 /**
  * ACTION TYPES
