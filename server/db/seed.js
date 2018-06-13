@@ -93,7 +93,12 @@ const seed = async () => {
       redwoods,
       patagonia,
       skyViewCity,
-      superHighway
+      superHighway,
+      linda,
+      pankti,
+      crystal,
+      gg,
+      pupper
     ] = await Promise.all([
       Product.create({
         title: 'Yellowstone',
@@ -149,6 +154,41 @@ const seed = async () => {
         price: 350,
         inventoryQuantity: 15,
         imageUrl: 'https://www.100resilientcities.org/wp-content/uploads/2017/06/cities-bangkok_optimized-450x300.jpg'
+      }),
+      Product.create({
+        title: 'Linda',
+        description: 'A great gal!',
+        price: 450,
+        inventoryQuantity: 20,
+        imageUrl: 'https://i.imgur.com/KQJk1Gk.jpg'
+      }),
+      Product.create({
+        title: 'Pankti',
+        description: 'What a great smile',
+        price: 450,
+        inventoryQuantity: 25,
+        imageUrl: 'https://i.imgur.com/uepQFlw.jpg'
+      }),
+      Product.create({
+        title: 'GG',
+        description: 'A beautiful selfie',
+        price: 450,
+        inventoryQuantity: 20,
+        imageUrl: 'https://i.imgur.com/ilZlOJd.jpg'
+      }),
+      Product.create({
+        title: 'Crystal',
+        description: 'A fun selfie at the Museum of Ice Cream',
+        price: 450,
+        inventoryQuantity: 25,
+        imageUrl: 'https://i.imgur.com/rImcTPo.jpg'
+      }),
+      Product.create({
+        title: 'Pupperino',
+        description: 'A handsome pup!',
+        price: 650,
+        inventoryQuantity: 15,
+        imageUrl: 'https://barkpost.com/wp-content/uploads/2014/09/awkward-dog-selfie.jpg?q=70&fit=crop&crop=entropy&w=808&h=500'
       })
     ])
 
@@ -179,6 +219,11 @@ const seed = async () => {
     await grandCanyon.setCategories([nationalParks])
     await skyViewCity.setCategories([cities])
     await superHighway.setCategories([cities])
+    await crystal.setCategories([selfies])
+    await pankti.setCategories([selfies])
+    await gg.setCategories([selfies])
+    await linda.setCategories([selfies])
+    await pupper.setCategories([selfies, animals])
 
     //add products to the carts
     await cart1.setProducts([yellowstone, patagonia])
