@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getCookie, setCookie } from 'redux-cookie'
 
 /**
  * ACTION TYPES
@@ -15,6 +16,7 @@ const CLOSE_CART = 'CLOSE_CART'
 const DELETE_PRODUCT_NO_USER = 'DELETE_PRODUCT_NO_USER'
 const UPDATE_NUM_AND_SUBTOTAL = 'UPDATE_NUM_AND_SUBTOTAL'
 const DELETE_PRODUCT_WITH_USER = 'DELETE_PRODUCT_WITH_USER '
+const CLEAR_CART_ON_LOGOUT = 'CLEAR_CART_ON_LOGOUT'
 
 /**
  * ACTION CREATORS
@@ -23,6 +25,7 @@ const getOpenCart = cart => ({ type: GET_OPEN_CART, cart })
 const closeCart = () => ({ type: CLOSE_CART })
 const addCart = cart => ({ type: ADD_CART, cart })
 const editCart = cart => ({ type: EDIT_CART, cart })
+export const clearCartOnLogout = () => ({type: CLEAR_CART_ON_LOGOUT})
 export const updateNumItemsAndSubtotal = products => ({
   type: UPDATE_NUM_AND_SUBTOTAL,
   products
@@ -36,6 +39,7 @@ export const deleteProductNoUser = product => ({
   product
 })
 const deleteProductWithUser = cart => ({ type: DELETE_PRODUCT_WITH_USER, cart })
+
 
 /**THUNKS **/
 export const retrieveOpenCart = user => {
@@ -151,6 +155,8 @@ export default (state = initialCart, action) => {
     case EDIT_CART: {
       return action.cart
     }
+    case CLEAR_CART_ON_LOGOUT:
+      return initialCart
     default:
       return state
   }
@@ -179,6 +185,8 @@ export const frontEndCartReducer = (state = initialFrontCart, action) => {
           }, 0) / 100
         ).toFixed(2)
       }
+    case CLEAR_CART_ON_LOGOUT:
+      return initialFrontCart
     default:
       return state
   }
